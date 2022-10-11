@@ -9,11 +9,20 @@ using System.Threading.Tasks;
 
 namespace GurrexTelegramBot.DAL
 {
+    /// <summary>
+    /// Регистрация репозиториев
+    /// </summary>
     public static class RepositoryRegistrator
     {
+        /// <summary>
+        /// Зарегистрировать репозитории
+        /// </summary>
+        /// <param name="services">расширение для <see cref="IServiceCollection"/></param>
+        /// <returns></returns>
         public static IServiceCollection AddRepositoriesInDB(this IServiceCollection services) => services
+            .AddTransient<IRepository<AdminUser>, DbRepository<AdminUser>>()
             .AddTransient<IRepository<ChatUser>, DbRepository<ChatUser>>()
-            .AddTransient<IRepository<Notes>, DbRepository<Notes>>()
+            .AddTransient<IRepository<Note>, DbRepository<Note>>()
             ;
     }
 }

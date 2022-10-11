@@ -8,9 +8,9 @@ using GurrexTelegramBot.DAL.Entityes.Base;
 namespace GurrexTelegramBot.DAL.Entityes
 {
     /// <summary>
-    /// Уведомления
+    /// Сущность уведомления
     /// </summary>
-    public class Notes : Entity
+    public class Note : Entity
     {
         /// <summary>
         /// Заголовок уведомления

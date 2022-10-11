@@ -33,7 +33,7 @@
         /// <param name="item">Обновляемый объект</param>
         /// <param name="cancel">Отмена операции</param>
         /// <returns>Обновленный объект</returns>
-        Task UpdateAsync(T item, CancellationToken cancel);
+        void Update(T item, CancellationToken cancel);
 
         /// <summary>
         /// Удаление объекта

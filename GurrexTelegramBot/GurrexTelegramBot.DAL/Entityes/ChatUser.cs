@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace GurrexTelegramBot.DAL.Entityes
 {
     /// <summary>
-    /// Информация о чате пользователя
+    /// Информация пользователя
     /// </summary>
     public class ChatUser : Entity
     {
