@@ -37,7 +37,20 @@ namespace GurrexTelegramBot.DAL.Context
         public GurrexTelegramBotDB(DbContextOptions<GurrexTelegramBotDB> dbContextOptions) :
             base(dbContextOptions) 
         {
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
+        }
+
+        /// <summary>
+        /// Первоначальная настройка
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        protected override void OnModelCreating(ModelBuilder modelBuilder) 
+        {
+            AdminUser adminUser = new AdminUser(Guid.NewGuid(), "Admin", "Password2012!");
+
+            modelBuilder.Entity<AdminUser>().HasData(adminUser);
+            base.OnModelCreating(modelBuilder);
         }
 
 

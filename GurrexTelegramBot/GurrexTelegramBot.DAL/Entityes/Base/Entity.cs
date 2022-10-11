@@ -16,5 +16,12 @@ namespace GurrexTelegramBot.DAL.Entityes.Base
         /// Id сущности
         /// </summary>
         public Guid Id { get; set; }
+
+        public Entity() { }
+
+        public Entity(Guid id) 
+        {
+            Id = id;
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace GurrexTelegramBot.WebHost.Models.ViewModels.UserViewModels
         /// Логин администратора
         /// </summary>
         [Required(ErrorMessage = "Не указан логин")]
-        [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,})+)$", ErrorMessage = "Неверный формат логина")]
+        [RegularExpression(@"^([\w\.\-]+))$", ErrorMessage = "Неверный формат логина")]
         [Display(Name = "Логин")]
         public string Email { get; set; } = null!;
 

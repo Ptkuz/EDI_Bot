@@ -12,7 +12,6 @@ namespace GurrexTelegramBot.DAL.Entityes
     /// </summary>
     public class ChatUser : Entity
     {
-
         public long ChatId { get; set; }
 
         /// <summary>
@@ -30,9 +29,27 @@ namespace GurrexTelegramBot.DAL.Entityes
         /// </summary>
         public string? LastName { get; set; }
 
+        public ChatUser() { }
+
+        /// <summary>
+        /// Создание нового пользователя чата
+        /// </summary>
+        /// <param name="id">Id пользователя</param>
+        /// <param name="chatId">Id чата</param>
+        /// <param name="username">Имя пользователя</param>
+        /// <param name="firstName">Имя</param>
+        /// <param name="lastName">Фамилия</param>
+        public ChatUser(Guid id, long chatId, string? username, string? firstName, string? lastName) : base(id)
+        {
+            ChatId = chatId;
+            Username = username;
+            FirstName = firstName;
+            LastName = lastName;
+        }
+
         /// <summary>
         /// Навигационное свойство
         /// </summary>
-        public virtual List<Notes> Notes { get; set; } = new List<Notes>();
+        public virtual List<Note> Notes { get; set; } = new List<Note>();
     }
 }

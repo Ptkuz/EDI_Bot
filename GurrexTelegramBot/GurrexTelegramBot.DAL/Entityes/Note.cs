@@ -12,6 +12,7 @@ namespace GurrexTelegramBot.DAL.Entityes
     /// </summary>
     public class Note : Entity
     {
+
         /// <summary>
         /// Заголовок уведомления
         /// </summary>
@@ -46,6 +47,32 @@ namespace GurrexTelegramBot.DAL.Entityes
         /// Id пользователя
         /// </summary>
         public Guid ChatUserId { get; set; }
+
+        public Note() { }
+
+        /// <summary>
+        /// Создание нового уведомления
+        /// </summary>
+        /// <param name="id">Id уведомления</param>
+        /// <param name="title">Заголовок уведомления</param>
+        /// <param name="textNote">Текст уведомления</param>
+        /// <param name="dateNote">Дата уведомления</param>
+        /// <param name="repeatEveryWeek">Повторять ли каждую неделю</param>
+        /// <param name="repeatEveryDay">Повторять ли каждый день</param>
+        /// <param name="isActive">Активность</param>
+        /// <param name="chatUserId">Id чата пользователя</param>
+        public Note(Guid id, string title, string textNote, DateTime dateNote, bool repeatEveryWeek, bool repeatEveryDay,
+            bool isActive, Guid chatUserId) : base(id)
+        {
+            Title = title;
+            TextNote = textNote;
+            DateNote = dateNote;
+            RepeatEveryWeek = repeatEveryWeek;
+            RepeatEveryDay = repeatEveryDay;
+            IsActive = isActive;
+            ChatUserId = chatUserId;
+        }
+
         /// <summary>
         /// Навигационное свойство
         /// </summary>
