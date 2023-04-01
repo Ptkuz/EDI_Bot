@@ -22,6 +22,8 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// </summary>
         public string Extention { get; set; } = null!;
 
+
+        public Guid VideoId { get; set; }
         /// <summary>
         /// Видео
         /// </summary>

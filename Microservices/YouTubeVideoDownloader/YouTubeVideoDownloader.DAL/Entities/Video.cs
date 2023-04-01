@@ -20,12 +20,12 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <summary>
         /// Канал
         /// </summary>
-        public virtual Channel Channel { get; set; } = null!;
+        public Channel Channel { get; set; } = null!;
 
         /// <summary>
         /// Картинка
         /// </summary>
-        public virtual Image Image { get; set; } = null!;
+        public Image Image { get; set; } = null!;
 
         /// <summary>
         /// Ссылка

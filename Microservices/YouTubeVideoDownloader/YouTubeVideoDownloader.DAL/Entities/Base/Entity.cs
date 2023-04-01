@@ -1,4 +1,5 @@
-﻿using YouTubeVideoDownloader.Interfaces.Interfaces;
+﻿using System.ComponentModel.DataAnnotations;
+using YouTubeVideoDownloader.Interfaces.Interfaces;
 
 namespace YouTubeVideoDownloader.DAL.Entities.Base
 {
@@ -10,6 +11,7 @@ namespace YouTubeVideoDownloader.DAL.Entities.Base
         /// <summary>
         /// Id сущности
         /// </summary>
+        [Key]
         public Guid Id { get; set; }
     }
 }
