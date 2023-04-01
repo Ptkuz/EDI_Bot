@@ -15,7 +15,7 @@ namespace YouTubeVideoDownloader.Interfaces.Interfaces.Repository.Base
         /// <summary>
         /// Получить все объекты сущности <see cref="T"/>
         /// </summary>
-        IQueryable<T> Emtities { get; }
+        IQueryable<T> Items { get; }
 
     }
 }

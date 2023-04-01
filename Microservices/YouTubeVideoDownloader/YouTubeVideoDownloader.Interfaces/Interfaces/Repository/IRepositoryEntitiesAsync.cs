@@ -18,7 +18,7 @@ namespace YouTubeVideoDownloader.Interfaces.Interfaces.Repository
         /// </summary>
         /// <param name="id">Id сущности с типом <see cref="Guid"/></param>
         /// <returns>Возвращает конкретную сущность <see cref="T"/> по Id</returns>
-        Task<T> GetEntityByIdAsync(Guid id, CancellationToken cancel = default);
+        Task<T>? GetEntityByIdAsync(Guid id, CancellationToken cancel = default);
 
         /// <summary>
         /// Асинхронно получить последнюю добавленную сущность <see cref="T"/>

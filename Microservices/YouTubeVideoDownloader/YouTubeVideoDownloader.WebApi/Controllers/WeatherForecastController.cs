@@ -1,3 +1,4 @@
+using Gurrex.Common.Validations;
 using Microsoft.AspNetCore.Mvc;
 
 namespace YouTubeVideoDownloader.WebApi.Controllers
@@ -21,6 +22,10 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
+            string str = null;
+
+            str.CheckObjectForNull(nameof(str));
+
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),

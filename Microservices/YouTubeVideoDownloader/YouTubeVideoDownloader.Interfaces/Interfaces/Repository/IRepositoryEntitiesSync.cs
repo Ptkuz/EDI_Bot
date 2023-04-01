@@ -18,7 +18,7 @@ namespace YouTubeVideoDownloader.Interfaces.Interfaces.Repository
         /// </summary>
         /// <param name="id">Id сущности с типом <see cref="Guid"/></param>
         /// <returns>Возвращает конкретную сущность <see cref="T"/> по Id</returns>
-        T GetEntityById(Guid id);
+        T? GetEntityById(Guid id);
 
         /// <summary>
         /// Получить последнюю добавленную сущность <see cref="T"/>
