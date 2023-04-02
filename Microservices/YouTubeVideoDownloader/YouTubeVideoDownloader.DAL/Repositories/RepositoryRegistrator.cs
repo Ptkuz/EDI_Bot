@@ -15,12 +15,23 @@ namespace YouTubeVideoDownloader.DAL.Repositories
     public static class RepositoryRegistrator
     {
         public static IServiceCollection AddRepositoryInDB(this IServiceCollection services) => services
+            .AddScoped<IAudioRepository<Audio>, AudioRepository>()
+            .AddScoped<IAudioRepositoryAsync<Audio>, AudioRepositoryAsync>()
+
             .AddScoped<IChannelRerository<Channel>, ChannelRepository>()
             .AddScoped<IChannelRerositoryAsync<Channel>, ChannelRepositoryAsync>()
-            .AddScoped<IVideoRepository<Video>, VideoRepository>()
-            .AddScoped<IVideoRepositoryAsync<Video>, VideoRepositoryAsync>()
+
             .AddScoped<IImageRepository<Image>, ImageRepository>()
             .AddScoped<IImageRepositoryAsync<Image>, ImageRepositoryAsync>()
+
+            .AddScoped<IServerInfoRepository<ServerInfo>, ServerInfoRepository>()
+            .AddScoped<IServerInfoRepositoryAsync<ServerInfo>, ServerInfoRepositoryAsync>()
+
+            .AddScoped<IVideoRepository<Video>, VideoRepository>()
+            .AddScoped<IVideoRepositoryAsync<Video>, VideoRepositoryAsync>()
+
+            .AddScoped<IYouTubeInfoRepository<YouTubeInfo>, YouTubeInfoRepository>()
+            .AddScoped<IYouTubeInfoRepositoryAsync<YouTubeInfo>, YouTubeInfoRepositoryAsync>()
             ;
     }
 }

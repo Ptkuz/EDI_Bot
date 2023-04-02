@@ -10,6 +10,9 @@ using Gurrex.Common.Interfaces.Repositories;
 
 namespace YouTubeVideoDownloader.Interfaces.Repositories.Async
 {
+    /// <summary>
+    /// Ассинхронный репозиторий работы с <see cref="IChannel"/>
+    /// </summary>
     public interface IChannelRerositoryAsync<T> : IRepositoryEntitiesAsync<T> where T : class, IChannel, new()
     {
 

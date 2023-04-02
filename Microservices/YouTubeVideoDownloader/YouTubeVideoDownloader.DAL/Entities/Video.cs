@@ -5,19 +5,19 @@ using YouTubeVideoDownloader.Interfaces.Entities;
 namespace YouTubeVideoDownloader.DAL.Entities
 {
     /// <summary>
-    /// Сущность видео
+    /// Видео поток
     /// </summary>
     public class Video : Entity, IVideo
     {
 
         /// <summary>
-        /// Формат видео
+        /// Формат
         /// </summary>
         [Column("FormatVideo", Order = 4)]
         public string FormatVideo { get; set; } = null!;
 
         /// <summary>
-        /// Разрешение видео
+        /// Разрешение
         /// </summary>
         [Column("Resolution", Order = 5)]
         public string Resolution { get; set; } = null!;
@@ -43,7 +43,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
 
 
         /// <summary>
-        /// Поток
+        /// YouTube поток
         /// </summary>
         public YouTubeInfo YouTubeInfo { get; set; } = null!;
 

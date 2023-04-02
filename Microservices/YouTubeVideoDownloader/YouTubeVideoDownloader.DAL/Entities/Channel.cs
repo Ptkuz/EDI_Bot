@@ -5,7 +5,7 @@ using YouTubeVideoDownloader.Interfaces.Entities;
 namespace YouTubeVideoDownloader.DAL.Entities
 {
     /// <summary>
-    /// Канал
+    /// Канал на YouTube
     /// </summary>
     public class Channel : Entity, IChannel
     {
@@ -16,7 +16,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         public string Name { get; set; } = null!;
 
         /// <summary>
-        /// Коллекция потоков
+        /// Коллекция YouTube потоков
         /// </summary>
         public IQueryable<YouTubeInfo> YouTubeInfos { get; set; } = null!;
     }

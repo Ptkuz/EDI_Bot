@@ -10,6 +10,9 @@ using YouTubeVideoDownloader.Interfaces.Entities;
 
 namespace YouTubeVideoDownloader.Interfaces.Repositories.Async
 {
+    /// <summary>
+    /// Ассинхронный репозиторий работы с <see cref="IVideo"/>
+    /// </summary>
     public interface IVideoRepositoryAsync<T> : IRepositoryEntitiesAsync<T> where T : class, IVideo, new()
     {
 

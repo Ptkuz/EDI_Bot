@@ -26,6 +26,9 @@ namespace YouTubeVideoDownloader.DAL.Entities
         [Column("Size", Order = 5)]
         public int Size { get; set; }
 
+        /// <summary>
+        /// Внешний ключ Video
+        /// </summary>
         public Guid VideoId { get; set; }
 
         /// <summary>
@@ -33,6 +36,9 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// </summary>
         public Video Video { get; set; } = null!;
 
+        /// <summary>
+        /// Внешний ключ Audio
+        /// </summary>
         public Guid AudioId { get; set; }   
 
         /// <summary>

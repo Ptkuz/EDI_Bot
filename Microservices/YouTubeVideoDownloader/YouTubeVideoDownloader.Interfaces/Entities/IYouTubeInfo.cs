@@ -10,7 +10,7 @@ namespace YouTubeVideoDownloader.Interfaces.Entities
     /// <summary>
     /// Поток, полученный по ссылки на YouTube
     /// </summary>
-    public interface IInfo : IEntity
+    public interface IYouTubeInfo : IEntity
     {
         /// <summary>
         /// Заголовок

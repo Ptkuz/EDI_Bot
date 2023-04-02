@@ -5,7 +5,7 @@ using YouTubeVideoDownloader.Interfaces.Entities;
 namespace YouTubeVideoDownloader.DAL.Entities
 {
     /// <summary>
-    /// Превью видео
+    /// Картинка на видео
     /// </summary>
     public class Image : Entity, IImage
     {
@@ -21,7 +21,15 @@ namespace YouTubeVideoDownloader.DAL.Entities
         [Column("Extention", Order = 5)]
         public string Extention { get; set; } = null!;
 
+        /// <summary>
+        /// Расширение картинки
+        /// </summary>
+        [Column("Resolution", Order = 6)]
+        public string Resolution { get; set; } = null!; 
 
+        /// <summary>
+        /// Внешний ключ YouTubeInfo
+        /// </summary>
         public Guid YouTubeInfoId { get; set; }
 
         /// <summary>

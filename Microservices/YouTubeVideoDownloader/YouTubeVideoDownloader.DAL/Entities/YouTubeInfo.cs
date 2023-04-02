@@ -8,7 +8,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
     /// <summary>
     /// Поток
     /// </summary>
-    public class YouTubeInfo : Entity, IInfo
+    public class YouTubeInfo : Entity, IYouTubeInfo
     {
         /// <summary>
         /// Заголовок

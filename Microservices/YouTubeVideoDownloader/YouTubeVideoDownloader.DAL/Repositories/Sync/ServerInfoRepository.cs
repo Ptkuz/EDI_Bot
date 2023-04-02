@@ -5,18 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using YouTubeVideoDownloader.DAL.Context;
 using YouTubeVideoDownloader.DAL.Entities;
 using YouTubeVideoDownloader.Interfaces.Repositories.Sync;
 
 namespace YouTubeVideoDownloader.DAL.Repositories.Sync
 {
-    /// <summary>
-    /// Репозиторий работы с <see cref="Channel"/>
-    /// </summary>
-    public class ChannelRepository : DbRepository<Channel>, IChannelRerository<Channel>
+    public class ServerInfoRepository : DbRepository<ServerInfo>, IServerInfoRepository<ServerInfo>
     {
-        public ChannelRepository(DownloaderContext dbContext) : base(dbContext)
+        public ServerInfoRepository(DbContext dbContext) : base(dbContext)
         {
 
         }

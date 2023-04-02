@@ -5,7 +5,7 @@ using YouTubeVideoDownloader.Interfaces.Entities;
 namespace YouTubeVideoDownloader.DAL.Context
 {
     /// <summary>
-    /// Контекст базы данных сервиса скачивания видео с YouTube
+    /// Контекст базы данных
     /// </summary>
     public class DownloaderContext : DbContext
     {
@@ -58,40 +58,51 @@ namespace YouTubeVideoDownloader.DAL.Context
             Database.EnsureCreated();
         }
 
+        /// <summary>
+        /// Настройка связей
+        /// </summary>
+        /// <param name="modelBuilder">Модель</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Один ко многим между YouTubeInfo и Audio
             modelBuilder.Entity<Audio>()
                 .HasOne(x => x.YouTubeInfo)
                 .WithMany(x => x.Audios)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // Один ко многим между YouTubeInfo и Video 
             modelBuilder.Entity<Video>()
-               .HasOne(x => x.Info)
+               .HasOne(x => x.YouTubeInfo)
                .WithMany(x => x.Videos)
                .OnDelete(DeleteBehavior.Cascade);
 
+            // Один ко многим между Channel и YouTubeInfo
             modelBuilder.Entity<YouTubeInfo>()
                 .HasOne(x => x.Channel)
                 .WithMany(x => x.YouTubeInfos)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // Один к одному между YouTubeInfo и Image
             modelBuilder.Entity<YouTubeInfo>()
                .HasOne(u => u.Image)
                .WithOne(s => s.YouTubeInfo)
                .OnDelete(DeleteBehavior.Cascade)
                .HasForeignKey<Image>(m => m.YouTubeInfoId);
 
+            // Один к одному между Audio и ServerInfo
             modelBuilder.Entity<Audio>()
                 .HasOne(x => x.ServerInfo)
                 .WithOne(x => x.Audio)
                 .OnDelete(DeleteBehavior.NoAction)
                 .HasForeignKey<ServerInfo>(x => x.AudioId);
 
+            // Один к одному между Video и ServerInfo
             modelBuilder.Entity<Video>()
                 .HasOne(x => x.ServerInfo)
                 .WithOne(x => x.Video)
                 .OnDelete(DeleteBehavior.NoAction)
                 .HasForeignKey<ServerInfo>(x => x.VideoId);
+
         }
     }
 }

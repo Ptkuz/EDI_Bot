@@ -6,8 +6,15 @@ using YouTubeVideoDownloader.Interfaces.Repositories.Async;
 
 namespace YouTubeVideoDownloader.DAL.Repositories.Async
 {
-    internal class ImageRepositoryAsync : DbRepositoryAsync<Image>, IImageRepositoryAsync<Image>
+    /// <summary>
+    /// Ассинхронный репозиторий работы с <see cref="Image"/>
+    /// </summary>
+    public class ImageRepositoryAsync : DbRepositoryAsync<Image>, IImageRepositoryAsync<Image>
     {
+        /// <summary>
+        /// Конструктор инициализатор
+        /// </summary>
+        /// <param name="dbContext">Контекст базы данных</param>
         public ImageRepositoryAsync(DownloaderContext dbContext) : base(dbContext)
         {
 

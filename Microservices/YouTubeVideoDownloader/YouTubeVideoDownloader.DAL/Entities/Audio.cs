@@ -10,13 +10,13 @@ using YouTubeVideoDownloader.Interfaces.Entities;
 namespace YouTubeVideoDownloader.DAL.Entities
 {
     /// <summary>
-    /// Аудио
+    /// Аудио поток
     /// </summary>
     public class Audio : Entity, IAudio
     {
 
         /// <summary>
-        /// Формат аудио
+        /// Формат
         /// </summary>
         [Column("FormatAudio", Order = 4)]
         public string FormatAudio { get; set; } = null!;
@@ -28,7 +28,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         public string Bitrate { get; set; } = null!;
 
         /// <summary>
-        /// Поток
+        /// YouTube поток
         /// </summary>
         [ForeignKey("YouTubeInfoId")]
         public YouTubeInfo YouTubeInfo { get; set; } = null!;
