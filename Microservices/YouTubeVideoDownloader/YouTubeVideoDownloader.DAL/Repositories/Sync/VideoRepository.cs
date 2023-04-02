@@ -12,7 +12,7 @@ using YouTubeVideoDownloader.Interfaces.Repositories.Sync;
 
 namespace YouTubeVideoDownloader.DAL.Repositories.Sync
 {
-    public class VideoRepository : DbRepository<Video>, IVideoRepository<Video>
+    public class VideoRepository : DbRepository<Video>, IVideoRepository
     {
         public VideoRepository(DownloaderContext dbContext) : base(dbContext)
         {

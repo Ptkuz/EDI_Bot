@@ -10,7 +10,7 @@ using YouTubeVideoDownloader.Interfaces.Repositories.Async;
 
 namespace YouTubeVideoDownloader.DAL.Repositories.Async
 {
-    public class ChannelRepositoryAsync : DbRepositoryAsync<Channel>, IVideoRepositoryAsync<Channel>
+    public class ChannelRepositoryAsync : DbRepositoryAsync<Channel>, IChannelRerositoryAsync
     {
         public ChannelRepositoryAsync(DbContext dbContext) : base(dbContext)
         {

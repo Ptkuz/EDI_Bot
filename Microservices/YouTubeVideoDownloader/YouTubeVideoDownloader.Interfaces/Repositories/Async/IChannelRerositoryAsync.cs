@@ -8,7 +8,7 @@ using Gurrex.Common.Interfaces.Entities;
 
 namespace YouTubeVideoDownloader.Interfaces.Repositories.Async
 {
-    public interface IChannelRerositoryAsync<T> : IRepository<T> where T : class, IEntity, new()
+    public interface IChannelRerositoryAsync
     {
 
     }

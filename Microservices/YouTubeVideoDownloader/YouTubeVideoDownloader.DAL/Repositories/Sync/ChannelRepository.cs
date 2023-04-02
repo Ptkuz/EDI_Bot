@@ -11,7 +11,7 @@ using YouTubeVideoDownloader.Interfaces.Repositories.Sync;
 
 namespace YouTubeVideoDownloader.DAL.Repositories.Sync
 {
-    public class ChannelRepository : DbRepository<Channel>, IVideoRepository<Channel>
+    public class ChannelRepository : DbRepository<Channel>, IChannelRerository
     {
         public ChannelRepository(DownloaderContext dbContext) : base(dbContext)
         {

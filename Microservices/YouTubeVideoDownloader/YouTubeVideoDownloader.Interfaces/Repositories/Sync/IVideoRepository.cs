@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace YouTubeVideoDownloader.Interfaces.Repositories.Sync
 {
-    public interface IVideoRepository<T> : IRepository<T> where T : class, IEntity, new()
+    public interface IVideoRepository
     {
 
     }
