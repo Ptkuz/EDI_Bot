@@ -12,16 +12,21 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <summary>
         /// Массив байтов картинки
         /// </summary>
+        [Column("ImageBytes", Order = 4)]
         public byte[] ImageBytes { get; set; } = null!;
 
         /// <summary>
         /// Расширение картинки
         /// </summary>
+        [Column("Extention", Order = 5)]
         public string Extention { get; set; } = null!;
+
+
+        public Guid YouTubeInfoId { get; set; }
 
         /// <summary>
         /// Информация о потоке
         /// </summary>
-        public Info Info { get; set; } = null!;
+        public YouTubeInfo YouTubeInfo { get; set; } = null!;
     }
 }

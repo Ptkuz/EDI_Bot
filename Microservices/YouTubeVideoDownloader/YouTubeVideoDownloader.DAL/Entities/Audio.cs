@@ -1,6 +1,7 @@
 ﻿using Gurrex.Common.DAL.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,26 +14,29 @@ namespace YouTubeVideoDownloader.DAL.Entities
     /// </summary>
     public class Audio : Entity, IAudio
     {
-        /// <summary>
-        /// Битрейт
-        /// </summary>
-        public string Bitrate { get; set; } = null!;
 
         /// <summary>
         /// Формат аудио
         /// </summary>
+        [Column("FormatAudio", Order = 4)]
         public string FormatAudio { get; set; } = null!;
+
+        /// <summary>
+        /// Битрейт
+        /// </summary>
+        [Column("Bitrate", Order = 5)]
+        public string Bitrate { get; set; } = null!;
 
         /// <summary>
         /// Поток
         /// </summary>
-        public Info Info { get; set; } = null!;
-
-        public Guid AudioId { get; set; }
+        [ForeignKey("YouTubeInfoId")]
+        public YouTubeInfo YouTubeInfo { get; set; } = null!;
 
         /// <summary>
         /// Информация о аудио на сервере
         /// </summary>
+        [ForeignKey("ServerInfoId")]
         public ServerInfo ServerInfo { get; set; } = null!;
 
     }

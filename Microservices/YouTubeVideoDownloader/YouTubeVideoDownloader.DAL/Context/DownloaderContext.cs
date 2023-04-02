@@ -10,9 +10,14 @@ namespace YouTubeVideoDownloader.DAL.Context
     public class DownloaderContext : DbContext
     {
         /// <summary>
-        /// Потоки
+        /// Информация о потоке с YouTube
         /// </summary>
-        public DbSet<Info> Infos { get; set; } = null!;
+        public DbSet<YouTubeInfo> YouTubeInfos { get; set; } = null!;
+
+        /// <summary>
+        /// Информация о файле на сервере
+        /// </summary>
+        public DbSet<ServerInfo> ServerInfos { get; set; } = null!;
 
         /// <summary>
         /// Аудио
@@ -56,7 +61,7 @@ namespace YouTubeVideoDownloader.DAL.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Audio>()
-                .HasOne(x => x.Info)
+                .HasOne(x => x.YouTubeInfo)
                 .WithMany(x => x.Audios)
                 .OnDelete(DeleteBehavior.Cascade);
 
@@ -65,28 +70,28 @@ namespace YouTubeVideoDownloader.DAL.Context
                .WithMany(x => x.Videos)
                .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Info>()
+            modelBuilder.Entity<YouTubeInfo>()
                 .HasOne(x => x.Channel)
-                .WithMany(x => x.Infos)
+                .WithMany(x => x.YouTubeInfos)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Image>()
-               .HasOne(u => u.Info)
-               .WithOne(s => s.Image)
+            modelBuilder.Entity<YouTubeInfo>()
+               .HasOne(u => u.Image)
+               .WithOne(s => s.YouTubeInfo)
                .OnDelete(DeleteBehavior.Cascade)
-               .HasForeignKey<Info>(m => m.ImageId);
+               .HasForeignKey<Image>(m => m.YouTubeInfoId);
 
-            modelBuilder.Entity<ServerInfo>()
-                .HasOne(x => x.Audio)
-                .WithOne(x => x.ServerInfo)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasForeignKey<Audio>(x => x.AudioId);
+            modelBuilder.Entity<Audio>()
+                .HasOne(x => x.ServerInfo)
+                .WithOne(x => x.Audio)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasForeignKey<ServerInfo>(x => x.AudioId);
 
-            modelBuilder.Entity<ServerInfo>()
-                .HasOne(x => x.Video)
-                .WithOne(x => x.ServerInfo)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasForeignKey<Video>(x => x.VideoId);
+            modelBuilder.Entity<Video>()
+                .HasOne(x => x.ServerInfo)
+                .WithOne(x => x.Video)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasForeignKey<ServerInfo>(x => x.VideoId);
         }
     }
 }

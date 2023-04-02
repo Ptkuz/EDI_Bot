@@ -1,6 +1,7 @@
 ﻿using Gurrex.Common.DAL.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,17 +17,23 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <summary>
         /// Ссылка на файл
         /// </summary>
+        [Column("Ref", Order = 4)]
         public string Ref { get; set; } = null!;
 
         /// <summary>
         /// Размер файла
         /// </summary>
+        [Column("Size", Order = 5)]
         public int Size { get; set; }
+
+        public Guid VideoId { get; set; }
 
         /// <summary>
         /// Видео
         /// </summary>
         public Video Video { get; set; } = null!;
+
+        public Guid AudioId { get; set; }   
 
         /// <summary>
         /// Аудио
