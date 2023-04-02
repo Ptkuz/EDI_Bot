@@ -12,7 +12,7 @@ namespace Gurrex.Common.Interfaces.Repositories
     /// Синхронный репозиторий сущностей
     /// </summary>
     /// <typeparam name="T">Сущность</typeparam>
-    public interface IRepositoryEntitiesSync<T> : IRepository<T> where T : class, IEntity, new()
+    public interface IRepositoryEntities<T> : IRepository<T> where T : class, IEntity, new()
     {
         /// <summary>
         /// Получить конкретную сущность <see cref="T"/> по Id

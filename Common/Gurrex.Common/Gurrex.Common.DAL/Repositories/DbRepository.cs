@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Gurrex.Common.DAL.Repositories
 {
-    public class DbRepositorySync<T> : IRepositoryEntitiesSync<T> where T : Entity, new()
+    public class DbRepository<T> : IRepositoryEntities<T> where T : Entity, new()
     {
         private readonly DbContext _dbContext;
         private readonly DbSet<T> _entities;
 
         private bool autoSaveChanges = true;
 
-        public DbRepositorySync(DbContext dbContext)
+        public DbRepository(DbContext dbContext)
         {
             _dbContext = dbContext;
             _entities = dbContext.Set<T>();
