@@ -22,6 +22,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Gurrex.Common.DAL">
+      <HintPath>..\..\..\Common\Gurrex.Common\Gurrex.Common.DAL\bin\Debug\net7.0\Gurrex.Common.DAL.dll</HintPath>
+    </Reference>
+    <Reference Include="Gurrex.Common.Interfaces">
+      <HintPath>..\..\..\Common\Gurrex.Common\Gurrex.Common.Interfaces\bin\Debug\net7.0\Gurrex.Common.Interfaces.dll</HintPath>
+    </Reference>
     <Reference Include="Gurrex.Common.Localization">
       <HintPath>..\..\..\Common\Gurrex.Common\Gurrex.Common.Localization\bin\Debug\net7.0\Gurrex.Common.Localization.dll</HintPath>
     </Reference>

@@ -1,11 +1,12 @@
 ﻿using Gurrex.Common.DAL.Entities;
+using YouTubeVideoDownloader.Interfaces.Entities;
 
 namespace YouTubeVideoDownloader.DAL.Entities
 {
     /// <summary>
     /// Превью видео
     /// </summary>
-    public class Image : Entity
+    public class Image : Entity, IImage
     {
         /// <summary>
         /// Массив байтов картинки

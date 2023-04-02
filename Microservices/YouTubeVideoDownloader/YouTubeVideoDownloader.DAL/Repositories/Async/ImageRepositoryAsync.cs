@@ -1,14 +1,14 @@
 ﻿using Gurrex.Common.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
+using YouTubeVideoDownloader.DAL.Context;
 using YouTubeVideoDownloader.DAL.Entities;
 using YouTubeVideoDownloader.Interfaces.Repositories.Async;
-using YouTubeVideoDownloader.Interfaces.Repositories.Sync;
 
 namespace YouTubeVideoDownloader.DAL.Repositories.Async
 {
-    internal class ImageRepositoryAsync : DbRepositoryAsync<Image>, IImageRepositoryAsync
+    internal class ImageRepositoryAsync : DbRepositoryAsync<Image>, IImageRepositoryAsync<Image>
     {
-        public ImageRepositoryAsync(DbContext dbContext) : base(dbContext)
+        public ImageRepositoryAsync(DownloaderContext dbContext) : base(dbContext)
         {
 
         }

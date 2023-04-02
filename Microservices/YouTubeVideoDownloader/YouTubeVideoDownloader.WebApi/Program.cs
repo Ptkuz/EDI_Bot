@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 using YouTubeVideoDownloader.DAL.Context;
 using Microsoft.EntityFrameworkCore;
+using YouTubeVideoDownloader.DAL.Repositories;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,7 @@ if (String.IsNullOrEmpty(connectionString))
 }
 
 builder.Services.AddDbContext<DownloaderContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Scoped);
+builder.Services.AddRepositoryInDB();
 
 var app = builder.Build();
 

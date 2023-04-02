@@ -1,5 +1,7 @@
 using Gurrex.Common.Validations;
 using Microsoft.AspNetCore.Mvc;
+using YouTubeVideoDownloader.DAL.Entities;
+using YouTubeVideoDownloader.Interfaces.Repositories.Async;
 
 namespace YouTubeVideoDownloader.WebApi.Controllers
 {
@@ -13,18 +15,22 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
     };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IChannelRerositoryAsync<Channel> _channelRerositoryAsync;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IChannelRerositoryAsync<Channel> channelRerositoryAsync)
         {
             _logger = logger;
+            _channelRerositoryAsync = channelRerositoryAsync;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
-            string str = null;
+            Channel channel = new Channel();
+            channel.Id = Guid.NewGuid();
+            channel.Name = "Alina Gindertail";
 
-            str.CheckObjectForNull(nameof(str));
+            _channelRerositoryAsync.AddEntityAsync(channel);
 
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

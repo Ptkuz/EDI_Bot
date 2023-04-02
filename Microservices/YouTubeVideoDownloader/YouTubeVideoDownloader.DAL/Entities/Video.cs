@@ -1,11 +1,12 @@
 ﻿using Gurrex.Common.DAL.Entities;
+using YouTubeVideoDownloader.Interfaces.Entities;
 
 namespace YouTubeVideoDownloader.DAL.Entities
 {
     /// <summary>
     /// Сущность видео
     /// </summary>
-    public class Video : Entity
+    public class Video : Entity, IVideo
     {
         /// <summary>
         /// Заголовок
