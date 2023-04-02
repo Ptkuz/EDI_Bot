@@ -1,4 +1,5 @@
 ﻿using Gurrex.Common.DAL.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 using YouTubeVideoDownloader.Interfaces.Entities;
 
 namespace YouTubeVideoDownloader.DAL.Entities
@@ -18,11 +19,9 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// </summary>
         public string Extention { get; set; } = null!;
 
-
-        public Guid VideoId { get; set; }
         /// <summary>
-        /// Видео
+        /// Информация о потоке
         /// </summary>
-        public Video Video { get; set; } = null!;
+        public Info Info { get; set; } = null!;
     }
 }

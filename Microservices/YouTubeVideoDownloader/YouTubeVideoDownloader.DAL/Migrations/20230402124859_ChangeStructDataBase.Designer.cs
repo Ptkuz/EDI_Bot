@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YouTubeVideoDownloader.DAL.Context;
 
@@ -11,9 +12,11 @@ using YouTubeVideoDownloader.DAL.Context;
 namespace YouTubeVideoDownloader.DAL.Migrations
 {
     [DbContext(typeof(DownloaderContext))]
-    partial class DownloaderContextModelSnapshot : ModelSnapshot
+    [Migration("20230402124859_ChangeStructDataBase")]
+    partial class ChangeStructDataBase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,9 +31,6 @@ namespace YouTubeVideoDownloader.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AudioId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Bitrate")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -39,15 +39,17 @@ namespace YouTubeVideoDownloader.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("InfoId")
+                    b.Property<Guid>("ImageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StreamId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AudioId")
-                        .IsUnique();
+                    b.HasIndex("ImageId");
 
-                    b.HasIndex("InfoId");
+                    b.HasIndex("StreamId");
 
                     b.ToTable("Audios");
                 });
@@ -81,7 +83,13 @@ namespace YouTubeVideoDownloader.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<Guid>("StreamId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("StreamId")
+                        .IsUnique();
 
                     b.ToTable("Images");
                 });
@@ -98,9 +106,6 @@ namespace YouTubeVideoDownloader.DAL.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ImageId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -113,28 +118,7 @@ namespace YouTubeVideoDownloader.DAL.Migrations
 
                     b.HasIndex("ChannelId");
 
-                    b.HasIndex("ImageId")
-                        .IsUnique();
-
-                    b.ToTable("Infos");
-                });
-
-            modelBuilder.Entity("YouTubeVideoDownloader.DAL.Entities.ServerInfo", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Ref")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Size")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ServerInfo");
+                    b.ToTable("Streams");
                 });
 
             modelBuilder.Entity("YouTubeVideoDownloader.DAL.Entities.Video", b =>
@@ -159,108 +143,98 @@ namespace YouTubeVideoDownloader.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("InfoId")
+                    b.Property<Guid>("ImageId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Resolution")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("VideoId")
+                    b.Property<Guid>("StreamId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InfoId");
+                    b.HasIndex("ImageId");
 
-                    b.HasIndex("VideoId")
-                        .IsUnique();
+                    b.HasIndex("StreamId");
 
                     b.ToTable("Videos");
                 });
 
             modelBuilder.Entity("YouTubeVideoDownloader.DAL.Entities.Audio", b =>
                 {
-                    b.HasOne("YouTubeVideoDownloader.DAL.Entities.ServerInfo", "ServerInfo")
-                        .WithOne("Audio")
-                        .HasForeignKey("YouTubeVideoDownloader.DAL.Entities.Audio", "AudioId")
+                    b.HasOne("YouTubeVideoDownloader.DAL.Entities.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("YouTubeVideoDownloader.DAL.Entities.Info", "Info")
-                        .WithMany("Audios")
-                        .HasForeignKey("InfoId")
+                    b.HasOne("YouTubeVideoDownloader.DAL.Entities.Info", "Stream")
+                        .WithMany("Audio")
+                        .HasForeignKey("StreamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Info");
+                    b.Navigation("Image");
 
-                    b.Navigation("ServerInfo");
+                    b.Navigation("Stream");
+                });
+
+            modelBuilder.Entity("YouTubeVideoDownloader.DAL.Entities.Image", b =>
+                {
+                    b.HasOne("YouTubeVideoDownloader.DAL.Entities.Info", "Stream")
+                        .WithOne("Image")
+                        .HasForeignKey("YouTubeVideoDownloader.DAL.Entities.Image", "StreamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Stream");
                 });
 
             modelBuilder.Entity("YouTubeVideoDownloader.DAL.Entities.Info", b =>
                 {
                     b.HasOne("YouTubeVideoDownloader.DAL.Entities.Channel", "Channel")
-                        .WithMany("Infos")
+                        .WithMany("Streams")
                         .HasForeignKey("ChannelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("YouTubeVideoDownloader.DAL.Entities.Image", "Image")
-                        .WithOne("Info")
-                        .HasForeignKey("YouTubeVideoDownloader.DAL.Entities.Info", "ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Channel");
-
-                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("YouTubeVideoDownloader.DAL.Entities.Video", b =>
                 {
-                    b.HasOne("YouTubeVideoDownloader.DAL.Entities.Info", "Info")
+                    b.HasOne("YouTubeVideoDownloader.DAL.Entities.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("YouTubeVideoDownloader.DAL.Entities.Info", "Stream")
                         .WithMany("Videos")
-                        .HasForeignKey("InfoId")
+                        .HasForeignKey("StreamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("YouTubeVideoDownloader.DAL.Entities.ServerInfo", "ServerInfo")
-                        .WithOne("Video")
-                        .HasForeignKey("YouTubeVideoDownloader.DAL.Entities.Video", "VideoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Image");
 
-                    b.Navigation("Info");
-
-                    b.Navigation("ServerInfo");
+                    b.Navigation("Stream");
                 });
 
             modelBuilder.Entity("YouTubeVideoDownloader.DAL.Entities.Channel", b =>
                 {
-                    b.Navigation("Infos");
-                });
-
-            modelBuilder.Entity("YouTubeVideoDownloader.DAL.Entities.Image", b =>
-                {
-                    b.Navigation("Info")
-                        .IsRequired();
+                    b.Navigation("Streams");
                 });
 
             modelBuilder.Entity("YouTubeVideoDownloader.DAL.Entities.Info", b =>
                 {
-                    b.Navigation("Audios");
+                    b.Navigation("Audio");
+
+                    b.Navigation("Image")
+                        .IsRequired();
 
                     b.Navigation("Videos");
-                });
-
-            modelBuilder.Entity("YouTubeVideoDownloader.DAL.Entities.ServerInfo", b =>
-                {
-                    b.Navigation("Audio")
-                        .IsRequired();
-
-                    b.Navigation("Video")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

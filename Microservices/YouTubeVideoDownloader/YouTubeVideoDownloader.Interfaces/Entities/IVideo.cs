@@ -9,41 +9,24 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace YouTubeVideoDownloader.Interfaces.Entities
 {
-    public interface IVideo : IEntity
+    /// <summary>
+    /// Видео
+    /// </summary>
+    public interface IVideo : IAudio
     {
         /// <summary>
-        /// Заголовок
+        /// Разрешение
         /// </summary>
-        string Title { get; set; }
+        public string Resolution { get; set; }
 
         /// <summary>
-        /// Ссылка
+        /// Формат видео
         /// </summary>
-        string Url { get; set; }
+        public string FormatVideo { get; set; }
 
         /// <summary>
-        /// Продолжительность
+        /// Количество кадров в секунду (FPS)
         /// </summary>
-        int Duration { get; set; }
-
-        /// <summary>
-        /// Формат видеодорожки 
-        /// </summary>
-        string VideoFormat { get; set; }
-
-        /// <summary>
-        /// Формат аудиодорожки
-        /// </summary>
-        string AudioFormat { get; set; }
-
-        /// <summary>
-        /// Ссылка на FTP сервере
-        /// </summary>
-        string FTPRef { get; set; }
-
-        /// <summary>
-        /// Размер конечного файла
-        /// </summary>
-        int Size { get; set; }
+        public string FrameRate { get; set; }
     }
 }

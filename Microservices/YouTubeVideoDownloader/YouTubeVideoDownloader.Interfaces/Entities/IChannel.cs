@@ -7,12 +7,16 @@ using System.Threading.Tasks;
 
 namespace YouTubeVideoDownloader.Interfaces.Entities
 {
+
+    /// <summary>
+    /// Канал
+    /// </summary>
     public interface IChannel : IEntity
     {
         /// <summary>
         /// Название
         /// </summary>
-        string Name { get; set; }
+        public string Name { get; set; }
 
     }
 }

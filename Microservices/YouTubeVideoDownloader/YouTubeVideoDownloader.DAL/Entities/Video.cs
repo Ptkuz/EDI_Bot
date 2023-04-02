@@ -9,48 +9,41 @@ namespace YouTubeVideoDownloader.DAL.Entities
     public class Video : Entity, IVideo
     {
         /// <summary>
-        /// Заголовок
+        /// Разрешение видео
         /// </summary>
-        public string Title { get; set; } = null!;
+        public string Resolution { get; set; } = null!;
 
         /// <summary>
-        /// Канал
+        /// Формат видео
         /// </summary>
-        public Channel Channel { get; set; } = null!;
+        public string FormatVideo { get; set; } = null!;
 
         /// <summary>
-        /// Картинка
+        /// Количество кадров в секунду (FPS)
         /// </summary>
-        public Image Image { get; set; } = null!;
+        public string FrameRate { get; set; } = null!;
 
         /// <summary>
-        /// Ссылка
+        /// Битрейт аудио
         /// </summary>
-        public string Url { get; set; } = null!;
+        public string Bitrate { get; set; } = null!;
 
         /// <summary>
-        /// Продолжительность
+        /// Формат аудио
         /// </summary>
-        public int Duration { get; set; }
+        public string FormatAudio { get; set; } = null!;
 
         /// <summary>
-        /// Формат видеодорожки 
+        /// Поток
         /// </summary>
-        public string VideoFormat { get; set; } = null!;
+        public Info Info { get; set; } = null!;
+
+        public Guid VideoId { get; set; }
 
         /// <summary>
-        /// Формат аудиодорожки
+        /// Информация о видео на сервере
         /// </summary>
-        public string AudioFormat { get; set; } = null!;
+        public ServerInfo ServerInfo { get; set; } = null!;
 
-        /// <summary>
-        /// Ссылка на FTP сервере
-        /// </summary>
-        public string FTPRef { get; set; } = null!;
-
-        /// <summary>
-        /// Размер конечного файла
-        /// </summary>
-        public int Size { get; set; }
     }
 }

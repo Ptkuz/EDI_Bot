@@ -4,18 +4,18 @@ using YouTubeVideoDownloader.Interfaces.Entities;
 namespace YouTubeVideoDownloader.DAL.Entities
 {
     /// <summary>
-    /// Сущность канала
+    /// Канал
     /// </summary>
     public class Channel : Entity, IChannel
     {
         /// <summary>
-        /// Название
+        /// Название канала
         /// </summary>
         public string Name { get; set; } = null!;
 
         /// <summary>
-        /// Коллекция видео
+        /// Коллекция потоков
         /// </summary>
-        public virtual IQueryable<Video> Videos { get; set; } = null!;
+        public IQueryable<Info> Infos { get; set; } = null!;
     }
 }

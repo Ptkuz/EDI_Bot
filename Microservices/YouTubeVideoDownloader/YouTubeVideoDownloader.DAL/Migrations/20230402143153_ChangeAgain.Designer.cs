@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YouTubeVideoDownloader.DAL.Context;
 
@@ -11,9 +12,11 @@ using YouTubeVideoDownloader.DAL.Context;
 namespace YouTubeVideoDownloader.DAL.Migrations
 {
     [DbContext(typeof(DownloaderContext))]
-    partial class DownloaderContextModelSnapshot : ModelSnapshot
+    [Migration("20230402143153_ChangeAgain")]
+    partial class ChangeAgain
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
