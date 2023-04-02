@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace YouTubeVideoDownloader.Interfaces.Interfaces
+namespace Gurrex.Common.Interfaces.Entities
 {
     /// <summary>
     /// Интерфейс сущности

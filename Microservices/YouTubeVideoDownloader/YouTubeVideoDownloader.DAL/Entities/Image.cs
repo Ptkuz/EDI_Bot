@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using YouTubeVideoDownloader.DAL.Entities.Base;
+﻿using Gurrex.Common.DAL.Entities;
 
 namespace YouTubeVideoDownloader.DAL.Entities
 {

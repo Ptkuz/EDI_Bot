@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using YouTubeVideoDownloader.Interfaces.Interfaces;
+﻿using Gurrex.Common.Interfaces.Entities;
+using System.ComponentModel.DataAnnotations;
 
-namespace YouTubeVideoDownloader.DAL.Entities.Base
+namespace Gurrex.Common.DAL.Entities
 {
     /// <summary>
     /// Базовая сущность

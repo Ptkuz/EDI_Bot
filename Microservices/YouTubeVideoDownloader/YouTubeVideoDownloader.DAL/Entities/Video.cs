@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using YouTubeVideoDownloader.DAL.Entities.Base;
+﻿using Gurrex.Common.DAL.Entities;
 
 namespace YouTubeVideoDownloader.DAL.Entities
 {
@@ -45,7 +40,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <summary>
         /// Формат аудиодорожки
         /// </summary>
-        public string AudioFormat { get; set; } = null!;    
+        public string AudioFormat { get; set; } = null!;
 
         /// <summary>
         /// Ссылка на FTP сервере

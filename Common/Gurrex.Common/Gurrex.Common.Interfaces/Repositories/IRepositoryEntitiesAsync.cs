@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Gurrex.Common.Interfaces.Entities;
+using Gurrex.Common.Interfaces.Repositories.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using YouTubeVideoDownloader.Interfaces.Interfaces.Repository.Base;
 
-namespace YouTubeVideoDownloader.Interfaces.Interfaces.Repository
+namespace Gurrex.Common.Interfaces.Repositories
 {
     /// <summary>
     /// Асинхронный репозиторий сущностей
@@ -18,7 +19,7 @@ namespace YouTubeVideoDownloader.Interfaces.Interfaces.Repository
         /// </summary>
         /// <param name="id">Id сущности с типом <see cref="Guid"/></param>
         /// <returns>Возвращает конкретную сущность <see cref="T"/> по Id</returns>
-        Task<T>? GetEntityByIdAsync(Guid id, CancellationToken cancel = default);
+        Task<T> GetEntityByIdAsync(Guid id, CancellationToken cancel = default);
 
         /// <summary>
         /// Асинхронно получить последнюю добавленную сущность <see cref="T"/>
@@ -31,26 +32,27 @@ namespace YouTubeVideoDownloader.Interfaces.Interfaces.Repository
         /// </summary>
         /// <param name="entity">Добавляемая сущность</param>
         /// <returns>True - сущность успешно добавлена, False - сущность не добавлена</returns>
-        Task<bool> AddEntityAsync(T entity, CancellationToken cancel = default);
+        Task<T> AddEntityAsync(T entity, CancellationToken cancel = default);
 
         /// <summary>
         /// Асинхронно обновить сущность <see cref="T"/>
         /// </summary>
         /// <param name="entity">Обновляемая сущность</param>
         /// <returns>True - сущность успешно обновлена, False - сущность не обновлена</returns>
-        Task<bool> UpdateEntity(T entity, CancellationToken cancel = default);
+        Task<T> UpdateEntityAsync(T entity, CancellationToken cancel = default);
 
         /// <summary>
-        /// Асинхронно удалить сущность
+        /// Удаление сущности по Id
         /// </summary>
         /// <param name="id">Id сущности</param>
-        /// <returns>True - сущность удалена, False - сущность не удалена</returns>
-        Task<bool> DeleteEntityById(Guid id, CancellationToken cancel = default);
+        /// <param name="cancel">Токен отмены</param>
+        /// <returns></returns>
+        Task<bool> RemoveEntityByIdAsync(Guid id, CancellationToken cancel = default);
 
         /// <summary>
         /// Асинхронно сохранить изменения в базу
         /// </summary>
         /// <returns>True - изменения сохранены, Fales - изменения не сохранены</returns>
-        Task<bool> SaveChangesAsync();
+        Task<bool> SaveChangesAsync(CancellationToken cancel = default);
     }
 }

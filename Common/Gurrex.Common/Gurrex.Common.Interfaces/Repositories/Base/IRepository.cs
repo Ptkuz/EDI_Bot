@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Gurrex.Common.Interfaces.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace YouTubeVideoDownloader.Interfaces.Interfaces.Repository.Base
+namespace Gurrex.Common.Interfaces.Repositories.Base
 {
     /// <summary>
     /// Интерфейс репозитория для работы с сущностями базы данных

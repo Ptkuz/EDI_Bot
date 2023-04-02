@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Gurrex.Common.Interfaces.Entities;
+using Gurrex.Common.Interfaces.Repositories.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using YouTubeVideoDownloader.Interfaces.Interfaces.Repository.Base;
 
-namespace YouTubeVideoDownloader.Interfaces.Interfaces.Repository
+namespace Gurrex.Common.Interfaces.Repositories
 {
     /// <summary>
     /// Синхронный репозиторий сущностей
@@ -18,7 +19,7 @@ namespace YouTubeVideoDownloader.Interfaces.Interfaces.Repository
         /// </summary>
         /// <param name="id">Id сущности с типом <see cref="Guid"/></param>
         /// <returns>Возвращает конкретную сущность <see cref="T"/> по Id</returns>
-        T? GetEntityById(Guid id);
+        T GetEntityById(Guid id);
 
         /// <summary>
         /// Получить последнюю добавленную сущность <see cref="T"/>
@@ -31,21 +32,22 @@ namespace YouTubeVideoDownloader.Interfaces.Interfaces.Repository
         /// </summary>
         /// <param name="entity">Добавляемая сущность</param>
         /// <returns>True - сущность успешно добавлена, False - сущность не добавлена</returns>
-        bool AddEntity(T entity);
+        T AddEntity(T entity);
 
         /// <summary>
         /// Обновить сущность <see cref="T"/>
         /// </summary>
         /// <param name="entity">Обновляемая сущность</param>
         /// <returns>True - сущность успешно обновлена, False - сущность не обновлена</returns>
-        bool UpdateEntity(T entity);
+        T UpdateEntity(T entity);
 
         /// <summary>
-        /// Удалить сущность
+        /// Удаление сущности по Id
         /// </summary>
         /// <param name="id">Id сущности</param>
-        /// <returns>True - сущность удалена, False - сущность не удалена</returns>
-        bool DeleteEntityById(Guid id);
+        /// <param name="cancel">Токен отмены</param>
+        /// <returns></returns>
+        bool RemoveEntityById(Guid id);
 
         /// <summary>
         /// Сохранить изменения в базу
