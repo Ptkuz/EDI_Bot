@@ -16,7 +16,7 @@ namespace Gurrex.Common.DAL.Repositories
         /// Конструктор инициализатор
         /// </summary>
         /// <param name="dbContext">Контекст базы данных</param>
-        public DbRepository(DbContext dbContext) : base(dbContext)
+        protected DbRepository(DbContext dbContext) : base(dbContext)
         {
 
         }
@@ -134,6 +134,10 @@ namespace Gurrex.Common.DAL.Repositories
             }
         }
 
+        /// <summary>
+        /// Сохранить изменения в базу данных
+        /// </summary>
+        /// <returns>True - изменения сохранены, False - изменения не сохранены</returns>
         public bool SaveChanges()
         {
             try

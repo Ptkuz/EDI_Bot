@@ -10,9 +10,19 @@ namespace Gurrex.Common.DAL.Repositories.Base
     /// <typeparam name="T"></typeparam>
     public class BaseDbRepository<T> : IRepository<T> where T : Entity, new()
     {
+        /// <summary>
+        /// Контекст базы данных
+        /// </summary>
         protected readonly DbContext _dbContext;
+
+        /// <summary>
+        /// DbSet сущности, унаследованной от <see cref="Entity"/>
+        /// </summary>
         protected readonly DbSet<T> _entities;
 
+        /// <summary>
+        /// Автосохранение изменений
+        /// </summary>
         protected bool autoSaveChanges = true;
 
         /// <summary>

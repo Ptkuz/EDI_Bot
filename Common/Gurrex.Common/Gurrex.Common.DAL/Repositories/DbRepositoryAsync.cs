@@ -1,4 +1,5 @@
 ﻿using Gurrex.Common.DAL.Entities;
+using Gurrex.Common.DAL.Repositories.Base;
 using Gurrex.Common.Interfaces.Repositories;
 using Gurrex.Common.Validations;
 using Microsoft.EntityFrameworkCore;
@@ -9,28 +10,17 @@ namespace Gurrex.Common.DAL.Repositories
     /// Базовый асинхронный репозиторий работы с сущностью, унаследованной от <see cref="Entity"/>
     /// </summary>
     /// <typeparam name="T">Сущность, унаследованная от <see cref="Entity"/></typeparam>
-    public class DbRepositoryAsync<T> : IRepositoryEntitiesAsync<T> where T : Entity, new()
+    public class DbRepositoryAsync<T> : BaseDbRepository<T>, IRepositoryEntitiesAsync<T> where T : Entity, new()
     {
 
-        private readonly DbContext _dbContext;
-        private readonly DbSet<T> _entities;
-
-        private bool autoSaveChanges = true;
-
         /// <summary>
-        /// Репозиторий инициализатор
+        /// Конструктор инициализатор
         /// </summary>
         /// <param name="dbContext">Контекст базы данных</param>
-        public DbRepositoryAsync(DbContext dbContext)
+        protected DbRepositoryAsync(DbContext dbContext) : base(dbContext)
         {
-            _dbContext = dbContext;
-            _entities = dbContext.Set<T>();
-        }
 
-        /// <summary>
-        /// Количество экземпляров сущности, унаследованной от <see cref="Entity"/>
-        /// </summary>
-        public IQueryable<T> Items => _entities;
+        }
 
         /// <summary>
         /// Асинхронно получить экземпляр по Id
