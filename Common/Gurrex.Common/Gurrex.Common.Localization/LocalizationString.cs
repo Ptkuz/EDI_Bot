@@ -17,7 +17,7 @@ namespace Gurrex.Common.Localization
         /// <param name="resourceName">Имя ресурса</param>
         /// <exception cref="ArgumentNullException">Значение локализируемой строки не может быть равно null</exception>
         /// <returns>Локализируемая строка</returns>
-        public static string GetString(string fileResourceName, Assembly currentAssembly, string resourceName) 
+        public static string GetString(string fileResourceName, Assembly currentAssembly, string resourceName)
         {
             try
             {
@@ -30,10 +30,21 @@ namespace Gurrex.Common.Localization
                 }
                 return value;
             }
-            catch(ArgumentNullException)
+            catch (ArgumentNullException)
             {
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Получить результирующую локализируемую строку
+        /// </summary>
+        /// <param name="localizationString">Локализируемая строка</param>
+        /// <param name="args">Аргументы</param>
+        /// <returns>Результирующая локализируемая строка</returns>
+        public static string GetResultString(string localizationString, params object[] args)
+        {
+            return String.Format(localizationString, args);
         }
     }
 }

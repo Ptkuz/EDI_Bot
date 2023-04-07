@@ -14,7 +14,7 @@ namespace Gurrex.Common.Interfaces.Repositories.Base
     public interface IRepository<T> where T : class, IEntity, new()
     {
         /// <summary>
-        /// Получить все объекты сущности <see cref="T"/>, унаследованной от <see cref="IEntity"/>
+        /// Получить все экземпляры сущности, унаследованной от <see cref="IEntity"/>
         /// </summary>
         IQueryable<T> Items { get; }
 

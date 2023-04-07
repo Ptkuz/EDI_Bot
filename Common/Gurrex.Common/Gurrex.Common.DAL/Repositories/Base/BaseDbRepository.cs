@@ -21,7 +21,7 @@ namespace Gurrex.Common.DAL.Repositories.Base
         protected readonly DbSet<T> _entities;
 
         /// <summary>
-        /// Автосохранение изменений
+        /// Автоматическое сохранение изменений
         /// </summary>
         protected bool autoSaveChanges = true;
 
