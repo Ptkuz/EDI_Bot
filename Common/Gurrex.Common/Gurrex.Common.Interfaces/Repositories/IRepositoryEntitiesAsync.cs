@@ -1,48 +1,47 @@
 ﻿using Gurrex.Common.Interfaces.Entities;
 using Gurrex.Common.Interfaces.Repositories.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gurrex.Common.Interfaces.Repositories
 {
     /// <summary>
-    /// Асинхронный репозиторий сущностей
+    /// Асинхронный репозиторий работы с сущностью, реализующей интерфейс <see cref="IEntity"/>
     /// </summary>
-    /// <typeparam name="T">Сущность</typeparam>
+    /// <typeparam name="T">Сущность, реализующая интерфейс <see cref="IEntity"/></typeparam>
     public interface IRepositoryEntitiesAsync<T> : IRepository<T> where T : class, IEntity, new()
     {
         /// <summary>
-        /// Асинхронно получить конкретную сущность <see cref="T"/> по Id
+        /// Асинхронно получить экземпляр сущности по Id
         /// </summary>
-        /// <param name="id">Id сущности с типом <see cref="Guid"/></param>
-        /// <returns>Возвращает конкретную сущность <see cref="T"/> по Id</returns>
+        /// <param name="id">Id сущности</param>
+        /// <param name="cancel">Токен отмены</param>
+        /// <returns>Экземпляр сущности</returns>
         Task<T> GetEntityByIdAsync(Guid id, CancellationToken cancel = default);
 
         /// <summary>
-        /// Асинхронно получить последнюю добавленную сущность <see cref="T"/>
+        /// Асинхронно получить последний добавленный экземпляр сущности
         /// </summary>
-        /// <returns>Возвращает последнюю добавленную сущность <see cref="T"/></returns>
+        /// <param name="cancel">Токен отмены</param>
+        /// <returns>Последний добавленный экземпляр</returns>
         Task<T> GetLastEntityAsync(CancellationToken cancel = default);
 
         /// <summary>
-        /// Асинхронно добавить сущность <see cref="T"/>
+        /// Асинхронно добавить экземпляр сущности
         /// </summary>
-        /// <param name="entity">Добавляемая сущность</param>
-        /// <returns>True - сущность успешно добавлена, False - сущность не добавлена</returns>
-        Task<T> AddEntityAsync(T entity, CancellationToken cancel = default);
+        /// <param name="entity">Добавляемый экземпляр</param>
+        /// <param name="cancel">Токен отмены</param>
+        /// <returns>True - экземпляр добавлен, False - экземпляр не добавлен</returns>
+        Task<bool> AddEntityAsync(T entity, CancellationToken cancel = default);
 
         /// <summary>
-        /// Асинхронно обновить сущность <see cref="T"/>
+        /// Асинхронно обновить обновить экземпляр
         /// </summary>
-        /// <param name="entity">Обновляемая сущность</param>
-        /// <returns>True - сущность успешно обновлена, False - сущность не обновлена</returns>
-        Task<T> UpdateEntityAsync(T entity, CancellationToken cancel = default);
+        /// <param name="entity">Обновляемый экземпляр</param>
+        /// <param name="cancel">Токен отмены</param>
+        /// <returns>True - экземпляр обновлен, False - экземпляр не обновлен</returns>
+        Task<bool> UpdateEntityAsync(T entity, CancellationToken cancel = default);
 
         /// <summary>
-        /// Удаление сущности по Id
+        /// Асинхронно удалить экземпляр сущности
         /// </summary>
         /// <param name="id">Id сущности</param>
         /// <param name="cancel">Токен отмены</param>
@@ -52,7 +51,8 @@ namespace Gurrex.Common.Interfaces.Repositories
         /// <summary>
         /// Асинхронно сохранить изменения в базу
         /// </summary>
-        /// <returns>True - изменения сохранены, Fales - изменения не сохранены</returns>
+        /// <param name="cancel">Токен отмены</param>
+        /// <returns>True - изменения сохранены, False - изменения не сохранены</returns>
         Task<bool> SaveChangesAsync(CancellationToken cancel = default);
     }
 }

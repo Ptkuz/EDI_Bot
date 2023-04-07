@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 namespace Gurrex.Common.Interfaces.Repositories.Base
 {
     /// <summary>
-    /// Интерфейс репозитория для работы с сущностями базы данных
+    /// Базовый репозиторий работы с сущностью, реализующей интерфейс <see cref="IEntity"/>
     /// </summary>
-    /// <typeparam name="T">Сущность</typeparam>
+    /// <typeparam name="T">Сущность, реализующая интерфейс <see cref="IEntity"/></typeparam>
     public interface IRepository<T> where T : class, IEntity, new()
     {
         /// <summary>
-        /// Получить все объекты сущности <see cref="T"/>
+        /// Получить все объекты сущности <see cref="T"/>, унаследованной от <see cref="IEntity"/>
         /// </summary>
         IQueryable<T> Items { get; }
 

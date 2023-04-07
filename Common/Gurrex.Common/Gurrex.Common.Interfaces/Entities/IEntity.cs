@@ -12,7 +12,7 @@ namespace Gurrex.Common.Interfaces.Entities
     public interface IEntity
     {
         /// <summary>
-        /// Id сущности с типом <see cref="Guid"/>
+        /// Id сущности с типом
         /// </summary>
         Guid Id { get; set; }
 

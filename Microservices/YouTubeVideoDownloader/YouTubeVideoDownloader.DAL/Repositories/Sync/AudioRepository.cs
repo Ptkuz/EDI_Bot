@@ -1,19 +1,20 @@
 ﻿using Gurrex.Common.DAL.Repositories;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using YouTubeVideoDownloader.DAL.Context;
 using YouTubeVideoDownloader.DAL.Entities;
-using YouTubeVideoDownloader.Interfaces.Repositories.Async;
 using YouTubeVideoDownloader.Interfaces.Repositories.Sync;
 
 namespace YouTubeVideoDownloader.DAL.Repositories.Sync
 {
+    /// <summary>
+    /// Репозиторий работы с <see cref="Audio"/>
+    /// </summary>
     public class AudioRepository : DbRepository<Audio>, IAudioRepository<Audio>
     {
-        public AudioRepository(DbContext dbContext) : base(dbContext)
+        /// <summary>
+        /// Конструктор инициализатор
+        /// </summary>
+        /// <param name="downloaderContext">Контекст базы данных</param>
+        public AudioRepository(DownloaderContext downloaderContext) : base(downloaderContext)
         {
 
         }

@@ -1,5 +1,4 @@
 ﻿using Gurrex.Common.DAL.Entities;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using YouTubeVideoDownloader.Interfaces.Entities;
 

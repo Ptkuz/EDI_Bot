@@ -1,5 +1,4 @@
 ﻿using Gurrex.Common.Interfaces.Entities;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace YouTubeVideoDownloader.Interfaces.Entities
 {

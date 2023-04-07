@@ -4,9 +4,19 @@ using System.Resources;
 
 namespace Gurrex.Common.Localization
 {
+    /// <summary>
+    /// Локализируемые строки
+    /// </summary>
     public static class LocalizationString
     {
-
+        /// <summary>
+        /// Получить локализируемую строку
+        /// </summary>
+        /// <param name="fileResourceName">Имя файла ресурса</param>
+        /// <param name="currentAssembly">Имя сборки, где лежит ресурс</param>
+        /// <param name="resourceName">Имя ресурса</param>
+        /// <exception cref="ArgumentNullException">Значение локализируемой строки не может быть равно null</exception>
+        /// <returns>Локализируемая строка</returns>
         public static string GetString(string fileResourceName, Assembly currentAssembly, string resourceName) 
         {
             try

@@ -1,11 +1,4 @@
-﻿using Gurrex.Common.Interfaces.Entities;
-using Gurrex.Common.Interfaces.Repositories;
-using Gurrex.Common.Interfaces.Repositories.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Gurrex.Common.Interfaces.Repositories;
 using YouTubeVideoDownloader.Interfaces.Entities;
 
 namespace YouTubeVideoDownloader.Interfaces.Repositories.Sync
@@ -13,6 +6,7 @@ namespace YouTubeVideoDownloader.Interfaces.Repositories.Sync
     /// <summary>
     /// Репозиторий работы с <see cref="IImage"/>
     /// </summary>
+    /// <typeparam name="T">Сущность, реализующая интерфейс <see cref="IImage"/></typeparam>
     public interface IImageRepository<T> : IRepositoryEntities<T> where T : class, IImage, new()
     {
 

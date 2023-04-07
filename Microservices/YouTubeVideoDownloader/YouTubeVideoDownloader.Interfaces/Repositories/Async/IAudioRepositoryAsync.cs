@@ -1,13 +1,12 @@
 ﻿using Gurrex.Common.Interfaces.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using YouTubeVideoDownloader.Interfaces.Entities;
 
 namespace YouTubeVideoDownloader.Interfaces.Repositories.Async
 {
+    /// <summary>
+    /// Асинхронный репозиторий работы с <see cref="IAudio"/>
+    /// </summary>
+    /// <typeparam name="T">Сущность, реализующая интерфейс <see cref="IAudio"/></typeparam>
     public interface IAudioRepositoryAsync<T> : IRepositoryEntitiesAsync<T> where T : class, IAudio, new()
     {
 

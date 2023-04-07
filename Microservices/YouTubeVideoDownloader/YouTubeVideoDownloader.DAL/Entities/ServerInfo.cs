@@ -1,10 +1,5 @@
 ﻿using Gurrex.Common.DAL.Entities;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using YouTubeVideoDownloader.Interfaces.Entities;
 
 namespace YouTubeVideoDownloader.DAL.Entities
@@ -39,7 +34,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <summary>
         /// Внешний ключ Audio
         /// </summary>
-        public Guid AudioId { get; set; }   
+        public Guid AudioId { get; set; }
 
         /// <summary>
         /// Аудио

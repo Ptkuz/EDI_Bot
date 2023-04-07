@@ -1,13 +1,4 @@
-﻿using Gurrex.Common.Interfaces.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Channels;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace YouTubeVideoDownloader.Interfaces.Entities
+﻿namespace YouTubeVideoDownloader.Interfaces.Entities
 {
     /// <summary>
     /// Видео

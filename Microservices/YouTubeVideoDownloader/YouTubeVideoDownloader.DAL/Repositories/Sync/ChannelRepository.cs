@@ -1,10 +1,4 @@
 ﻿using Gurrex.Common.DAL.Repositories;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using YouTubeVideoDownloader.DAL.Context;
 using YouTubeVideoDownloader.DAL.Entities;
 using YouTubeVideoDownloader.Interfaces.Repositories.Sync;
@@ -16,7 +10,11 @@ namespace YouTubeVideoDownloader.DAL.Repositories.Sync
     /// </summary>
     public class ChannelRepository : DbRepository<Channel>, IChannelRerository<Channel>
     {
-        public ChannelRepository(DownloaderContext dbContext) : base(dbContext)
+        /// <summary>
+        /// Конструктор инициализатор
+        /// </summary>
+        /// <param name="downloaderContext">Контекст базы данных</param>
+        public ChannelRepository(DownloaderContext downloaderContext) : base(downloaderContext)
         {
 
         }

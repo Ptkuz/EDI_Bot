@@ -1,52 +1,46 @@
 ﻿using Gurrex.Common.Interfaces.Entities;
 using Gurrex.Common.Interfaces.Repositories.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gurrex.Common.Interfaces.Repositories
 {
     /// <summary>
-    /// Синхронный репозиторий сущностей
+    /// Репозиторий работы с сущностью, реализующей интерфейс <see cref="IEntity"/>
     /// </summary>
-    /// <typeparam name="T">Сущность</typeparam>
+    /// <typeparam name="T">Сущность, реализующая интерфейс <see cref="IEntity"/></typeparam>
     public interface IRepositoryEntities<T> : IRepository<T> where T : class, IEntity, new()
     {
         /// <summary>
-        /// Получить конкретную сущность <see cref="T"/> по Id
+        /// Получить экземпляр сущности по Id
         /// </summary>
-        /// <param name="id">Id сущности с типом <see cref="Guid"/></param>
-        /// <returns>Возвращает конкретную сущность <see cref="T"/> по Id</returns>
+        /// <param name="id">Id сущности</param>
+        /// <returns>Полученный экземпляр сущности</returns>
         T GetEntityById(Guid id);
 
         /// <summary>
-        /// Получить последнюю добавленную сущность <see cref="T"/>
+        /// Получить последний добавленный экземпляр сущности
         /// </summary>
-        /// <returns>Возвращает последнюю добавленную сущность <see cref="T"/></returns>
+        /// <returns>Последний добавленный экземпляр сущности</returns>
         T GetLastEntity();
 
         /// <summary>
-        /// Добавить сущность <see cref="T"/>
+        /// Добавить экземпляр сущности
         /// </summary>
-        /// <param name="entity">Добавляемая сущность</param>
+        /// <param name="entity">Добавляемый экземпляр сущности</param>
         /// <returns>True - сущность успешно добавлена, False - сущность не добавлена</returns>
-        T AddEntity(T entity);
+        bool AddEntity(T entity);
 
         /// <summary>
-        /// Обновить сущность <see cref="T"/>
+        /// Обновить экземпляр сущности
         /// </summary>
-        /// <param name="entity">Обновляемая сущность</param>
+        /// <param name="entity">Обновляемый экземпляр сущности</param>
         /// <returns>True - сущность успешно обновлена, False - сущность не обновлена</returns>
-        T UpdateEntity(T entity);
+        bool UpdateEntity(T entity);
 
         /// <summary>
-        /// Удаление сущности по Id
+        /// Удалить экземпляр сущности по Id
         /// </summary>
         /// <param name="id">Id сущности</param>
-        /// <param name="cancel">Токен отмены</param>
-        /// <returns></returns>
+        /// <returns>True - сущность удалена, False - сущность не удалена</returns>
         bool RemoveEntityById(Guid id);
 
         /// <summary>

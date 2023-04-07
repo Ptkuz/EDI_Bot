@@ -2,14 +2,13 @@
 using Gurrex.Common.Interfaces.Repositories;
 using Gurrex.Common.Validations;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gurrex.Common.DAL.Repositories
 {
+    /// <summary>
+    /// Базовый асинхронный репозиторий работы с сущностью, унаследованной от <see cref="Entity"/>
+    /// </summary>
+    /// <typeparam name="T">Сущность, унаследованная от <see cref="Entity"/></typeparam>
     public class DbRepositoryAsync<T> : IRepositoryEntitiesAsync<T> where T : Entity, new()
     {
 
@@ -18,15 +17,27 @@ namespace Gurrex.Common.DAL.Repositories
 
         private bool autoSaveChanges = true;
 
+        /// <summary>
+        /// Репозиторий инициализатор
+        /// </summary>
+        /// <param name="dbContext">Контекст базы данных</param>
         public DbRepositoryAsync(DbContext dbContext)
         {
             _dbContext = dbContext;
             _entities = dbContext.Set<T>();
         }
 
-
+        /// <summary>
+        /// Количество экземпляров сущности, унаследованной от <see cref="Entity"/>
+        /// </summary>
         public IQueryable<T> Items => _entities;
 
+        /// <summary>
+        /// Асинхронно получить экземпляр по Id
+        /// </summary>
+        /// <param name="id">Id экземпляра</param>
+        /// <param name="cancel">Токен отмены</param>
+        /// <returns>Полученный экземпляр</returns>
         public async Task<T> GetEntityByIdAsync(Guid id, CancellationToken cancel = default)
         {
             try
@@ -41,53 +52,119 @@ namespace Gurrex.Common.DAL.Repositories
             }
         }
 
+        /// <summary>
+        /// Асинхронно получить последний добавленный экземпляр сущности
+        /// </summary>
+        /// <param name="cancel">Токен отмены</param>
+        /// <returns>Полученный экземпляр</returns>
         public async Task<T> GetLastEntityAsync(CancellationToken cancel = default)
         {
-            IEnumerable<T> entityList = await Items.ToListAsync().ConfigureAwait(false);
-            return entityList.Last();
-        }
-
-        public async Task<T> AddEntityAsync(T entity, CancellationToken cancel = default)
-        {
-            entity.CheckObjectForNull(nameof(entity));
-            _dbContext.Entry(entity).State = EntityState.Added;
-            if (autoSaveChanges)
+            try
             {
-                await SaveChangesAsync(cancel);
+                IEnumerable<T> entityList = await Items.ToListAsync().ConfigureAwait(false);
+                return entityList.Last();
             }
-            return entity;
-
-        }
-
-        public async Task<T> UpdateEntityAsync(T entity, CancellationToken cancel = default)
-        {
-            entity.CheckObjectForNull(nameof(entity));
-            _dbContext.Entry(entity).State = EntityState.Modified;
-
-            if (autoSaveChanges)
+            catch (Exception)
             {
-                await SaveChangesAsync();
+                throw;
             }
-            return entity;
         }
 
-        public async Task<bool> RemoveEntityByIdAsync(Guid id, CancellationToken cancel = default)
+        /// <summary>
+        /// Асинхронно добавить экземпляр сущности
+        /// </summary>
+        /// <param name="entity">Добавляемый экземпляр сущности</param>
+        /// <param name="cancel">Токен отмены</param>
+        /// <returns>True - экземпляр добавился, False - экземпляр не добавился</returns>
+        public async Task<bool> AddEntityAsync(T entity, CancellationToken cancel = default)
         {
-            T entity = new T { Id = id };
-            _dbContext.Remove(entity);
-
-            if (autoSaveChanges)
+            try
             {
-                await SaveChangesAsync(cancel);
+                entity.CheckObjectForNull(nameof(entity));
+                _dbContext.Entry(entity).State = EntityState.Added;
+
+                if (autoSaveChanges)
+                {
+                    await SaveChangesAsync(cancel);
+                }
+
                 return true;
             }
-            return false;
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
 
+        /// <summary>
+        /// Асинхронно обновить экземпляр сущности
+        /// </summary>
+        /// <param name="entity">Обновляемый экземпляр сущности</param>
+        /// <param name="cancel">Токен отмены</param>
+        /// <returns>True - экземпляр обновился, False - экземпляр не обновился</returns>
+        public async Task<bool> UpdateEntityAsync(T entity, CancellationToken cancel = default)
+        {
+            try
+            {
+                entity.CheckObjectForNull(nameof(entity));
+                _dbContext.Entry(entity).State = EntityState.Modified;
+
+                if (autoSaveChanges)
+                {
+                    await SaveChangesAsync();
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Асинхронно удалить экземпляр сущности
+        /// </summary>
+        /// <param name="id">Id сущности</param>
+        /// <param name="cancel">Токен отмены</param>
+        /// <returns>True - экземпляр удален, False - укземпляр не удален</returns>
+        public async Task<bool> RemoveEntityByIdAsync(Guid id, CancellationToken cancel = default)
+        {
+            try
+            {
+                T entity = new T { Id = id };
+                _dbContext.Remove(entity);
+
+                if (autoSaveChanges)
+                {
+                    await SaveChangesAsync(cancel);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Асинхронно сохранить изменения в базе данных
+        /// </summary>
+        /// <param name="cancel">Токен отмены</param>
+        /// <returns>True - изменения сохранились, False - изменения не сохранились</returns>
         public async Task<bool> SaveChangesAsync(CancellationToken cancel = default)
         {
-            await _dbContext.SaveChangesAsync(cancel).ConfigureAwait(false);
-            return true;
+            try
+            {
+                await _dbContext.SaveChangesAsync(cancel).ConfigureAwait(false);
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

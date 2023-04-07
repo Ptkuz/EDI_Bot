@@ -1,19 +1,20 @@
 ﻿using Gurrex.Common.DAL.Repositories;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using YouTubeVideoDownloader.DAL.Context;
 using YouTubeVideoDownloader.DAL.Entities;
 using YouTubeVideoDownloader.Interfaces.Repositories.Async;
-using YouTubeVideoDownloader.Interfaces.Repositories.Sync;
 
 namespace YouTubeVideoDownloader.DAL.Repositories.Async
 {
+    /// <summary>
+    /// Асинхронный репозиторий работы с <see cref="ServerInfo"/>
+    /// </summary>
     public class ServerInfoRepositoryAsync : DbRepositoryAsync<ServerInfo>, IServerInfoRepositoryAsync<ServerInfo>
     {
-        public ServerInfoRepositoryAsync(DbContext dbContext) : base(dbContext)
+        /// <summary>
+        /// Конструктор инициализатор
+        /// </summary>
+        /// <param name="downloaderContext">Контекст базы данных</param>
+        public ServerInfoRepositoryAsync(DownloaderContext downloaderContext) : base(downloaderContext)
         {
 
         }

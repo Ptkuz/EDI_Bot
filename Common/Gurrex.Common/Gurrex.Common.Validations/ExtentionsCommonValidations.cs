@@ -1,32 +1,38 @@
 ﻿using Gurrex.Common.Localization;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gurrex.Common.Validations
 {
+    /// <summary>
+    /// Расширения для валидации
+    /// </summary>
     public static class ExtentionsCommonValidations
     {
 
         private static Assembly currentAssembly = null!;
         private static string fileResourceName = null!;
 
-        static ExtentionsCommonValidations() 
+        /// <summary>
+        /// Конструктор инициализатор
+        /// </summary>
+        static ExtentionsCommonValidations()
         {
             currentAssembly = Assembly.GetExecutingAssembly();
             fileResourceName = "Gurrex.Common.Validations.Resources.ExtentionsCommonValidations";
         }
 
-        public static void CheckObjectForNull(this object? value, string argument) 
+        /// <summary>
+        /// Проверить <see cref="object"/> на null
+        /// </summary>
+        /// <param name="value">класс, унаследованный от <see cref="object"/></param>
+        /// <param name="argument">Аргумент исключения</param>
+        /// <exception cref="ArgumentNullException">Один из параметров метода пустой</exception>
+        public static void CheckObjectForNull(this object? value, string argument)
         {
             try
             {
 
-                if (argument is null) 
+                if (argument is null)
                 {
                     string localizationString = LocalizationString.GetString(fileResourceName, currentAssembly, "ExceptionCheckArgumentForNullOrEmpty");
                     string errorMessage = String.Format(localizationString, nameof(argument));
@@ -40,7 +46,11 @@ namespace Gurrex.Common.Validations
                     throw new ArgumentNullException(argument, errorMessage);
                 }
             }
-            catch (ArgumentNullException) 
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
+            catch (Exception)
             {
                 throw;
             }

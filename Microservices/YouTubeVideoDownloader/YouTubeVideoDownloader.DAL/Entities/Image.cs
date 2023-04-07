@@ -22,7 +22,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         public string Extention { get; set; } = null!;
 
         /// <summary>
-        /// Расширение картинки
+        /// Разрешение картинки
         /// </summary>
         [Column("Resolution", Order = 6)]
         public string Resolution { get; set; } = null!; 

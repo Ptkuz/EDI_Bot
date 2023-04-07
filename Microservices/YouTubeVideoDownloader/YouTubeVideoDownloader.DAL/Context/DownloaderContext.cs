@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using YouTubeVideoDownloader.DAL.Entities;
-using YouTubeVideoDownloader.Interfaces.Entities;
 
 namespace YouTubeVideoDownloader.DAL.Context
 {
