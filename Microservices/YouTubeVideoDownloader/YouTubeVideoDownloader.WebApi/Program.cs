@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.Localization;
+using Microsoft.EntityFrameworkCore;
+using NLog;
+using NLog.Web;
 using System.Globalization;
 using YouTubeVideoDownloader.DAL.Context;
-using Microsoft.EntityFrameworkCore;
 using YouTubeVideoDownloader.DAL.Repositories;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
+var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+logger.Debug("Init main");
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -25,6 +29,10 @@ if (String.IsNullOrEmpty(connectionString))
 builder.Services.AddDbContext<DownloaderContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Scoped);
 builder.Services.AddRepositoryInDB();
 
+builder.Logging.ClearProviders();
+builder.Logging.SetMinimumLevel(LogLevel.Trace);
+builder.Host.UseNLog();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -37,7 +45,7 @@ app.UseDeveloperExceptionPage();
 
 CultureInfo[] supportedCultures = new CultureInfo[] { new CultureInfo("ru") };
 
-app.UseRequestLocalization(new RequestLocalizationOptions 
+app.UseRequestLocalization(new RequestLocalizationOptions
 {
     DefaultRequestCulture = new RequestCulture("ru"),
     SupportedCultures = supportedCultures,

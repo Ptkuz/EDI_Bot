@@ -30,6 +30,8 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
             channel.Id = Guid.NewGuid();
             channel.Name = "Alina Gindertail";
 
+            _logger.LogInformation("Работает!!!");
+
             _channelRerositoryAsync.AddEntityAsync(channel);
 
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast

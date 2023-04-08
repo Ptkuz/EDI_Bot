@@ -15,11 +15,13 @@ namespace Gurrex.Common.DAL.Entities
         /// <summary>
         /// Экземпляр сборки
         /// </summary>
+        [NotMapped]
         public Assembly Assembly { get; set; }
 
         /// <summary>
         /// Путь до ресурсов
         /// </summary>
+        [NotMapped]
         public string ResourcesPath { get; set; }
 
         /// <summary>
@@ -51,7 +53,7 @@ namespace Gurrex.Common.DAL.Entities
         /// <summary>
         /// Инициализатор информации о сборке
         /// </summary>
-        private Entity()
+        public Entity()
         {
             Assembly = Assembly.GetExecutingAssembly();
             ResourcesPath = $"{Assembly.FullName}.Resources.Entities.Entity";

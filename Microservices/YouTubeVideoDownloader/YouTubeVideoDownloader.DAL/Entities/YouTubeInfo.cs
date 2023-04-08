@@ -1,6 +1,9 @@
 ﻿using Gurrex.Common.DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Drawing;
 using YouTubeVideoDownloader.Interfaces.Entities;
+using System.Reflection;
 
 namespace YouTubeVideoDownloader.DAL.Entities
 {
@@ -48,5 +51,32 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// Аудио
         /// </summary>
         public IQueryable<Audio> Audios { get; set; } = null!;
+
+        /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
+        public YouTubeInfo()
+        {
+            Assembly = Assembly.GetExecutingAssembly();
+            ResourcesPath = $"{Assembly.FullName}.Resources.Entities.YouTubeInfo";
+        }
+
+        /// <summary>
+        /// Конструктор инициализатор
+        /// </summary>
+        /// <param name="id">Id сущности</param>
+        /// <param name="dateAdded">Дата добавления</param>
+        /// <param name="dateModified">Дата изменения</param>
+        /// <param name="dateDeleted">Дата удаления</param>
+        /// <param name="title">Заголовок видео</param>
+        /// <param name="url">Ссылка на видео</param>
+        /// <param name="duration">Длина видео</param>
+        public YouTubeInfo(Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted, string title, string url, int duration)
+            : base(id, dateAdded, dateModified, dateDeleted)
+        {
+            Title = title;
+            Url = url;
+            Duration = duration;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Gurrex.Common.DAL.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection;
 using YouTubeVideoDownloader.Interfaces.Entities;
 
 namespace YouTubeVideoDownloader.DAL.Entities
@@ -51,6 +52,37 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// Информация о видео на сервере
         /// </summary>
         public ServerInfo ServerInfo { get; set; } = null!;
+
+        /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
+        public Video()
+        {
+            Assembly = Assembly.GetExecutingAssembly();
+            ResourcesPath = $"{Assembly.FullName}.Resources.Entities.Video";
+        }
+
+        /// <summary>
+        /// Инициализатор конструктор
+        /// </summary>
+        /// <param name="id">Id сущности</param>
+        /// <param name="dateAdded">Дата добавления</param>
+        /// <param name="dateModified">Дата изменения</param>
+        /// <param name="dateDeleted">Дата удаления</param>
+        /// <param name="formatVideo">Формат видео</param>
+        /// <param name="resolution">Разрешение</param>
+        /// <param name="frameRate">Количество кадров в секунду</param>
+        /// <param name="formatAudio">Формат аудио</param>
+        /// <param name="bitrate">Битрейт</param>
+        public Video(Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted, string formatVideo, string resolution, string frameRate, string formatAudio, string bitrate)
+            : base(id, dateAdded, dateModified, dateDeleted)
+        {
+            FormatVideo = formatVideo;
+            Resolution = resolution;
+            FrameRate = frameRate;
+            FormatAudio = formatAudio;
+            Bitrate = bitrate;
+        }
 
     }
 }

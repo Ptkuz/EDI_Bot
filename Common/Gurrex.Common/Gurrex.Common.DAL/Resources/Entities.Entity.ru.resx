@@ -117,10 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EntityConstructorInit" xml:space="preserve">
-    <value>Конструктор базовой сущности {0} проинициализирован параметрами {1}, {2}, {3}</value>
-    <comment>Логирование: Инициализация конструктора</comment>
-  </data>
   <data name="EntityInfo" xml:space="preserve">
     <value>Базовая сущность с Id: {0}</value>
     <comment>Вывод: Для переопределение метода ToString()</comment>
