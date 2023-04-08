@@ -1,4 +1,4 @@
-﻿using Gurrex.Common.DAL.Base;
+﻿using Gurrex.Common.Interfaces;
 using Gurrex.Common.Interfaces.Entities;
 using Gurrex.Common.Localization;
 using System.ComponentModel.DataAnnotations;
@@ -10,8 +10,18 @@ namespace Gurrex.Common.DAL.Entities
     /// <summary>
     /// Базовая сущность
     /// </summary>
-    public class Entity : BaseDAL, IEntity
+    public class Entity : IEntity, IAssemblyInfo
     {
+        /// <summary>
+        /// Экземпляр сборки
+        /// </summary>
+        public Assembly Assembly { get; set; }
+
+        /// <summary>
+        /// Путь до ресурсов
+        /// </summary>
+        public string ResourcesPath { get; set; }
+
         /// <summary>
         /// Id сущности
         /// </summary>
@@ -37,34 +47,30 @@ namespace Gurrex.Common.DAL.Entities
         [Column("DateDeleted", Order = 3)]
         public DateTime? DateDeleted { get; set; }
 
+
         /// <summary>
         /// Инициализатор информации о сборке
         /// </summary>
-        private Entity(Assembly currentAssembly, string resourcesPath) 
-            : base() 
+        private Entity()
         {
-            _resourcesPath = $"{_resourcesPath}.Entities.Entity";
+            Assembly = Assembly.GetExecutingAssembly();
+            ResourcesPath = $"{Assembly.FullName}.Resources.Entities.Entity";
         }
 
         /// <summary>
         /// Конструктор инициализатор
         /// </summary>
-        /// <param name="currentAssembly">Текущая сборка</param>
-        /// <param name="resourcesPath">Путь до ресурсов</param>
         /// <param name="id">Id сущности</param>
         /// <param name="dateAdded">Дата добавления</param>
         /// <param name="dateModified">Дата изменения</param>
         /// <param name="dateDeleted">Дата удаления</param>
-        public Entity(Assembly currentAssembly, string resourcesPath, Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted) 
-            : this(currentAssembly, resourcesPath)
+        public Entity(Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted) 
+            : this()
         {
             Id = id;
             DateAdded = dateAdded;
             DateModified = dateModified;
-            DateDeleted = dateDeleted;
-
-            string localizationString = LocalizationString.GetString(_resourcesPath, _currentAssembly, "EntityConstructorInit");
-            
+            DateDeleted = dateDeleted;            
         }
 
         /// <summary>
@@ -73,7 +79,7 @@ namespace Gurrex.Common.DAL.Entities
         /// <returns>Информация о сущности</returns>
         public override string ToString()
         {
-            string localizationString = LocalizationString.GetString(_resourcesPath, _currentAssembly, "EntityInfo");
+            string localizationString = LocalizationString.GetString(ResourcesPath, Assembly, "EntityInfo");
             return LocalizationString.GetResultString(localizationString, Id);
         }
     }
