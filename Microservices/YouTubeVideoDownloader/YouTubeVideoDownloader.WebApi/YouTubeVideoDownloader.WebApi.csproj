@@ -18,10 +18,12 @@
     <PackageReference Include="NLog.Schema" Version="5.1.3" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.2.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="VideoLibrary" Version="3.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\YouTubeVideoDownloader.DAL\YouTubeVideoDownloader.DAL.csproj" />
+    <ProjectReference Include="..\YouTubeVideoDownloader.YouTubeDataOperations\YouTubeVideoDownloader.YouTubeDataOperations.csproj" />
   </ItemGroup>
 
   <ItemGroup>
