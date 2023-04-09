@@ -1,0 +1,432 @@
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Aac 
+ Format - Mp4 
+ FPS - 30 
+ Extention - .mp4 
+ Length - 7379120 
+AdaptiveKind - Video 
+AudioBitrate - 96 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).mp4 
+FotmatCode - 18 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 360 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=18&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fmp4&ns=1Y32b092Kmcvx3d27GxNvuwM&cnr=14&ratebypass=yes&dur=223.886&lmt=1666587656744596&mt=1681039264&fvip=14&fexp=24007246&c=WEB&txp=5538434&n=-jJgXlvLGme4-RgzYS4&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Ccnr%2Cratebypass%2Cdur%2Clmt&sig=AOq0QJ8wRQIgMRlN9V9SAY7IY3jGWLgBC6Oai1wfAlRJk6MNUPZ753UCIQDvgJDxiRyyadunQ1oMTp1bhI6rk0jWCoqjzkIY-8X8TQ%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - WebM 
+ FPS - 30 
+ Extention - .webm 
+ Length - 225566992 
+AdaptiveKind - Video 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).webm 
+FotmatCode - 313 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 2160 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=313&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fwebm&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=225566992&dur=223.840&lmt=1644844649723140&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIgEM6sr-AuCOd0hUVOEqbkJEvb7DqU-V01VDmx_JFS6_ECIQD_gFMS5Pr8YSh7cGagAVWP3zuY93Mt2mkNSZNx7TKBvw%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - Mp4 
+ FPS - 60 
+ Extention - .mp4 
+ Length - 159000637 
+AdaptiveKind - Video 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).mp4 
+FotmatCode - 401 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 2160 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=401&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fmp4&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=159000637&dur=223.840&lmt=1644847790721836&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIhAOiFozFQnz-IZVh5NCAsa8BGkk1eWNkvR_NiE8I4TfS7AiAT5LtImtL3VP17luSVsIaTU-o5gLI8KCzIwwMFuKehkg%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - WebM 
+ FPS - 30 
+ Extention - .webm 
+ Length - 72671564 
+AdaptiveKind - Video 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).webm 
+FotmatCode - 271 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 1440 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=271&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fwebm&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=72671564&dur=223.840&lmt=1644844151061522&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIhAJJbu-IdtQ2NVm1o0Zy0g1XFeYmGFN1l83vGGMXhpk-3AiBs6nCYa4Go6FMLKBjGafGXEaPY7rW29VyMqDGqDLqvvA%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - Mp4 
+ FPS - 60 
+ Extention - .mp4 
+ Length - 73732111 
+AdaptiveKind - Video 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).mp4 
+FotmatCode - 400 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 1440 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=400&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fmp4&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=73732111&dur=223.840&lmt=1644844934503162&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIgG7rjZxgoMdEOfcshcs_Kjt6DPDBMdmeUHH4GS5tRLDMCIQD4EtzVL9aaQRMzIK4f-B946zXvFr5T70Iu2fCka4TTCw%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - Mp4 
+ FPS - 30 
+ Extention - .mp4 
+ Length - 32722334 
+AdaptiveKind - Video 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).mp4 
+FotmatCode - 137 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 1080 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=137&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fmp4&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=32722334&dur=223.840&lmt=1644843870969032&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIgVV92nkKDTfhSsTShFlHZkEEnfGY9Zc0K0iXDuU5UD0ECIQCZgMJ9PEa5otNQx-oDk93F49_XjN_Ko0BlaJ3MVQll7Q%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - WebM 
+ FPS - 30 
+ Extention - .webm 
+ Length - 26615468 
+AdaptiveKind - Video 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).webm 
+FotmatCode - 248 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 1080 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=248&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fwebm&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=26615468&dur=223.840&lmt=1644844126574380&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5537434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIgcXv8yNmn5G0e8ksFAfvtSs82KoMqW0hi81ydr-OC0uwCIQCW4FhhFfO9cqzTnw9t7nQ2sp2MK-RHGZ7dLm6nXyhztQ%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - Mp4 
+ FPS - 60 
+ Extention - .mp4 
+ Length - 24104761 
+AdaptiveKind - Video 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).mp4 
+FotmatCode - 399 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 1080 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=399&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fmp4&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=24104761&dur=223.840&lmt=1644845517151702&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIhALMcF_fc_6m_4ZSrfrUnQjgzTrPD100fHc24tW07q7o4AiB7d-xcJfF_mswoUPIfmJ9VXmHho-m99Z0JgSv5_vd23g%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - Mp4 
+ FPS - 30 
+ Extention - .mp4 
+ Length - 10893378 
+AdaptiveKind - Video 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).mp4 
+FotmatCode - 136 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 720 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=136&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fmp4&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=10893378&dur=223.840&lmt=1644843894117455&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIhAOHrLeloue6COhZ6RlI_2gpiSWRZdDUY2UesoAS-hKodAiBP4SWzvQhZqOwC7TdAX7T8SKIwYTTRv1M_1wEV-J9ESA%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - WebM 
+ FPS - 30 
+ Extention - .webm 
+ Length - 15296557 
+AdaptiveKind - Video 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).webm 
+FotmatCode - 247 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 720 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=247&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fwebm&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=15296557&dur=223.840&lmt=1644844220576089&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5537434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIhAPbhIZcHlIxehMcnAQ1fB_gnFzeqm-Iazg0D9GfndiVeAiAaDLv-_miS5AdLPatUnEeZFy338yv5DJDObO2gzut7mw%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - Mp4 
+ FPS - 60 
+ Extention - .mp4 
+ Length - 14102619 
+AdaptiveKind - Video 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).mp4 
+FotmatCode - 398 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 720 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=398&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fmp4&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=14102619&dur=223.840&lmt=1644844517633203&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIhAIJS4EbHTKVdcd8GidteQdSwaGTJgpuoUOzx74_Gg9wAAiA_pmN58tZgRKkGbm86ee16DyX2nQrKr3IcHfDckZ3XgQ%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - Mp4 
+ FPS - 30 
+ Extention - .mp4 
+ Length - 6452445 
+AdaptiveKind - Video 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).mp4 
+FotmatCode - 135 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 480 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=135&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fmp4&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=6452445&dur=223.840&lmt=1644843894260261&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRgIhAK2gXefeUFNAeJSg6Xxb0lZKn0UQzg-YsAyUszEgpUuTAiEA10NaV_gBmKIoFfL9xkOW_0fuXAOfWjSo0dooCBhpAaA%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - WebM 
+ FPS - 30 
+ Extention - .webm 
+ Length - 8406256 
+AdaptiveKind - Video 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).webm 
+FotmatCode - 244 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 480 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=244&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fwebm&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=8406256&dur=223.840&lmt=1644844220529678&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5537434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIgc1CWiqG3aSCRXTghTehqn2W0izdvugZjBYcH10xpycUCIQDe0kV5PywgPlTHiLmwoNNB_4Ou7mWJZuTJjlefosz__w%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - Mp4 
+ FPS - 30 
+ Extention - .mp4 
+ Length - 7400723 
+AdaptiveKind - Video 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).mp4 
+FotmatCode - 397 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 480 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=397&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fmp4&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=7400723&dur=223.840&lmt=1644844542211859&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIhAMadEkCH_99sXLPteP2MneCDmKxTjuKeFz-87xAkHJebAiBmTQvURQH-viJUghD-2dyDJtUxg5P7pPsNiPbfTOlMHg%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - Mp4 
+ FPS - 30 
+ Extention - .mp4 
+ Length - 3765294 
+AdaptiveKind - Video 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).mp4 
+FotmatCode - 134 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 360 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=134&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fmp4&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=3765294&dur=223.840&lmt=1644843894237693&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIhAOVv7Raq6IVozi2bkrWZ8ECbOxT-DSESfxzL4LDbP3kqAiAD6LgL2ILbaxXwmhDWzFcyVJOEpzCcJgFd1BJOD4mb3Q%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - WebM 
+ FPS - 30 
+ Extention - .webm 
+ Length - 5671529 
+AdaptiveKind - Video 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).webm 
+FotmatCode - 243 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 360 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=243&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fwebm&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=5671529&dur=223.840&lmt=1644844221543939&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5537434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIhAPJn_5SC63_8ISfCf1xq20lRRt1tpYfF3uNKO9J64ZjhAiAahWd3z9tDwSAX8RKo-Wj68KlE6mj_YULwk0GNUlJtCw%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - Mp4 
+ FPS - 30 
+ Extention - .mp4 
+ Length - 4245051 
+AdaptiveKind - Video 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).mp4 
+FotmatCode - 396 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 360 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=396&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fmp4&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=4245051&dur=223.840&lmt=1644844339025116&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRgIhAL2hbbtzDkkYcEPQ08Bif_2n48PAFLwpSwgSz5ktqoNQAiEAzJTSpypgjEHcrULcvUmFtVJSqb14EoqjFuKTMJ4mEok%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - Mp4 
+ FPS - 30 
+ Extention - .mp4 
+ Length - 2005972 
+AdaptiveKind - Video 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).mp4 
+FotmatCode - 133 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 240 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=133&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fmp4&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=2005972&dur=223.840&lmt=1644843894251654&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIhAOBEAUeZDwWGGHeCteJToJVi1TcxgsgDwwri1hluoKDQAiAS4NF2Z0FwBeJjTelHMQAZTQqkX5EJrvxHvlJaTgQq7g%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - WebM 
+ FPS - 30 
+ Extention - .webm 
+ Length - 2298747 
+AdaptiveKind - Video 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).webm 
+FotmatCode - 242 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 240 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=242&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fwebm&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=2298747&dur=223.840&lmt=1644844234699715&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5537434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIhAJrUuIv-dMv0PUeOiH27RDJlcK5OwuUXFt9eIWRyx7QmAiAHnLXssYA7GuxRtG-xZOHUBBeNXVR1mykwXji-oGF9uA%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - Mp4 
+ FPS - 30 
+ Extention - .mp4 
+ Length - 2319117 
+AdaptiveKind - Video 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).mp4 
+FotmatCode - 395 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 240 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=395&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fmp4&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=2319117&dur=223.840&lmt=1644844093453899&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRgIhANfal8nZHK_0ZeJ-HeRIkG0NcBqoVHz8o8QFU1NT-SxhAiEAvBGHeL1P7-eWK9aK6C29NonaV3Khws8FOQYZamJ-5W0%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - Mp4 
+ FPS - 30 
+ Extention - .mp4 
+ Length - 971503 
+AdaptiveKind - Video 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).mp4 
+FotmatCode - 160 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 144 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=160&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fmp4&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=971503&dur=223.840&lmt=1644843894246900&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIgEi82r-rZEwfTyV_tAV71r1TCqfOGnwLkPm5w43yUhckCIQDwK8WJ7YW29cJt5EgeAk2ZKEnkrMFONrpI-SV7NINMQA%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - Unknown 
+ FPS - 30 
+ Extention -  
+ Length - 1775433 
+AdaptiveKind - None 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+FotmatCode - 278 
+IsAdaptive - False 
+IsEncrypted - False 
+Resolution - 144 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=278&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fwebm&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=1775433&dur=223.840&lmt=1644844220761149&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5537434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRgIhALk7VHY7JkKVEHNq1mwwLzvR6c75lDyJrDhHLgbyZxFUAiEA5sMRLCShfGeJ5s3kUQ3a6TZZZEq0eeQmdSemFYvjeFI%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Unknown 
+ Format - Mp4 
+ FPS - 30 
+ Extention - .mp4 
+ Length - 1725697 
+AdaptiveKind - Video 
+AudioBitrate - -1 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover).mp4 
+FotmatCode - 394 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - 144 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=394&aitags=133%2C134%2C135%2C136%2C137%2C160%2C242%2C243%2C244%2C247%2C248%2C271%2C278%2C313%2C394%2C395%2C396%2C397%2C398%2C399%2C400%2C401&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=video%2Fmp4&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=1725697&dur=223.840&lmt=1644843896956219&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Caitags%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRgIhANZcZFyN982umodltitaTcvBsy9X2A-zqfn1fpPM7o55AiEAqwpMl-vgGbLRC0vFSa-L_LVVHEH5KWJGjuFqDFeziFs%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Aac 
+ Format - Unknown 
+ FPS - -1 
+ Extention -  
+ Length - 3624088 
+AdaptiveKind - Audio 
+AudioBitrate - 128 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+FotmatCode - 140 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - -1 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=140&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=audio%2Fmp4&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=3624088&dur=223.886&lmt=1644843435494560&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRAIgBiO1uU2R-qNuMDOTyIku2ZDl4HMU_UPPkaIS8-_faksCIAhznluBvlIzQgLTIkeD4w1e7LtUZvA93_81qPQcnV06&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Opus 
+ Format - Unknown 
+ FPS - -1 
+ Extention -  
+ Length - 1490660 
+AdaptiveKind - Audio 
+AudioBitrate - 48 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+FotmatCode - 249 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - -1 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=249&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=audio%2Fwebm&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=1490660&dur=223.861&lmt=1644843444129875&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRgIhAKd3rn0gICC0PWb8f9l_q6G4kAccsKJRN-Graw2WIgEmAiEAxFcqfG1ejZdm8ZVUBkxsWkHvSwbds1RHPqnWfdDAeZ4%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Opus 
+ Format - Unknown 
+ FPS - -1 
+ Extention -  
+ Length - 1979025 
+AdaptiveKind - Audio 
+AudioBitrate - 48 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+FotmatCode - 250 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - -1 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=250&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=audio%2Fwebm&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=1979025&dur=223.861&lmt=1644843444128253&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRgIhAIyp0mQm0Tss6LYBj5fU0CNM0HSrKgHpnp61l-gxrhENAiEA5PIymgIWm13dO2EE3nUf65xXuGoA7NQpa04vYBcI47Q%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
+Info - VideoLibrary.VideoInfo 
+ AudioFormat - Opus 
+ Format - Unknown 
+ FPS - -1 
+ Extention -  
+ Length - 3889042 
+AdaptiveKind - Audio 
+AudioBitrate - 128 
+FullName - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+FotmatCode - 251 
+IsAdaptive - True 
+IsEncrypted - False 
+Resolution - -1 
+Title - Warframe - Sleeping in the Cold Below (Gingertail Cover) 
+uri - https://rr6---sn-pivhx-n8vs.googlevideo.com/videoplayback?expire=1681061246&ei=HaEyZM73O4j2yAWD_Y3oAQ&ip=87.249.26.254&id=o-AHWRNSHmVFaKpFh4IHZv5ax-mSzLX0G8Zs5j_jbk3ziO&itag=251&source=youtube&requiressl=yes&mh=4P&mm=31%2C29&mn=sn-pivhx-n8vs%2Csn-n8v7knez&ms=au%2Crdu&mv=m&mvi=6&pl=22&initcwndbps=1742500&vprv=1&mime=audio%2Fwebm&ns=vj-CUIevOzZX20lz-9nTAs8M&gir=yes&clen=3889042&dur=223.861&lmt=1644843444129939&mt=1681039264&fvip=14&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=DN0R3vEkwI6tfW4amwL&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIhANDGO2A_bQTPPwqaczUDqz4NM8xGJJIb8Y-BjCv3FQY0AiBFHSmudWAFBYHBDRnzMa3oatwXBAYIbBkquFRRlPUeQA%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhANbNzOGnUunDekYT0lZSqON9QFDk4GdzObD27HtJoQl2AiEAutV2wnzoMEn1biNMwA7PkKqJnGev7gyHvWWa1Cs23oQ%3D 
+WebSite - YouTube
