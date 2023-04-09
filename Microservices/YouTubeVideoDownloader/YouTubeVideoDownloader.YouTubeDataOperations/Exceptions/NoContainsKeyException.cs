@@ -9,7 +9,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Exceptions
     /// <summary>
     /// Исключение, если не нашлось значение по ключу в ссылке
     /// </summary>
-    internal class ExceptionNoContainsKey : Exception
+    internal class NoContainsKeyException : Exception
     {
         /// <summary>
         /// Ключ
@@ -21,7 +21,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Exceptions
         /// </summary>
         /// <param name="message">Сообщение</param>
         /// <param name="key">Ключ</param>
-        public ExceptionNoContainsKey(string message, string key)
+        public NoContainsKeyException(string message, string key)
             : base(message)
         {
             Key = key;

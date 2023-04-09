@@ -19,10 +19,16 @@ namespace Gurrex.Common.DAL.Entities
         public Assembly Assembly { get; set; }
 
         /// <summary>
-        /// Путь до ресурсов
+        /// Полное имя сборки
         /// </summary>
         [NotMapped]
-        public string ResourcesPath { get; set; }
+        public AssemblyName FullAssemblyName { get; set; }
+
+        /// <summary>
+        /// Имя сборки
+        /// </summary>
+        [NotMapped]
+        public string? AssemblyName { get; set; }
 
         /// <summary>
         /// Id сущности
@@ -56,7 +62,8 @@ namespace Gurrex.Common.DAL.Entities
         public Entity()
         {
             Assembly = Assembly.GetExecutingAssembly();
-            ResourcesPath = $"{Assembly.FullName}.Resources.Entities.Entity";
+            FullAssemblyName = Assembly.GetName();
+            AssemblyName = FullAssemblyName.Name;
         }
 
         /// <summary>
@@ -76,12 +83,21 @@ namespace Gurrex.Common.DAL.Entities
         }
 
         /// <summary>
+        /// Получить путь до ресурсов
+        /// </summary>
+        /// <returns>Путь до ресурсов</returns>
+        public virtual string GetResourcesPath(bool callBase = false) 
+        {
+            return $"{AssemblyName}.Resources.Entities.Entity";
+        }
+
+        /// <summary>
         /// Информация о сущности, реализующей интерфейс <see cref="IEntity"/>
         /// </summary>
         /// <returns>Информация о сущности</returns>
         public override string ToString()
         {
-            string localizationString = LocalizationString.GetString(ResourcesPath, Assembly, "EntityInfo");
+            string localizationString = LocalizationString.GetString(GetResourcesPath(), Assembly, "EntityInfo");
             return LocalizationString.GetResultString(localizationString, Id);
         }
     }

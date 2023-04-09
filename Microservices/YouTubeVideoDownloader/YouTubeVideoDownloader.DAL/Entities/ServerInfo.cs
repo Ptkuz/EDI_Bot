@@ -48,7 +48,8 @@ namespace YouTubeVideoDownloader.DAL.Entities
         public ServerInfo()
         {
             Assembly = Assembly.GetExecutingAssembly();
-            ResourcesPath = $"{Assembly.FullName}.Resources.Entities.ServerInfo";
+            FullAssemblyName = Assembly.GetName();
+            AssemblyName = FullAssemblyName.Name;
         }
 
         /// <summary>
@@ -65,6 +66,15 @@ namespace YouTubeVideoDownloader.DAL.Entities
         {
             Ref = reference;
             Size = size;
+        }
+
+        /// <summary>
+        /// Получить путь до ресурсов
+        /// </summary>
+        /// <returns>Путь до ресурсов</returns>
+        public override string GetResourcesPath(bool callBase)
+        {
+            return $"{AssemblyName}.Resources.Entities.ServerInfo";
         }
     }
 }

@@ -24,6 +24,6 @@ namespace YouTubeVideoDownloader.Interfaces.Models
         /// <summary>
         /// Продолжительность в секундах
         /// </summary>
-        int Duration { get; set; }   
+        int? Duration { get; set; }   
     }
 }

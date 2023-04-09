@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gurrex.Common.Interfaces", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gurrex.Common.DAL", "Gurrex.Common.DAL\Gurrex.Common.DAL.csproj", "{599EF1D5-4F23-4108-8EF4-5C7F463FB20A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gurrex.Common", "Gurrex.Common\Gurrex.Common.csproj", "{62E3F3BD-D2C9-4CC6-BFD1-D3817420A72F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{599EF1D5-4F23-4108-8EF4-5C7F463FB20A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{599EF1D5-4F23-4108-8EF4-5C7F463FB20A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{599EF1D5-4F23-4108-8EF4-5C7F463FB20A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{62E3F3BD-D2C9-4CC6-BFD1-D3817420A72F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{62E3F3BD-D2C9-4CC6-BFD1-D3817420A72F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{62E3F3BD-D2C9-4CC6-BFD1-D3817420A72F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{62E3F3BD-D2C9-4CC6-BFD1-D3817420A72F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

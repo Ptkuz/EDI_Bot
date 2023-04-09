@@ -12,6 +12,11 @@ namespace YouTubeVideoDownloader.Interfaces.Services.Async
     /// </summary>
     public interface IDataInformationAsync<T> where T : class
     {
-
+        /// <summary>
+        /// Асинхронно получить всю информацию о видео по ссылке
+        /// </summary>
+        /// <param name="url">Ссылка на видео</param>
+        /// <returns>Вся информация о видео по ссылке</returns>
+        Task<IYouTubeVideoInfo> GetYouTubeVideoInfoAsync(string url);
     }
 }

@@ -16,9 +16,9 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
 
         private readonly ILogger<YouTubeDownloadController> _logger;
         private readonly IChannelRerositoryAsync<Channel> _channelRerositoryAsync;
-        private readonly IDataInformationAsync _dataInformationsAsync;
+        private readonly IDataInformationAsync<YouTubeVideo> _dataInformationsAsync;
 
-        public YouTubeDownloadController(ILogger<YouTubeDownloadController> logger, IChannelRerositoryAsync<Channel> channelRerositoryAsync, IDataInformationAsync dataInformationsAsync)
+        public YouTubeDownloadController(ILogger<YouTubeDownloadController> logger, IChannelRerositoryAsync<Channel> channelRerositoryAsync, IDataInformationAsync<YouTubeVideo> dataInformationsAsync)
         {
             _logger = logger;
             _channelRerositoryAsync = channelRerositoryAsync;
@@ -30,7 +30,7 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
         public async Task GetVideoInfo(string url)
         {
 
-            await _dataInformationsAsync.GetInformationByUrlAsync(url);
+            await _dataInformationsAsync.GetYouTubeVideoInfoAsync(url);
 
             Channel channel = new Channel();
             channel.Id = Guid.NewGuid();
