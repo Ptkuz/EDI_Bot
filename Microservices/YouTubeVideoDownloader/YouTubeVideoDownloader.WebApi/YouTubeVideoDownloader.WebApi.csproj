@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\YouTubeVideoDownloader.DAL\YouTubeVideoDownloader.DAL.csproj" />
+    <ProjectReference Include="..\YouTubeVideoDownloader.Downloader\YouTubeVideoDownloader.Downloader.csproj" />
   </ItemGroup>
 
   <ItemGroup>
