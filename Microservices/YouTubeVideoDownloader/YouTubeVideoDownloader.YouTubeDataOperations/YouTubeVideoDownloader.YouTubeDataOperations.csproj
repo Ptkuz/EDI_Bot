@@ -12,4 +12,8 @@
     <PackageReference Include="VideoLibrary" Version="3.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\YouTubeVideoDownloader.Interfaces\YouTubeVideoDownloader.Interfaces.csproj" />
+  </ItemGroup>
+
 </Project>

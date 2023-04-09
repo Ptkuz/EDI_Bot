@@ -4,37 +4,33 @@ using YouTubeVideoDownloader.DAL.Entities;
 using YouTubeVideoDownloader.Interfaces.Repositories.Async;
 using VideoLibrary;
 using System.IO;
-using YouTubeVideoDownloader.YouTubeDataOperations.Services.Interfaces;
 using YouTubeVideoDownloader.YouTubeDataOperations.Services;
+using YouTubeVideoDownloader.Interfaces.Services.Async;
 
 namespace YouTubeVideoDownloader.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class YouTubeDownloadController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<YouTubeDownloadController> _logger;
         private readonly IChannelRerositoryAsync<Channel> _channelRerositoryAsync;
-        private readonly IDataInformations _dataInformations;
+        private readonly IDataInformationAsync _dataInformationsAsync;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IChannelRerositoryAsync<Channel> channelRerositoryAsync, IDataInformations dataInformations)
+        public YouTubeDownloadController(ILogger<YouTubeDownloadController> logger, IChannelRerositoryAsync<Channel> channelRerositoryAsync, IDataInformationAsync dataInformationsAsync)
         {
             _logger = logger;
             _channelRerositoryAsync = channelRerositoryAsync;
-            _dataInformations = dataInformations;
+            _dataInformationsAsync = dataInformationsAsync;
 
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public async Task<IEnumerable<WeatherForecast>> Get()
+        [HttpGet(Name = "GetVideoInfo")]
+        public async Task GetVideoInfo(string url)
         {
 
-            _dataInformations.GetInformationByUrl("https://www.youtube.com/watch?v=X7RDKkTGDUw&ab_channel=AlinaGingertail");
+            await _dataInformationsAsync.GetInformationByUrlAsync(url);
 
             Channel channel = new Channel();
             channel.Id = Guid.NewGuid();
@@ -79,14 +75,12 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
                     }
                 }
             }
+        }
 
-                return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-                {
-                    Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    TemperatureC = Random.Shared.Next(-20, 55),
-                    Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-                })
-                .ToArray();
+        [HttpPost(Name = "DownloadVideo")]
+        public async Task DownloadVideo() 
+        {
+            throw new Exception();
         }
     }
 }
