@@ -10,7 +10,7 @@ namespace Gurrex.Common.Interfaces
     /// <summary>
     /// Информация о сборке
     /// </summary>
-    public interface IAssemblyInfo
+    public interface IResources
     {
 
         /// <summary>

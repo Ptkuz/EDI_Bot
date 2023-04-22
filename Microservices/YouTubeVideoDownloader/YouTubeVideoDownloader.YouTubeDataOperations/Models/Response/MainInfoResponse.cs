@@ -1,11 +1,13 @@
 ﻿using YouTubeVideoDownloader.Interfaces.Models;
+using YouTubeVideoDownloader.Interfaces.Models.Response;
+using YouTubeVideoDownloader.YouTubeDataOperations.Models.Base;
 
-namespace YouTubeVideoDownloader.YouTubeDataOperations.Models
+namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.Response
 {
     /// <summary>
     /// Общая главная информация о видео
     /// </summary>
-    public class MainInfo : IMainInfo
+    public class MainInfoResponse : IMainInfoResponse
     {
         /// <summary>
         /// Заголовок
@@ -28,7 +30,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models
         /// <param name="title">Заголовок</param>
         /// <param name="author">Автор</param>
         /// <param name="duration">Продолжительность в секундах</param>
-        public MainInfo(string title, string author, int? duration) 
+        public MainInfoResponse(string title, string author, int? duration)
         {
             Title = title;
             Author = author;

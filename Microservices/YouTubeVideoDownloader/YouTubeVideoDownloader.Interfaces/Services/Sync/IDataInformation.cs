@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using YouTubeVideoDownloader.Interfaces.Models;
+using YouTubeVideoDownloader.Interfaces.Models.Response;
 
 namespace YouTubeVideoDownloader.Interfaces.Services.Sync
 {
@@ -13,10 +13,10 @@ namespace YouTubeVideoDownloader.Interfaces.Services.Sync
     public interface IDataInformation
     {
         /// <summary>
-        /// Получить коллекцию объектов, реализующих интерфейс <see cref="IYouTubeVideoInfo"/>, по ссылке
+        /// Получить всю информацию о видео по ссылке
         /// </summary>
         /// <param name="url">Ссылка на видео</param>
-        /// <returns>Коллекция объектов <see cref="IYouTubeVideoInfo"/></returns>
-        IEnumerable<IYouTubeVideoInfo> GetInformationByUrl(string url);
+        /// <returns>Вся информация о видео по ссылке</returns>
+        IYouTubeVideoInfoResponse GetYouTubeVideoInfo(string url);
     }
 }

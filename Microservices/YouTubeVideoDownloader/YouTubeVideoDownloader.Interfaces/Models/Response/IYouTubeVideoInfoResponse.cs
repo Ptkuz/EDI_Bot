@@ -4,18 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VideoLibrary;
+using YouTubeVideoDownloader.Interfaces.Models.Base;
 
-namespace YouTubeVideoDownloader.Interfaces.Models
+namespace YouTubeVideoDownloader.Interfaces.Models.Response
 {
     /// <summary>
     /// Информация о видео
     /// </summary>
-    public interface IYouTubeVideoInfo
+    public interface IYouTubeVideoInfoResponse : IBaseModel
     {
+
         /// <summary>
         /// Главная информация о видео
         /// </summary>
-        IMainInfo MainInfo { get; set; }
+        IMainInfoResponse MainInfo { get; set; }
 
         /// <summary>
         /// Перечисление доступных аудио битрейтов 
@@ -25,7 +27,7 @@ namespace YouTubeVideoDownloader.Interfaces.Models
         /// <summary>
         /// Перечисление доступных разрешений
         /// </summary>
-        IEnumerable<int> Resolutions {  get; set; }
+        IEnumerable<int> Resolutions { get; set; }
 
         /// <summary>
         /// Перечисление доступных аудио форматов

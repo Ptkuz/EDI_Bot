@@ -12,8 +12,16 @@ using YouTubeVideoDownloader.YouTubeDataOperations.Services.Sync;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
 {
+    /// <summary>
+    /// Регистратор сервисов
+    /// </summary>
     public static class ServicesRegistrator
     {
+        /// <summary>
+        /// Добавить сервисы
+        /// </summary>
+        /// <param name="services">Коллекция сервисов</param>
+        /// <returns></returns>
         public static IServiceCollection AddDownloadServices(this IServiceCollection services) => services
             .AddTransient<IDataInformation, DataInformations>()
             .AddTransient<IDataInformationAsync<YouTubeVideo>, DataInformationsAsync>()

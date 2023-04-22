@@ -1,25 +1,26 @@
 ﻿using Gurrex.Helpers;
 using System.Diagnostics;
 using VideoLibrary;
-using YouTubeVideoDownloader.Interfaces.Models;
+using YouTubeVideoDownloader.Interfaces.Models.Response;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
+using YouTubeVideoDownloader.YouTubeDataOperations.Models.Response;
 using YouTubeVideoDownloader.YouTubeDataOperations.Services.Base;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
 {
     /// <summary>
-    /// Информация о видео и аудио
+    /// Информация о видео и аудио асинхронно
     /// </summary>
     public class DataInformationsAsync : DataInformation, IDataInformationAsync<YouTubeVideo>
     {
 
         /// <summary>
-        /// Получить информациб о видео по ссылке
+        /// Асинхронно получить информациб о видео по ссылке
         /// </summary>
         /// <param name="url">URL видео</param>
         /// <returns></returns>
-        public async Task<IYouTubeVideoInfo> GetYouTubeVideoInfoAsync(string url)
+        public async Task<IYouTubeVideoInfoResponse> GetYouTubeVideoInfoAsync(string url)
         {
             YouTube youTube = YouTube.Default;
 
@@ -28,7 +29,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
                 .ConfigureAwait(false);
 
             YouTubeVideo youTubeVideo = GetYouTubeVideo(videos);
-            IMainInfo mainInfo = GetMainInfo(youTubeVideo);
+            IMainInfoResponse mainInfo = GetMainInfo(youTubeVideo);
 
             IEnumerable<int> audioBitrates = GetEnumerableAudioBitrates(videos);
             IEnumerable<int> resolutions = GetEnumerableResolutions(videos);
@@ -36,7 +37,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
             IEnumerable<VideoFormat> videoFormats = GetEnumerableVideoFormat(videos);
             IEnumerable<int> fps = GetEnumerableFps(videos);
 
-            IYouTubeVideoInfo youTubeVideoInfo = new YouTubeVideoInfo(mainInfo, audioBitrates, resolutions, audioFormats, videoFormats);
+            IYouTubeVideoInfoResponse youTubeVideoInfo = new YouTubeVideoInfoResponse(mainInfo, audioBitrates, resolutions, audioFormats, videoFormats, fps);
 
             return youTubeVideoInfo;
         }

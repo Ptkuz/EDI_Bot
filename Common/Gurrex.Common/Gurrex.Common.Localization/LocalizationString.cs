@@ -34,6 +34,10 @@ namespace Gurrex.Common.Localization
             {
                 throw;
             }
+            catch(Exception) 
+            {
+                throw;
+            }
         }
 
         /// <summary>

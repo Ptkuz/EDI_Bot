@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YouTubeVideoDownloader.Interfaces.Models.Base;
 
-namespace YouTubeVideoDownloader.Interfaces.Models
+namespace YouTubeVideoDownloader.Interfaces.Models.Response
 {
     /// <summary>
     /// Общая главная информация о видео
     /// </summary>
-    public interface IMainInfo
+    public interface IMainInfoResponse
     {
         /// <summary>
         /// Название
@@ -19,11 +20,11 @@ namespace YouTubeVideoDownloader.Interfaces.Models
         /// <summary>
         /// Автор
         /// </summary>
-        string Author { get; set; } 
+        string Author { get; set; }
 
         /// <summary>
         /// Продолжительность в секундах
         /// </summary>
-        int? Duration { get; set; }   
+        int? Duration { get; set; }
     }
 }

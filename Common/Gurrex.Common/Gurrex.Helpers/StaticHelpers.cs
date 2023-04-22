@@ -18,7 +18,7 @@ namespace Gurrex.Helpers
         /// <returns></returns>
         public static Assembly GetAssembly() 
         { 
-            return Assembly.GetCallingAssembly(); 
+            return Assembly.GetEntryAssembly(); 
         }
 
         /// <summary>

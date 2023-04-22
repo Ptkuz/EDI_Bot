@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using YouTubeVideoDownloader.Interfaces.Models;
+using YouTubeVideoDownloader.Interfaces.Models.Response;
 
 namespace YouTubeVideoDownloader.Interfaces.Services.Async
 {
@@ -17,6 +17,6 @@ namespace YouTubeVideoDownloader.Interfaces.Services.Async
         /// </summary>
         /// <param name="url">Ссылка на видео</param>
         /// <returns>Вся информация о видео по ссылке</returns>
-        Task<IYouTubeVideoInfo> GetYouTubeVideoInfoAsync(string url);
+        Task<IYouTubeVideoInfoResponse> GetYouTubeVideoInfoAsync(string url);
     }
 }

@@ -11,7 +11,7 @@ namespace Gurrex.Common.DAL.Entities
     /// <summary>
     /// Базовая сущность
     /// </summary>
-    public class Entity : IEntity, IAssemblyInfo
+    public class Entity : IEntity, IResources
     {
 
         /// <summary>
