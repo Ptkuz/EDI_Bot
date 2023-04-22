@@ -1,4 +1,5 @@
 ﻿using Gurrex.Common.Localization;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace Gurrex.Common.Validations
@@ -27,7 +28,7 @@ namespace Gurrex.Common.Validations
         /// <param name="value">класс, унаследованный от <see cref="object"/></param>
         /// <param name="argument">Аргумент исключения</param>
         /// <exception cref="ArgumentNullException">Один из параметров метода пустой</exception>
-        public static void CheckObjectForNull(this object? value, string argument)
+        public static void CheckObjectForNull([NotNull] this object? value, string argument)
         {
             try
             {

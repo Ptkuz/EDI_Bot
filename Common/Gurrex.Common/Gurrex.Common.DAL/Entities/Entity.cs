@@ -1,6 +1,7 @@
 ﻿using Gurrex.Common.Interfaces;
 using Gurrex.Common.Interfaces.Entities;
 using Gurrex.Common.Localization;
+using Gurrex.Helpers;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
@@ -12,23 +13,6 @@ namespace Gurrex.Common.DAL.Entities
     /// </summary>
     public class Entity : IEntity, IAssemblyInfo
     {
-        /// <summary>
-        /// Экземпляр сборки
-        /// </summary>
-        [NotMapped]
-        public Assembly Assembly { get; set; }
-
-        /// <summary>
-        /// Полное имя сборки
-        /// </summary>
-        [NotMapped]
-        public AssemblyName FullAssemblyName { get; set; }
-
-        /// <summary>
-        /// Имя сборки
-        /// </summary>
-        [NotMapped]
-        public string? AssemblyName { get; set; }
 
         /// <summary>
         /// Id сущности
@@ -61,9 +45,7 @@ namespace Gurrex.Common.DAL.Entities
         /// </summary>
         public Entity()
         {
-            Assembly = Assembly.GetExecutingAssembly();
-            FullAssemblyName = Assembly.GetName();
-            AssemblyName = FullAssemblyName.Name;
+
         }
 
         /// <summary>
@@ -86,9 +68,9 @@ namespace Gurrex.Common.DAL.Entities
         /// Получить путь до ресурсов
         /// </summary>
         /// <returns>Путь до ресурсов</returns>
-        public virtual string GetResourcesPath(bool callBase = false) 
+        public virtual string GetResourcesPath(string type) 
         {
-            return $"{AssemblyName}.Resources.Entities.Entity";
+            return $"{StaticHelpers.GetAssemblyName().Name}.Resources.Entities.Entity";
         }
 
         /// <summary>
@@ -97,7 +79,7 @@ namespace Gurrex.Common.DAL.Entities
         /// <returns>Информация о сущности</returns>
         public override string ToString()
         {
-            string localizationString = LocalizationString.GetString(GetResourcesPath(), Assembly, "EntityInfo");
+            string localizationString = LocalizationString.GetString(GetResourcesPath(nameof(Entity)), StaticHelpers.GetAssembly(), "EntityInfo");
             return LocalizationString.GetResultString(localizationString, Id);
         }
     }

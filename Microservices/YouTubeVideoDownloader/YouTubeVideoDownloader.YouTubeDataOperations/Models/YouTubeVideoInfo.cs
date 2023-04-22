@@ -14,48 +14,50 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models
     public class YouTubeVideoInfo : IYouTubeVideoInfo
     {
         /// <summary>
-        /// Заголовок видео
+        /// Главная информация о видео
         /// </summary>
-        public string Title { get; set; } = null!;
+        public IMainInfo MainInfo { get; set; } = null!;
 
         /// <summary>
-        /// Название канала
+        /// Перечисление доступных аудио битрейтов
         /// </summary>
-        public string ChannelName { get; set; } = null!;
+        public IEnumerable<int> AudioBitrates { get; set; } = null!;
 
         /// <summary>
-        /// Формат аудио дорожки
+        /// Пееречисление доступных
         /// </summary>
-        public string AudioFormat { get; set; } = null!;
+        public IEnumerable<int> Resolutions { get; set; } = null!;
 
         /// <summary>
-        /// Формат видео дорожки
+        /// Перечисление доступных аудио форматов
         /// </summary>
-        public string VideoFormat { get; set; } = null!;
+        public IEnumerable<AudioFormat> AudioFormats { get; set; } = null!;
 
         /// <summary>
-        /// Количество кадров в секунду
+        /// Перечисление видео форматов
         /// </summary>
-        public int FrameRate { get; set; }
+        public IEnumerable<VideoFormat> VideoFormats { get; set; } = null!;
 
         /// <summary>
-        /// Размер видео
+        /// Перечисление доступных Fps
         /// </summary>
-        public int Length { get; set; }
+        public IEnumerable<int> Fps { get; set; } = null!;
 
         /// <summary>
-        /// Битрейт аудио
+        /// Конструктор инициализатор
         /// </summary>
-        public int Bitrate { get; set; }
-
-        /// <summary>
-        /// Разрешение
-        /// </summary>
-        public int Resolution { get; set; } 
-
-        /// <summary>
-        /// Продолжительность
-        /// </summary>
-        public int Duration { get; set; }   
+        /// <param name="mainInfo">Главная информация о видео</param>
+        /// <param name="audioBitrates">Перечисление аудио битрейтов</param>
+        /// <param name="resolutions">Перечисление разрешений</param>
+        /// <param name="audioFormats">Перечисление аудио форматов</param>
+        /// <param name="videoFormats">Перечислене видео форматов</param>
+        public YouTubeVideoInfo(IMainInfo mainInfo, IEnumerable<int> audioBitrates, IEnumerable<int> resolutions, IEnumerable<AudioFormat> audioFormats, IEnumerable<VideoFormat> videoFormats) 
+        {
+            MainInfo = mainInfo;
+            AudioBitrates = audioBitrates;
+            Resolutions = resolutions;
+            AudioFormats = audioFormats;
+            VideoFormats = videoFormats;
+        }
     }
 }
