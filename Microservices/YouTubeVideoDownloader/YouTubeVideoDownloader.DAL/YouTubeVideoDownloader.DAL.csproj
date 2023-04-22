@@ -40,6 +40,9 @@
     <Reference Include="Gurrex.Common.Validations">
       <HintPath>..\..\..\Common\Gurrex.Common\Gurrex.Common.Validations\bin\Debug\net7.0\Gurrex.Common.Validations.dll</HintPath>
     </Reference>
+    <Reference Include="Gurrex.Helpers">
+      <HintPath>..\..\..\Common\Gurrex.Common\Gurrex.Helpers\bin\Debug\net7.0\Gurrex.Helpers.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

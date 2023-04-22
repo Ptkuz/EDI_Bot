@@ -1,7 +1,9 @@
 ﻿using Gurrex.Common.Interfaces;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Validations;
+using Gurrex.Helpers;
 using System.Collections.Specialized;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Web;
 using VideoLibrary;
@@ -18,29 +20,11 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
     {
 
         /// <summary>
-        /// Экземпляр сборки
-        /// </summary>
-        public Assembly Assembly { get; set; }
-
-        /// <summary>
-        /// Полное имя сборки
-        /// </summary>
-        public AssemblyName FullAssemblyName { get; set; }
-
-        /// <summary>
-        /// Имя сборки
-        /// </summary>
-        public string? AssemblyName { get; set; }
-
-
-        /// <summary>
         /// Конструктор инициализатор
         /// </summary>
         public DataInformation()
         {
-            Assembly = Assembly.GetExecutingAssembly();
-            FullAssemblyName = Assembly.GetName();
-            AssemblyName = FullAssemblyName.Name;
+
         }
 
         /// <summary>
@@ -119,7 +103,19 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
         }
 
         /// <summary>
-        /// Получить экземпляр, реализующий <see cref="IMainInfo"/>
+        /// Получить видео из перечисления объектов <see cref="YouTubeVideo"/>
+        /// </summary>
+        /// <param name="videos"></param>
+        /// <returns></returns>
+        protected YouTubeVideo GetYouTubeVideo(IEnumerable<YouTubeVideo> videos) 
+        {
+                YouTubeVideo? video = videos.FirstOrDefault();
+                video.CheckObjectForNull(nameof(video));
+                return video;
+        }
+
+        /// <summary>
+        /// Получить главную информация о видео
         /// </summary>
         /// <param name="video">Видео <see cref="YouTubeVideo"/></param>
         /// <returns>Экземпляр, реализующий <see cref="IMainInfo"/></returns>
@@ -140,7 +136,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
         {
             try
             {
-                string gf = LocalizationString.GetString(GetResourcesPath(true), Assembly, "ExceptionNoContainsKeyV");
+                string gf = LocalizationString.GetString(GetResourcesPath(nameof(DataInformation)), StaticHelpers.GetAssembly(), "ExceptionNoContainsKeyV");
                 string resufggfltString = LocalizationString.GetResultString(gf, url);
 
                 Uri uri = new Uri(url);
@@ -152,7 +148,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
                     return query[key];
                 else
                 {
-                    string localizationString = LocalizationString.GetString(GetResourcesPath(), Assembly, "ExceptionNoContainsKeyV");
+                    string localizationString = LocalizationString.GetString(GetResourcesPath(nameof(DataInformation)), StaticHelpers.GetAssembly(), "ExceptionNoContainsKeyV");
                     string resultString = LocalizationString.GetResultString(localizationString, url);
                     throw new NoContainsKeyException(resultString, key);
                 }
@@ -171,9 +167,9 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
         /// Получить путь до ресурсов
         /// </summary>
         /// <returns>Путь до ресурсов</returns>
-        public virtual string GetResourcesPath(bool callBase = false)
+        public virtual string GetResourcesPath(string type)
         {
-            return $"{AssemblyName}.Resources.Services.Base.DataInformation";
+            return $"{StaticHelpers.GetAssemblyName().Name}.Resources.Services.Base.DataInformation";
         }
 
     }

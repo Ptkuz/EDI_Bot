@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using YouTubeVideoDownloader.Interfaces.Entities;
 using System.Reflection;
+using Gurrex.Helpers;
 
 namespace YouTubeVideoDownloader.DAL.Entities
 {
@@ -27,9 +28,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// </summary>
         public Channel() 
         {
-            Assembly = Assembly.GetExecutingAssembly();
-            FullAssemblyName = Assembly.GetName();
-            AssemblyName = FullAssemblyName.Name;
+
         }
 
         /// <summary>
@@ -50,9 +49,9 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// Получить путь до ресурсов
         /// </summary>
         /// <returns>Путь до ресурсов</returns>
-        public override string GetResourcesPath(bool callBase) 
+        public override string GetResourcesPath(string type) 
         {
-            return $"{AssemblyName}.Resources.Entities.Channel";
+            return $"{StaticHelpers.GetAssemblyName().Name}.Resources.Entities.Channel";
         }
     }
 }

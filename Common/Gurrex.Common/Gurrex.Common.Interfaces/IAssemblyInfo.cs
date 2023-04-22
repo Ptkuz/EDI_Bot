@@ -12,26 +12,12 @@ namespace Gurrex.Common.Interfaces
     /// </summary>
     public interface IAssemblyInfo
     {
-        /// <summary>
-        /// Сборка
-        /// </summary>
-        Assembly Assembly { get; protected set; }
-
-        /// <summary>
-        /// Полное имя сборки
-        /// </summary>
-        AssemblyName FullAssemblyName { get; protected set; }
-
-        /// <summary>
-        /// Имя сборки
-        /// </summary>
-        string? AssemblyName { get; protected set; }
 
         /// <summary>
         /// Получить путь до ресурсов
         /// </summary>
-        /// <param name="callBase">Вызывать ли базовую реализацию</param>
+        /// <param name="type">Тип, из которого будет вызвана реализация метода</param>
         /// <returns>Путь до ресурсов</returns>
-        string GetResourcesPath(bool callBase = false);
+        string GetResourcesPath(string type);
     }
 }

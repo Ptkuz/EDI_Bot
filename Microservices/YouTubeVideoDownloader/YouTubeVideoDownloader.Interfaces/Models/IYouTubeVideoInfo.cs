@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VideoLibrary;
 
 namespace YouTubeVideoDownloader.Interfaces.Models
 {
@@ -12,48 +13,34 @@ namespace YouTubeVideoDownloader.Interfaces.Models
     public interface IYouTubeVideoInfo
     {
         /// <summary>
-        /// Заголовок видео
+        /// Главная информация о видео
         /// </summary>
-        string Title { get; set; }
+        IMainInfo MainInfo { get; set; }
 
         /// <summary>
-        /// Название канала
+        /// Перечисление доступных аудио битрейтов 
         /// </summary>
-        string ChannelName { get; set; }
+        IEnumerable<int> AudioBitrates { get; set; }
 
         /// <summary>
-        /// Формат аудио дорожки
+        /// Перечисление доступных разрешений
         /// </summary>
-        string AudioFormat { get; set; }
+        IEnumerable<int> Resolutions {  get; set; }
 
         /// <summary>
-        /// Формат видео дорожки
+        /// Перечисление доступных аудио форматов
         /// </summary>
-        string VideoFormat { get; set; }
+        IEnumerable<AudioFormat> AudioFormats { get; set; }
 
         /// <summary>
-        /// Количество кадров в секунду
+        /// Перечисление доступных видео форматов
         /// </summary>
-        public int FrameRate { get; set; }
+        IEnumerable<VideoFormat> VideoFormats { get; set; }
 
         /// <summary>
-        /// Размер видео
+        /// Перечисление доступных Fps
         /// </summary>
-        public int Length { get; set; }
+        IEnumerable<int> Fps { get; set; }
 
-        /// <summary>
-        /// Битрейт аудио
-        /// </summary>
-        public int Bitrate { get; set; }
-
-        /// <summary>
-        /// Разрешение
-        /// </summary>
-        public int Resolution { get; set; }
-
-        /// <summary>
-        /// Продолжительность
-        /// </summary>
-        public int Duration { get; set; }
     }
 }

@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="VideoLibrary" Version="3.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Gurrex.Common.Interfaces">
       <HintPath>..\..\..\Common\Gurrex.Common\Gurrex.Common.Interfaces\bin\Debug\net7.0\Gurrex.Common.Interfaces.dll</HintPath>
     </Reference>
