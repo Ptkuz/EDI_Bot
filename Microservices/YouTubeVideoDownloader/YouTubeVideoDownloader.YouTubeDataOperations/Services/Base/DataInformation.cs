@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Web;
 using VideoLibrary;
-using YouTubeVideoDownloader.Interfaces.Models.Response;
+using YouTubeVideoDownloader.Interfaces.Models;
 using YouTubeVideoDownloader.YouTubeDataOperations.Exceptions;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.Response;
@@ -119,10 +119,10 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
         /// Получить главную информация о видео
         /// </summary>
         /// <param name="video">Видео <see cref="YouTubeVideo"/></param>
-        /// <returns>Экземпляр, реализующий <see cref="IMainInfoResponse"/></returns>
-        protected IMainInfoResponse GetMainInfo(YouTubeVideo video)
+        /// <returns>Экземпляр, реализующий <see cref="IMainInfo"/></returns>
+        protected MainInfo GetMainInfo(YouTubeVideo video)
         {
-            IMainInfoResponse mainInfo = new MainInfoResponse(video.Info.Title, video.Info.Author, video.Info.LengthSeconds);
+            MainInfo mainInfo = new MainInfo(video.Info.Title, video.Info.Author, video.Info.LengthSeconds);
             return mainInfo;
         }
 

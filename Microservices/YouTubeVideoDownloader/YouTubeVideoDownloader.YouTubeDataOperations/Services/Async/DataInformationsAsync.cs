@@ -1,7 +1,5 @@
 ﻿using Gurrex.Helpers;
-using System.Diagnostics;
 using VideoLibrary;
-using YouTubeVideoDownloader.Interfaces.Models.Response;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.Response;
@@ -12,7 +10,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
     /// <summary>
     /// Информация о видео и аудио асинхронно
     /// </summary>
-    public class DataInformationsAsync : DataInformation, IDataInformationAsync<YouTubeVideo>
+    public class DataInformationsAsync : DataInformation, IDataInformationAsync<YouTubeVideoInfoResponse>
     {
 
         /// <summary>
@@ -20,7 +18,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// </summary>
         /// <param name="url">URL видео</param>
         /// <returns></returns>
-        public async Task<IYouTubeVideoInfoResponse> GetYouTubeVideoInfoAsync(string url)
+        public async Task<YouTubeVideoInfoResponse> GetYouTubeVideoInfoAsync(string url)
         {
             YouTube youTube = YouTube.Default;
 
@@ -29,7 +27,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
                 .ConfigureAwait(false);
 
             YouTubeVideo youTubeVideo = GetYouTubeVideo(videos);
-            IMainInfoResponse mainInfo = GetMainInfo(youTubeVideo);
+            MainInfo mainInfo = GetMainInfo(youTubeVideo);
 
             IEnumerable<int> audioBitrates = GetEnumerableAudioBitrates(videos);
             IEnumerable<int> resolutions = GetEnumerableResolutions(videos);
@@ -37,7 +35,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
             IEnumerable<VideoFormat> videoFormats = GetEnumerableVideoFormat(videos);
             IEnumerable<int> fps = GetEnumerableFps(videos);
 
-            IYouTubeVideoInfoResponse youTubeVideoInfo = new YouTubeVideoInfoResponse(mainInfo, audioBitrates, resolutions, audioFormats, videoFormats, fps);
+            YouTubeVideoInfoResponse youTubeVideoInfo = new YouTubeVideoInfoResponse(mainInfo, audioBitrates, resolutions, audioFormats, videoFormats, fps);
 
             return youTubeVideoInfo;
         }
@@ -48,7 +46,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// <returns>Путь до ресурсов</returns>
         public override string GetResourcesPath(string type)
         {
-            if (type is not nameof(type)) 
+            if (type is not nameof(type))
             {
                 return base.GetResourcesPath(type);
             }

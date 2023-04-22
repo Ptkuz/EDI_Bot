@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using VideoLibrary;
 using YouTubeVideoDownloader.Interfaces.Models;
-using YouTubeVideoDownloader.Interfaces.Models.Response;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.Base;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.Response
@@ -13,13 +12,13 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.Response
     /// <summary>
     /// Информация о YouTube ролике, полученном по ссылке
     /// </summary>
-    public class YouTubeVideoInfoResponse : BaseModel, IYouTubeVideoInfoResponse
+    public class YouTubeVideoInfoResponse : BaseModel
     {
 
         /// <summary>
         /// Главная информация о видео
         /// </summary>
-        public IMainInfoResponse MainInfo { get; set; } = null!;
+        public MainInfo MainInfo { get; set; } = null!;
 
         /// <summary>
         /// Перечисление доступных аудио битрейтов
@@ -55,7 +54,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.Response
         /// <param name="audioFormats">Перечисление аудио форматов</param>
         /// <param name="videoFormats">Перечислене видео форматов</param>
         /// <param name="fps">Перечислене Fps</param>
-        public YouTubeVideoInfoResponse(IMainInfoResponse mainInfo, IEnumerable<int> audioBitrates, IEnumerable<int> resolutions, IEnumerable<AudioFormat> audioFormats, IEnumerable<VideoFormat> videoFormats, IEnumerable<int> fps)
+        public YouTubeVideoInfoResponse(MainInfo mainInfo, IEnumerable<int> audioBitrates, IEnumerable<int> resolutions, IEnumerable<AudioFormat> audioFormats, IEnumerable<VideoFormat> videoFormats, IEnumerable<int> fps)
            : base()
         {
             MainInfo = mainInfo;

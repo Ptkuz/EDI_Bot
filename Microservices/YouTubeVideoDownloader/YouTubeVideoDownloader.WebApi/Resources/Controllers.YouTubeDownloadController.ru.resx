@@ -120,4 +120,7 @@
   <data name="GetVideoInfoAsyncException" xml:space="preserve">
     <value>В процессе получения информации о видео произошла ошибка: {0}</value>
   </data>
+  <data name="GetVideoInfoAsyncSuccess" xml:space="preserve">
+    <value>Пользователь "{0}" получил информацию о видео по ссылке "{1}" </value>
+  </data>
 </root>
