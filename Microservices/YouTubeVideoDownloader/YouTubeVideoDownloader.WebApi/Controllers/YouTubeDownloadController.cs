@@ -1,13 +1,16 @@
 using Gurrex.Common.Localization;
+using Gurrex.Common.Localization.Models;
+using Gurrex.Common.Validations;
 using Gurrex.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
-using VideoLibrary;
+using System.Reflection;
 using YouTubeVideoDownloader.DAL.Entities;
 using YouTubeVideoDownloader.Interfaces.Repositories.Async;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.Request;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.Response;
+using YouTubeVideoDownloader.YouTubeDataOperations.Services.Base;
 
 namespace YouTubeVideoDownloader.WebApi.Controllers
 {
@@ -20,17 +23,50 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
         private readonly IChannelRerositoryAsync<Channel> _channelRerositoryAsync;
         private readonly IDataInformationAsync<YouTubeVideoInfoResponse> _dataInformationsAsync;
 
+        /// <summary>
+        /// Сборка
+        /// </summary>
+        public virtual Assembly Assembly
+        {
+            get
+            {
+                Assembly? assembly = Assembly.GetAssembly(typeof(YouTubeDownloadController));
+                assembly.CheckObjectForNull(nameof(assembly));
+                return assembly;
+            }
+        }
+
+        /// <summary>
+        /// Имя сборки
+        /// </summary>
+        public virtual string AssemblyName
+        {
+            get
+            {
+                AssemblyName assemblyName = Assembly.GetName();
+                string? name = assemblyName.Name;
+                name.CheckObjectForNull(nameof(name));
+                return name;
+            }
+        }
+
+        /// <summary>
+        /// Путь до ресурсов
+        /// </summary>
+        public virtual string ResourcesPath
+        {
+            get
+            {
+                return $"{AssemblyName}.Resources.Controllers.YouTubeDownloadController";
+            }
+        }
+
         public YouTubeDownloadController(ILogger<YouTubeDownloadController> logger, IChannelRerositoryAsync<Channel> channelRerositoryAsync, IDataInformationAsync<YouTubeVideoInfoResponse> dataInformationsAsync)
         {
             _logger = logger;
             _channelRerositoryAsync = channelRerositoryAsync;
             _dataInformationsAsync = dataInformationsAsync;
 
-        }
-
-        private string GetResourcesPath(string type)
-        {
-            return $"{StaticHelpers.GetAssemblyName().Name}.Resources.Controllers.YouTubeDownloadController";
         }
 
         [HttpGet("GetVideoInfoAsync")]
@@ -40,14 +76,14 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
             try
             {
                 YouTubeVideoInfoResponse youtubeVideoInfo = await _dataInformationsAsync.GetYouTubeVideoInfoAsync(videoInfoRequest.Url);
-                string localizationString = LocalizationString.GetString(GetResourcesPath(nameof(YouTubeDownloadController)), StaticHelpers.GetAssembly(), "GetVideoInfoAsyncSuccess");
+                string localizationString = LocalizationString.GetString(new Resource(ResourcesPath, "GetVideoInfoAsyncSuccess", Assembly));
                 string resultString = LocalizationString.GetResultString(localizationString, videoInfoRequest.Id, videoInfoRequest.Url);
                 _logger.LogInformation(resultString);
                 return Ok(youtubeVideoInfo);
             }
             catch (Exception ex)
             {
-                string localizationString = LocalizationString.GetString(GetResourcesPath(nameof(YouTubeDownloadController)), StaticHelpers.GetAssembly(), "GetVideoInfoAsyncException");
+                string localizationString = LocalizationString.GetString(new Resource(ResourcesPath, "GetVideoInfoAsyncException", Assembly));
                 string resultStringLog = LocalizationString.GetResultString(localizationString, ex);
                 string resultString = LocalizationString.GetResultString(localizationString, ex.Message);
                 _logger.LogError(resultStringLog);

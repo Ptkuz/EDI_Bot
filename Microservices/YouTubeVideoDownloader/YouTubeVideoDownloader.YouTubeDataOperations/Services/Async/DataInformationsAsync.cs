@@ -1,4 +1,9 @@
-﻿using Gurrex.Helpers;
+﻿using Gurrex.Common.Localization;
+using Gurrex.Common.Localization.Models;
+using Gurrex.Common.Validations;
+using Gurrex.Helpers;
+using System.Net.Http.Headers;
+using System.Reflection;
 using VideoLibrary;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
@@ -12,6 +17,22 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
     /// </summary>
     public class DataInformationsAsync : DataInformation, IDataInformationAsync<YouTubeVideoInfoResponse>
     {
+
+        /// <summary>
+        /// Путь до ресурсов
+        /// </summary>
+        public override string ResourcesPath
+        {
+            get
+            {
+                if (TypeName is not nameof(DataInformationsAsync)) 
+                {
+                    return base.ResourcesPath;
+                }
+
+                return $"{AssemblyName}.Resources.Services.Async.DataInformationsAsync";
+            }
+        }
 
         /// <summary>
         /// Асинхронно получить информациб о видео по ссылке
@@ -34,6 +55,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
             IEnumerable<AudioFormat> audioFormats = GetEnumerableAudioFormat(videos);
             IEnumerable<VideoFormat> videoFormats = GetEnumerableVideoFormat(videos);
             IEnumerable<int> fps = GetEnumerableFps(videos);
+            Stream stream = await GetVideoImageAsync(url);
 
             YouTubeVideoInfoResponse youTubeVideoInfo = new YouTubeVideoInfoResponse(mainInfo, audioBitrates, resolutions, audioFormats, videoFormats, fps);
 
@@ -41,19 +63,30 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         }
 
         /// <summary>
-        /// Получить путь до ресурсов
+        /// Асинхронно получить картинку видео по Url
         /// </summary>
-        /// <returns>Путь до ресурсов</returns>
-        public override string GetResourcesPath(string type)
+        /// <param name="url">Ссылка на видео</param>
+        /// <returns>Поток <see cref="Stream"/> с картинкой</returns>
+        private async Task<Stream> GetVideoImageAsync(string url)
         {
-            if (type is not nameof(type))
+            string? id = GetUrlValueByKey(url, "v");
+            id.CheckObjectForNull(nameof(id));
+
+            string localizationString = LocalizationString.GetString(new Resource(ResourcesPath, "VideoImageUrl", Assembly));
+            string resultString = LocalizationString.GetResultString(localizationString, id, "maxresdefault.jpg");
+
+            Uri uri = new Uri(resultString);
+
+            using (HttpClient httpClient = new HttpClient())
             {
-                return base.GetResourcesPath(type);
+                HttpResponseMessage response = await httpClient.GetAsync(url);
+
+                using (Stream stream = new MemoryStream()) 
+                {
+                    await response.Content.CopyToAsync(stream);
+                    return stream;
+                }
             }
-
-            return $"{StaticHelpers.GetAssemblyName()}.Services.Async.DataInformationsAsync";
         }
-
-
     }
 }

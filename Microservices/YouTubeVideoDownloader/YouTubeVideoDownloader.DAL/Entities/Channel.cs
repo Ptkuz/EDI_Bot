@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using YouTubeVideoDownloader.Interfaces.Entities;
 using System.Reflection;
 using Gurrex.Helpers;
+using Gurrex.Common.Validations;
 
 namespace YouTubeVideoDownloader.DAL.Entities
 {
@@ -11,6 +12,24 @@ namespace YouTubeVideoDownloader.DAL.Entities
     /// </summary>
     public class Channel : Entity, IChannel
     {
+
+        /// <summary>
+        /// Тип
+        /// </summary>
+        [NotMapped]
+        public override string? TypeName { get; set; }
+
+        /// <summary>
+        /// Путь до ресурсов
+        /// </summary>
+        [NotMapped]
+        public override string ResourcesPath
+        {
+            get
+            {
+                return $"{StaticHelpers.GetAssemblyInfo().Assembly}.Resources.Entities.Channel";
+            }
+        }
 
         /// <summary>
         /// Название канала
@@ -43,15 +62,6 @@ namespace YouTubeVideoDownloader.DAL.Entities
             : base(id, dateAdded, dateModified, dateDeleted)
         {
             Name = name;
-        }
-
-        /// <summary>
-        /// Получить путь до ресурсов
-        /// </summary>
-        /// <returns>Путь до ресурсов</returns>
-        public override string GetResourcesPath(string type) 
-        {
-            return $"{StaticHelpers.GetAssemblyName().Name}.Resources.Entities.Channel";
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Gurrex.Common.DAL.Entities;
+using Gurrex.Common.Validations;
 using Gurrex.Helpers;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
@@ -11,6 +12,24 @@ namespace YouTubeVideoDownloader.DAL.Entities
     /// </summary>
     public class Video : Entity, IVideo
     {
+
+        /// <summary>
+        /// Тип
+        /// </summary>
+        public override string? TypeName { get; set; }
+
+        /// <summary>
+        /// Путь до ресурсов
+        /// </summary>
+        [NotMapped]
+        public override string ResourcesPath
+        {
+            get
+            {
+                return $"{StaticHelpers.GetAssemblyInfo().Assembly}.Resources.Entities.Video";
+            }
+        }
+
 
         /// <summary>
         /// Формат
@@ -82,15 +101,6 @@ namespace YouTubeVideoDownloader.DAL.Entities
             FrameRate = frameRate;
             FormatAudio = formatAudio;
             Bitrate = bitrate;
-        }
-
-        /// <summary>
-        /// Получить путь до ресурсов
-        /// </summary>
-        /// <returns>Путь до ресурсов</returns>
-        public override string GetResourcesPath(string type)
-        {
-            return $"{StaticHelpers.GetAssemblyName().Name}.Resources.Entities.Video";
         }
 
     }

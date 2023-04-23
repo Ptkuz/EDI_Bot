@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Gurrex.Common.Validations\Gurrex.Common.Validations.csproj" />
+  </ItemGroup>
+
 </Project>

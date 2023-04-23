@@ -1,4 +1,5 @@
 ﻿using Gurrex.Common.Localization;
+using Gurrex.Common.Localization.Models;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
@@ -7,7 +8,7 @@ namespace Gurrex.Common.Validations
     /// <summary>
     /// Расширения для валидации
     /// </summary>
-    public static class ExtentionsCommonValidations
+    public static class ExtentionsCommonValidations 
     {
 
         private static Assembly currentAssembly = null!;
@@ -35,14 +36,14 @@ namespace Gurrex.Common.Validations
 
                 if (argument is null)
                 {
-                    string localizationString = LocalizationString.GetString(fileResourceName, currentAssembly, "ExceptionCheckArgumentForNullOrEmpty");
+                    string localizationString = LocalizationString.GetString(new Resource(fileResourceName, "ExceptionCheckArgumentForNullOrEmpty", currentAssembly));
                     string errorMessage = String.Format(localizationString, nameof(argument));
                     throw new ArgumentNullException(nameof(argument), errorMessage);
                 }
 
                 if (value is null)
                 {
-                    string localizationString = LocalizationString.GetString(fileResourceName, currentAssembly, "ExceptionCheckValueForNull");
+                    string localizationString = LocalizationString.GetString(new Resource(fileResourceName, "ExceptionCheckValueForNull", currentAssembly));
                     string errorMessage = String.Format(localizationString, argument);
                     throw new ArgumentNullException(argument, errorMessage);
                 }

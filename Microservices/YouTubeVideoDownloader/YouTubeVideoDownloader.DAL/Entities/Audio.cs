@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using YouTubeVideoDownloader.Interfaces.Entities;
 using System.Reflection;
 using Gurrex.Helpers;
+using Gurrex.Common.Validations;
+using System.Diagnostics;
 
 namespace YouTubeVideoDownloader.DAL.Entities
 {
@@ -12,6 +14,29 @@ namespace YouTubeVideoDownloader.DAL.Entities
     /// </summary>
     public class Audio : Entity, IAudio
     {
+
+        /// <summary>
+        /// Имя типа, вызывающий свойство <see cref="ResourcesPath"/>
+        /// </summary>
+        public override string? TypeName { get; set; }
+
+        /// <summary>
+        /// Путь до ресурсов
+        /// </summary>
+        [NotMapped]
+        public override string ResourcesPath
+        {
+            get
+            {
+                if (TypeName is not nameof(Audio)) 
+                {
+                    return base.ResourcesPath;
+                }
+
+                return $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.Audio";
+            }
+        }
+
 
         /// <summary>
         /// Формат
@@ -61,14 +86,6 @@ namespace YouTubeVideoDownloader.DAL.Entities
             Bitrate = bitrate;
         }
 
-        /// <summary>
-        /// Получить путь до ресурсов
-        /// </summary>
-        /// <returns>Путь до ресурсов</returns>
-        public override string GetResourcesPath(string type) 
-        {
-            return $"{StaticHelpers.GetAssemblyName().Name}.Resources.Entities.Audio";
-        }
 
     }
 }

@@ -120,4 +120,8 @@
   <data name="ExceptionNoContainsKeyV" xml:space="preserve">
     <value>Ссылка \"{0}\" не содержит ключа \"v\" </value>
   </data>
+  <data name="VideoImageUrl" xml:space="preserve">
+    <value>https://img.youtube.com/vi/{0}/{1}</value>
+    <comment>Ссылка на картинку видео. 0 - Id видео, 1 - название картинки</comment>
+  </data>
 </root>

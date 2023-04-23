@@ -1,8 +1,10 @@
 ﻿using Gurrex.Common.Interfaces;
 using Gurrex.Common.Localization;
+using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Validations;
 using Gurrex.Helpers;
 using System.Collections.Specialized;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Web;
@@ -19,6 +21,51 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
     /// </summary>
     public class DataInformation : IResources
     {
+
+        /// <summary>
+        /// Сборка
+        /// </summary>
+        public virtual Assembly Assembly
+        {
+            get
+            {
+                Assembly? assembly = Assembly.GetAssembly(typeof(DataInformation));
+                assembly.CheckObjectForNull(nameof(assembly));
+                return assembly;
+            }
+        }
+
+        /// <summary>
+        /// Имя сборки
+        /// </summary>
+        public virtual string AssemblyName
+        {
+            get
+            {
+                AssemblyName assemblyName = Assembly.GetName();
+                string? name = assemblyName.Name;
+                name.CheckObjectForNull(nameof(name));
+                return name;
+            }
+        }
+
+        /// <summary>
+        /// Имя вызывающего типа
+        /// </summary>
+        public string TypeName { get; set; } = null!;
+
+
+        /// <summary>
+        /// Путь до ресурсов
+        /// </summary>
+        public virtual string ResourcesPath
+        {
+            get
+            {
+                return $"{AssemblyName}.Resources.Services.Base.DataInformation";
+            }
+        }
+
 
         /// <summary>
         /// Конструктор инициализатор
@@ -137,7 +184,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
         {
             try
             {
-                string gf = LocalizationString.GetString(GetResourcesPath(nameof(DataInformation)), StaticHelpers.GetAssembly(), "ExceptionNoContainsKeyV");
+                string gf = LocalizationString.GetString(new Resource(ResourcesPath, "ExceptionNoContainsKeyV", Assembly));
                 string resufggfltString = LocalizationString.GetResultString(gf, url);
 
                 Uri uri = new Uri(url);
@@ -149,7 +196,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
                     return query[key];
                 else
                 {
-                    string localizationString = LocalizationString.GetString(GetResourcesPath(nameof(DataInformation)), StaticHelpers.GetAssembly(), "ExceptionNoContainsKeyV");
+                    string localizationString = LocalizationString.GetString(new Resource(ResourcesPath, "ExceptionNoContainsKeyV", Assembly));
                     string resultString = LocalizationString.GetResultString(localizationString, url);
                     throw new NoContainsKeyException(resultString, key);
                 }
@@ -162,15 +209,6 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
             {
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Получить путь до ресурсов
-        /// </summary>
-        /// <returns>Путь до ресурсов</returns>
-        public virtual string GetResourcesPath(string type)
-        {
-            return $"{StaticHelpers.GetAssemblyName().Name}.Resources.Services.Base.DataInformation";
         }
 
     }

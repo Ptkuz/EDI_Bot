@@ -12,12 +12,14 @@ namespace Gurrex.Common.Interfaces
     /// </summary>
     public interface IResources
     {
+        /// <summary>
+        /// Тип, вызывающий свойстов <see cref="ResourcesPath"/>
+        /// </summary>
+        string? TypeName { get; set; }
 
         /// <summary>
-        /// Получить путь до ресурсов
+        ///// Путь до ресурсов
         /// </summary>
-        /// <param name="type">Тип, из которого будет вызвана реализация метода</param>
-        /// <returns>Путь до ресурсов</returns>
-        string GetResourcesPath(string type);
+        string ResourcesPath { get; }
     }
 }
