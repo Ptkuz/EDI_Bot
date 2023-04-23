@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using Gurrex.Common.Localization.Models;
+using System.Globalization;
 using System.Reflection;
 using System.Resources;
 
@@ -10,19 +11,16 @@ namespace Gurrex.Common.Localization
     public static class LocalizationString
     {
         /// <summary>
-        /// Получить локализируемую строку
+        /// Получить строку из файла ресурсов
         /// </summary>
-        /// <param name="fileResourceName">Имя файла ресурса</param>
-        /// <param name="currentAssembly">Имя сборки, где лежит ресурс</param>
-        /// <param name="resourceName">Имя ресурса</param>
-        /// <exception cref="ArgumentNullException">Значение локализируемой строки не может быть равно null</exception>
-        /// <returns>Локализируемая строка</returns>
-        public static string GetString(string fileResourceName, Assembly currentAssembly, string resourceName)
+        /// <param name="resource">Ресурс</param>
+        /// <returns>Строка из файла ресурсов</returns>
+        public static string GetString(Resource resource)
         {
             try
             {
-                ResourceManager resourceManager = new ResourceManager(fileResourceName, currentAssembly);
-                string? value = resourceManager.GetString(resourceName, CultureInfo.CurrentCulture);
+                ResourceManager resourceManager = new ResourceManager(resource.FileResourceName, resource.Assembly);
+                string? value = resourceManager.GetString(resource.ResourceName, CultureInfo.CurrentCulture);
 
                 if (value == null)
                 {
@@ -31,6 +29,10 @@ namespace Gurrex.Common.Localization
                 return value;
             }
             catch (ArgumentNullException)
+            {
+                throw;
+            }
+            catch(Exception) 
             {
                 throw;
             }

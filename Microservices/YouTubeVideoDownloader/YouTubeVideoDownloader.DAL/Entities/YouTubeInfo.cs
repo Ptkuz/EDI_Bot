@@ -5,6 +5,7 @@ using System.Drawing;
 using YouTubeVideoDownloader.Interfaces.Entities;
 using System.Reflection;
 using Gurrex.Helpers;
+using Gurrex.Common.Validations;
 
 namespace YouTubeVideoDownloader.DAL.Entities
 {
@@ -13,6 +14,23 @@ namespace YouTubeVideoDownloader.DAL.Entities
     /// </summary>
     public class YouTubeInfo : Entity, IYouTubeInfo
     {
+        /// <summary>
+        /// Тип
+        /// </summary>
+        public override string? TypeName { get; set; }
+
+        /// <summary>
+        /// Путь до ресурсов
+        /// </summary>
+        [NotMapped]
+        public override string ResourcesPath
+        {
+            get
+            {
+                return $"{StaticHelpers.GetAssemblyInfo().Assembly}.Resources.Entities.YouTubeInfo";
+            }
+        }
+
         /// <summary>
         /// Заголовок
         /// </summary>
@@ -77,15 +95,6 @@ namespace YouTubeVideoDownloader.DAL.Entities
             Title = title;
             Url = url;
             Duration = duration;
-        }
-
-        /// <summary>
-        /// Получить путь до ресурсов
-        /// </summary>
-        /// <returns>Путь до ресурсов</returns>
-        public override string GetResourcesPath(string type)
-        {
-            return $"{StaticHelpers.GetAssemblyName().Name}.Resources.Entities.YouTubeInfo"; 
         }
     }
 }

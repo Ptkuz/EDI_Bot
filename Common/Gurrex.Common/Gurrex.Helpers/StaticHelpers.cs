@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Gurrex.Common.Validations;
+using Gurrex.Helpers.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -13,23 +15,18 @@ namespace Gurrex.Helpers
     public static class StaticHelpers
     {
         /// <summary>
-        /// Получение сборки вызываемого метода
+        /// Получить полную информацию о сборке
         /// </summary>
         /// <returns></returns>
-        public static Assembly GetAssembly() 
-        { 
-            return Assembly.GetCallingAssembly(); 
-        }
-
-        /// <summary>
-        /// Получение имени сборки
-        /// </summary>
-        /// <returns></returns>
-        public static AssemblyName GetAssemblyName() 
+        public static AssemblyInfo GetAssemblyInfo() 
         {
-            Assembly assembly = GetAssembly();
+            Assembly assembly = Assembly.GetCallingAssembly();
             AssemblyName assemblyName = assembly.GetName();
-            return assemblyName;
+            assembly.CheckObjectForNull(nameof(assemblyName));
+
+            AssemblyInfo assemblyInfo = new AssemblyInfo(assembly, assemblyName);
+
+            return assemblyInfo;
         }
     }
 }
