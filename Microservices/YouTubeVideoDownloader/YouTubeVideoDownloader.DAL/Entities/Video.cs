@@ -1,8 +1,6 @@
 ﻿using Gurrex.Common.DAL.Entities;
-using Gurrex.Common.Validations;
 using Gurrex.Common.Helpers;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Reflection;
 using YouTubeVideoDownloader.Interfaces.Entities;
 
 namespace YouTubeVideoDownloader.DAL.Entities
@@ -24,10 +22,10 @@ namespace YouTubeVideoDownloader.DAL.Entities
         [NotMapped]
         public override string ResourcesPath
         {
-            get
-            {
-                return $"{StaticHelpers.GetAssemblyInfo().Assembly}.Resources.Entities.Video";
-            }
+            get =>
+            TypeName is not nameof(Video) ?
+               base.ResourcesPath :
+               $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.Video";
         }
 
 

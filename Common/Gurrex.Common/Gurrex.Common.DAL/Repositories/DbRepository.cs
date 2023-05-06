@@ -34,7 +34,7 @@ namespace Gurrex.Common.DAL.Repositories
                 entity.CheckObjectForNull(nameof(entity));
                 return entity!;
             }
-            catch (Exception) 
+            catch (Exception)
             {
                 throw;
             }
@@ -51,7 +51,7 @@ namespace Gurrex.Common.DAL.Repositories
                 IEnumerable<T> entityList = Items.ToList();
                 return entityList.Last();
             }
-            catch (Exception) 
+            catch (Exception)
             {
                 throw;
             }
@@ -76,7 +76,7 @@ namespace Gurrex.Common.DAL.Repositories
 
                 return true;
             }
-            catch (Exception) 
+            catch (Exception)
             {
                 throw;
             }
@@ -102,7 +102,7 @@ namespace Gurrex.Common.DAL.Repositories
 
                 return true;
             }
-            catch (Exception) 
+            catch (Exception)
             {
                 throw;
             }
@@ -128,7 +128,7 @@ namespace Gurrex.Common.DAL.Repositories
 
                 return false;
             }
-            catch (Exception) 
+            catch (Exception)
             {
                 throw;
             }
@@ -145,7 +145,7 @@ namespace Gurrex.Common.DAL.Repositories
                 _dbContext.SaveChanges();
                 return true;
             }
-            catch(Exception) 
+            catch (Exception)
             {
                 throw;
             }

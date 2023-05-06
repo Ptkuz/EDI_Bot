@@ -24,10 +24,10 @@ namespace YouTubeVideoDownloader.DAL.Entities
         [NotMapped]
         public override string ResourcesPath
         {
-            get
-            {
-                return $"{StaticHelpers.GetAssemblyInfo().Assembly}.Resources.Entities.Image";
-            }
+            get =>
+            TypeName is not nameof(Image) ?
+               base.ResourcesPath :
+               $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.Image";
         }
 
         /// <summary>

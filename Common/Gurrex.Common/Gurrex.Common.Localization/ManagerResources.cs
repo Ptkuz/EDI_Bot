@@ -1,6 +1,5 @@
 ﻿using Gurrex.Common.Localization.Models;
 using System.Globalization;
-using System.Reflection;
 using System.Resources;
 
 namespace Gurrex.Common.Localization
@@ -32,7 +31,7 @@ namespace Gurrex.Common.Localization
             {
                 throw;
             }
-            catch(Exception) 
+            catch (Exception)
             {
                 throw;
             }

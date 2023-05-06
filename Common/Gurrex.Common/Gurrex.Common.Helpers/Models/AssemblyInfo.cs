@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 
 namespace Gurrex.Common.Helpers.Models
 {
@@ -27,7 +22,7 @@ namespace Gurrex.Common.Helpers.Models
         /// </summary>
         /// <param name="assembly">Экземпляр сборки</param>
         /// <param name="assemblyName">Полное имя сборки</param>
-        public AssemblyInfo(Assembly assembly, AssemblyName assemblyName) 
+        public AssemblyInfo(Assembly assembly, AssemblyName assemblyName)
         {
             Assembly = assembly;
             AssemblyName = assemblyName;

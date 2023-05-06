@@ -1,11 +1,7 @@
 ﻿using Gurrex.Common.DAL.Entities;
-using Gurrex.Common.Interfaces;
+using Gurrex.Common.Helpers;
 using System.ComponentModel.DataAnnotations.Schema;
 using YouTubeVideoDownloader.Interfaces.Entities;
-using System.Reflection;
-using Gurrex.Common.Helpers;
-using Gurrex.Common.Validations;
-using System.Diagnostics;
 
 namespace YouTubeVideoDownloader.DAL.Entities
 {
@@ -26,15 +22,10 @@ namespace YouTubeVideoDownloader.DAL.Entities
         [NotMapped]
         public override string ResourcesPath
         {
-            get
-            {
-                if (TypeName is not nameof(Audio)) 
-                {
-                    return base.ResourcesPath;
-                }
-
-                return $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.Audio";
-            }
+            get =>
+                 TypeName is not nameof(Audio) ?
+                    base.ResourcesPath :
+                    $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.Audio";   
         }
 
 
@@ -65,7 +56,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <summary>
         /// Конструктор по умолчанию
         /// </summary>
-        public Audio() 
+        public Audio()
         {
 
         }
@@ -79,7 +70,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <param name="dateDeleted">Дата удаления</param>
         /// <param name="formatAudio">Формат аудио</param>
         /// <param name="bitrate">Битрейт</param>
-        public Audio(Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted, string formatAudio, string bitrate) 
+        public Audio(Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted, string formatAudio, string bitrate)
             : base(id, dateAdded, dateModified, dateDeleted)
         {
             FormatAudio = formatAudio;

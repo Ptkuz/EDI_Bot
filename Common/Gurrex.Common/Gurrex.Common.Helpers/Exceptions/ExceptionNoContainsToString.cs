@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gurrex.Common.Helpers.Exceptions
+﻿namespace Gurrex.Common.Helpers.Exceptions
 {
+    /// <summary>
+    /// Подстрока не содержится в строке
+    /// </summary>
     public class ExceptionNoContainsToString : Exception
     {
-        public ExceptionNoContainsToString(string message) : base(message) 
+        /// <summary>
+        /// Конструктор инициализатор
+        /// </summary>
+        /// <param name="message">Сообщение</param>
+        public ExceptionNoContainsToString(string message) : base(message)
         {
-            
+
         }
     }
 }

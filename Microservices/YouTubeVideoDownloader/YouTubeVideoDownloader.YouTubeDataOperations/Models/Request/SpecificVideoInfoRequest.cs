@@ -1,34 +1,32 @@
 ﻿using Gurrex.Common.Helpers;
 using Gurrex.Common.Interfaces;
-using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Localization;
+using Gurrex.Common.Localization.Models;
 using VideoLibrary;
-using YouTubeVideoDownloader.Interfaces.Models;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.Base;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.Request
 {
     /// <summary>
     /// Информация о конкретном видео
     /// </summary>
-    public class SpecificVideoInfoRequest : BaseModel, IResources
+    public class SpecificVideoInfoRequest : BaseModel
     {
 
         /// <summary>
         /// Тип, из которого брать ресурсы
         /// </summary>
-        public string? TypeName { get; set; }
+        public override string? TypeName { get; set; } = null!;
 
         /// <summary>
         /// Путь до ресурсов
         /// </summary>
-        public string ResourcesPath 
+        public override string ResourcesPath
         {
-            get 
-            {
-                return $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Request.SpecificVideoInfoRequest";
-            }
+            get =>
+                 TypeName is not nameof(SpecificVideoInfoRequest) ?
+                    base.ResourcesPath :
+                    $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Request.SpecificVideoInfoRequest";
         }
 
         /// <summary>
@@ -94,7 +92,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.Request
 
                 return audioFormat;
             }
-            catch (FormatException) 
+            catch (FormatException)
             {
                 throw;
             }

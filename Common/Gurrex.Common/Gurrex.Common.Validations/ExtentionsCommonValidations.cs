@@ -55,7 +55,7 @@ namespace Gurrex.Common.Validations
         /// Проверка строки на null и пустое пространство
         /// </summary>
         /// <param name="text"></param>
-        public static void CheckStringForNullOrWhiteSpace([NotNull] this string? text) 
+        public static void CheckStringForNullOrWhiteSpace([NotNull] this string? text)
         {
             try
             {

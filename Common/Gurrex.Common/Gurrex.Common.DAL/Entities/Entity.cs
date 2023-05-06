@@ -1,12 +1,10 @@
-﻿using Gurrex.Common.Interfaces;
+﻿using Gurrex.Common.Helpers;
+using Gurrex.Common.Interfaces;
 using Gurrex.Common.Interfaces.Entities;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
-using Gurrex.Common.Validations;
-using Gurrex.Common.Helpers;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Reflection;
 
 namespace Gurrex.Common.DAL.Entities
 {
@@ -75,13 +73,13 @@ namespace Gurrex.Common.DAL.Entities
         /// <param name="dateAdded">Дата добавления</param>
         /// <param name="dateModified">Дата изменения</param>
         /// <param name="dateDeleted">Дата удаления</param>
-        public Entity(Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted) 
+        public Entity(Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted)
             : this()
         {
             Id = id;
             DateAdded = dateAdded;
             DateModified = dateModified;
-            DateDeleted = dateDeleted;            
+            DateDeleted = dateDeleted;
         }
 
 

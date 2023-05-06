@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VideoLibrary;
+﻿using VideoLibrary;
 
 namespace YouTubeVideoDownloader.Interfaces.Services.Async
 {
@@ -19,6 +14,11 @@ namespace YouTubeVideoDownloader.Interfaces.Services.Async
         /// <returns>Вся информация о видео по ссылке</returns>
         Task<T> GetYouTubeVideoInfoAsync(string url);
 
+        /// <summary>
+        /// Асинхронно получить конкретное видео на основе свойств
+        /// </summary>
+        /// <param name="specificVideoInfoRequest">Свойства видео</param>
+        /// <returns>Объект <see cref="YouTubeVideo"/></returns>
         Task<YouTubeVideo> GetSpecisicVideoInfoAsync(K specificVideoInfoRequest);
 
 

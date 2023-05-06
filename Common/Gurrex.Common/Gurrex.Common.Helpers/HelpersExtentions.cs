@@ -1,15 +1,24 @@
-﻿using Gurrex.Common.Localization.Models;
+﻿using Gurrex.Common.Helpers.Exceptions;
 using Gurrex.Common.Localization;
-using System.Reflection;
-using Gurrex.Common.Helpers.Exceptions;
+using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Validations;
+using System.Reflection;
 
 namespace Gurrex.Common.Helpers
 {
+    /// <summary>
+    /// Хелперы расширения
+    /// </summary>
     public static class HelpersExtentions
     {
-
+        /// <summary>
+        /// Сборка
+        /// </summary>
         private static Assembly currentAssembly = null!;
+
+        /// <summary>
+        /// Путь до ресурсов
+        /// </summary>
         private static string fileResourceName = null!;
 
         /// <summary>
@@ -39,14 +48,14 @@ namespace Gurrex.Common.Helpers
                     throw new RemoveEndToStringException(errorMessage);
                 }
 
-                if (!info.Contains(infoType)) 
+                if (!info.Contains(infoType))
                 {
                     string localizationString = ManagerResources.GetString(new Resource(fileResourceName, "ExceptionNoContainsToString", currentAssembly));
                     string errorMessage = String.Format(localizationString, info, infoType);
                     throw new ExceptionNoContainsToString(errorMessage);
                 }
 
-                if (String.IsNullOrWhiteSpace(infoType)) 
+                if (String.IsNullOrWhiteSpace(infoType))
                 {
                     return info;
                 }
@@ -54,7 +63,7 @@ namespace Gurrex.Common.Helpers
                 info = info.Remove(info.Length - infoType.Length);
                 return info;
             }
-            catch (RemoveEndToStringException) 
+            catch (RemoveEndToStringException)
             {
                 throw;
             }

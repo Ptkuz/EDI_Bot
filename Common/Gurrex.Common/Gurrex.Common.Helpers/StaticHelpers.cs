@@ -1,11 +1,6 @@
-﻿using Gurrex.Common.Validations;
-using Gurrex.Common.Helpers.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Gurrex.Common.Helpers.Models;
+using Gurrex.Common.Validations;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gurrex.Common.Helpers
 {
@@ -17,8 +12,8 @@ namespace Gurrex.Common.Helpers
         /// <summary>
         /// Получить полную информацию о сборке
         /// </summary>
-        /// <returns></returns>
-        public static AssemblyInfo GetAssemblyInfo() 
+        /// <returns>Объект <see cref="AssemblyInfo"/> с информацией о сборке</returns>
+        public static AssemblyInfo GetAssemblyInfo()
         {
             Assembly assembly = Assembly.GetCallingAssembly();
             AssemblyName assemblyName = assembly.GetName();

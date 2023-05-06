@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gurrex.Common.Helpers.Exceptions
+﻿namespace Gurrex.Common.Helpers.Exceptions
 {
     /// <summary>
-    /// Исключение при несоответсвии длины строки
+    /// Исключение при несоответствии длины строки
     /// </summary>
     public class RemoveEndToStringException : Exception
     {
+        /// <summary>
+        /// Конструктор инициализатор
+        /// </summary>
+        /// <param name="message">Сообщение</param>
         public RemoveEndToStringException(string message) : base(message)
         {
-            
+
         }
     }
 }

@@ -1,9 +1,7 @@
 ﻿using Gurrex.Common.DAL.Entities;
+using Gurrex.Common.Helpers;
 using System.ComponentModel.DataAnnotations.Schema;
 using YouTubeVideoDownloader.Interfaces.Entities;
-using System.Reflection;
-using Gurrex.Common.Helpers;
-using Gurrex.Common.Validations;
 
 namespace YouTubeVideoDownloader.DAL.Entities
 {
@@ -25,10 +23,10 @@ namespace YouTubeVideoDownloader.DAL.Entities
         [NotMapped]
         public override string ResourcesPath
         {
-            get
-            {
-                return $"{StaticHelpers.GetAssemblyInfo().Assembly}.Resources.Entities.Channel";
-            }
+            get =>
+            TypeName is not nameof(Channel) ?
+               base.ResourcesPath :
+               $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.Channel";
         }
 
         /// <summary>
@@ -45,7 +43,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <summary>
         /// Конструктор по умолчанию
         /// </summary>
-        public Channel() 
+        public Channel()
         {
 
         }
@@ -58,7 +56,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <param name="dateModified">Дата изменения</param>
         /// <param name="dateDeleted">Дата удаления</param>
         /// <param name="name">Название канала</param>
-        public Channel(Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted, string name) 
+        public Channel(Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted, string name)
             : base(id, dateAdded, dateModified, dateDeleted)
         {
             Name = name;
