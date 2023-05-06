@@ -1,6 +1,6 @@
 ﻿using Gurrex.Common.DAL.Entities;
 using Gurrex.Common.Validations;
-using Gurrex.Helpers;
+using Gurrex.Common.Helpers;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 using YouTubeVideoDownloader.Interfaces.Entities;

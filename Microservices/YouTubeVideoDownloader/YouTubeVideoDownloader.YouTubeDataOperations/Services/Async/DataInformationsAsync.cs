@@ -1,21 +1,23 @@
 ﻿using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Validations;
-using Gurrex.Helpers;
-using System.Net.Http.Headers;
-using System.Reflection;
 using VideoLibrary;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.Response;
 using YouTubeVideoDownloader.YouTubeDataOperations.Services.Base;
+using Gurrex.Common.Conversion;
+using YouTubeVideoDownloader.YouTubeDataOperations.Models.Request;
+using Gurrex.Common.Helpers;
+using YouTubeVideoDownloader.YouTubeDataOperations.Helpers;
+using System;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
 {
     /// <summary>
     /// Информация о видео и аудио асинхронно
     /// </summary>
-    public class DataInformationsAsync : DataInformation, IDataInformationAsync<YouTubeVideoInfoResponse>
+    public class DataInformationsAsync : DataInformation, IDataInformationAsync<YouTubeVideoInfoResponse, SpecificVideoInfoRequest>
     {
 
         /// <summary>
@@ -25,12 +27,12 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         {
             get
             {
-                if (TypeName is not nameof(DataInformationsAsync)) 
+                if (TypeName is not nameof(DataInformationsAsync))
                 {
                     return base.ResourcesPath;
                 }
 
-                return $"{AssemblyName}.Resources.Services.Async.DataInformationsAsync";
+                return $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Services.Async.DataInformationsAsync";
             }
         }
 
@@ -41,25 +43,43 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// <returns></returns>
         public async Task<YouTubeVideoInfoResponse> GetYouTubeVideoInfoAsync(string url)
         {
-            YouTube youTube = YouTube.Default;
-
-            IEnumerable<YouTubeVideo> videos = await youTube
-                .GetAllVideosAsync(url)
-                .ConfigureAwait(false);
+            IEnumerable<YouTubeVideo> videos = await GetEnumerableYouTubeVideo(url);
 
             YouTubeVideo youTubeVideo = GetYouTubeVideo(videos);
             MainInfo mainInfo = GetMainInfo(youTubeVideo);
 
-            IEnumerable<int> audioBitrates = GetEnumerableAudioBitrates(videos);
-            IEnumerable<int> resolutions = GetEnumerableResolutions(videos);
-            IEnumerable<AudioFormat> audioFormats = GetEnumerableAudioFormat(videos);
-            IEnumerable<VideoFormat> videoFormats = GetEnumerableVideoFormat(videos);
-            IEnumerable<int> fps = GetEnumerableFps(videos);
-            Stream stream = await GetVideoImageAsync(url);
+            IEnumerable<string> audioBitrates = GetEnumerableAudioBitrates(videos).ConvertToString(" kbps");
+            IEnumerable<string> resolutions = GetEnumerableResolutions(videos).ConvertToString("p");
+            IEnumerable<string> audioFormats = GetEnumerableAudioFormat(videos).ConvertToString();
+            IEnumerable<string> videoFormats = GetEnumerableVideoFormat(videos).ConvertToString();
+            IEnumerable<string> fps = GetEnumerableFps(videos).ConvertToString(" FPS");
+            byte[] image = await GetVideoImageAsync(url).ConfigureAwait(false);
 
-            YouTubeVideoInfoResponse youTubeVideoInfo = new YouTubeVideoInfoResponse(mainInfo, audioBitrates, resolutions, audioFormats, videoFormats, fps);
+            YouTubeVideoInfoResponse youTubeVideoInfo = new YouTubeVideoInfoResponse(mainInfo, audioBitrates, resolutions, audioFormats, videoFormats, fps, image);
 
             return youTubeVideoInfo;
+        }
+
+        /// <summary>
+        /// Получить объект <see cref="YouTubeVideo"/>
+        /// </summary>
+        /// <param name="specificVideoInfoRequest">Запрашиваемые свойства видео</param>
+        /// <returns>Объект <see cref="YouTubeVideo"/></returns>
+        public async Task<YouTubeVideo> GetSpecisicVideoInfoAsync(SpecificVideoInfoRequest specificVideoInfoRequest) 
+        {
+            IEnumerable<YouTubeVideo> videos = await GetEnumerableYouTubeVideo(specificVideoInfoRequest.Url);
+            YouTubeVideo youTubeVideo = GetYouTubeVideo(videos, specificVideoInfoRequest);
+            return youTubeVideo;
+
+        }
+
+        private async Task<IEnumerable<YouTubeVideo>> GetEnumerableYouTubeVideo(string url) 
+        {
+            YouTube youTube = YouTube.Default;
+            IEnumerable<YouTubeVideo> videos = await youTube
+                .GetAllVideosAsync(url)
+                .ConfigureAwait(false);
+            return videos;
         }
 
         /// <summary>
@@ -67,25 +87,21 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// </summary>
         /// <param name="url">Ссылка на видео</param>
         /// <returns>Поток <see cref="Stream"/> с картинкой</returns>
-        private async Task<Stream> GetVideoImageAsync(string url)
+        private async Task<byte[]> GetVideoImageAsync(string url)
         {
             string? id = GetUrlValueByKey(url, "v");
             id.CheckObjectForNull(nameof(id));
 
-            string localizationString = LocalizationString.GetString(new Resource(ResourcesPath, "VideoImageUrl", Assembly));
-            string resultString = LocalizationString.GetResultString(localizationString, id, "maxresdefault.jpg");
+            TypeName = nameof(DataInformationsAsync);
+            string resource = ManagerResources.GetString(new Resource(ResourcesPath, "VideoImageUrl", StaticHelpers.GetAssemblyInfo().Assembly));
+            string resultString = ManagerResources.GetResultString(resource, id, "maxresdefault.jpg");
 
             Uri uri = new Uri(resultString);
 
             using (HttpClient httpClient = new HttpClient())
             {
-                HttpResponseMessage response = await httpClient.GetAsync(url);
-
-                using (Stream stream = new MemoryStream()) 
-                {
-                    await response.Content.CopyToAsync(stream);
-                    return stream;
-                }
+                byte[] image = await httpClient.GetByteArrayAsync(uri);
+                return image;
             }
         }
     }

@@ -8,7 +8,7 @@ namespace Gurrex.Common.Localization
     /// <summary>
     /// Локализируемые строки
     /// </summary>
-    public static class LocalizationString
+    public static class ManagerResources
     {
         /// <summary>
         /// Получить строку из файла ресурсов

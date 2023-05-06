@@ -15,7 +15,7 @@
     <ProjectReference Include="..\Gurrex.Common.Interfaces\Gurrex.Common.Interfaces.csproj" />
     <ProjectReference Include="..\Gurrex.Common.Localization\Gurrex.Common.Localization.csproj" />
     <ProjectReference Include="..\Gurrex.Common.Validations\Gurrex.Common.Validations.csproj" />
-    <ProjectReference Include="..\Gurrex.Helpers\Gurrex.Helpers.csproj" />
+    <ProjectReference Include="..\Gurrex.Common.Helpers\Gurrex.Common.Helpers.csproj" />
   </ItemGroup>
 
 </Project>
