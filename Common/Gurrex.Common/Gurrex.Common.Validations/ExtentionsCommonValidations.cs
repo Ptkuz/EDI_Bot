@@ -8,7 +8,7 @@ namespace Gurrex.Common.Validations
     /// <summary>
     /// Расширения для валидации
     /// </summary>
-    public static class ExtentionsCommonValidations 
+    public static class ExtentionsCommonValidations
     {
 
         private static Assembly currentAssembly = null!;
@@ -33,19 +33,37 @@ namespace Gurrex.Common.Validations
         {
             try
             {
-
-                if (argument is null)
-                {
-                    string localizationString = LocalizationString.GetString(new Resource(fileResourceName, "ExceptionCheckArgumentForNullOrEmpty", currentAssembly));
-                    string errorMessage = String.Format(localizationString, nameof(argument));
-                    throw new ArgumentNullException(nameof(argument), errorMessage);
-                }
-
+                argument.CheckStringForNullOrWhiteSpace();
                 if (value is null)
                 {
-                    string localizationString = LocalizationString.GetString(new Resource(fileResourceName, "ExceptionCheckValueForNull", currentAssembly));
+                    string localizationString = ManagerResources.GetString(new Resource(fileResourceName, "ExceptionCheckValueForNull", currentAssembly));
                     string errorMessage = String.Format(localizationString, argument);
                     throw new ArgumentNullException(argument, errorMessage);
+                }
+            }
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Проверка строки на null и пустое пространство
+        /// </summary>
+        /// <param name="text"></param>
+        public static void CheckStringForNullOrWhiteSpace([NotNull] this string? text) 
+        {
+            try
+            {
+                if (String.IsNullOrWhiteSpace(text))
+                {
+                    string localizationString = ManagerResources.GetString(new Resource(fileResourceName, "ExceptionCheckStringForNullOrEmpty", currentAssembly));
+                    string errorMessage = String.Format(localizationString, nameof(text));
+                    throw new ArgumentNullException(nameof(text), errorMessage);
                 }
             }
             catch (ArgumentNullException)

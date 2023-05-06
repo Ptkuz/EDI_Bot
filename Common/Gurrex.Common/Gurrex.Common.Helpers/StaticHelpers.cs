@@ -1,5 +1,5 @@
 ﻿using Gurrex.Common.Validations;
-using Gurrex.Helpers.Models;
+using Gurrex.Common.Helpers.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gurrex.Helpers
+namespace Gurrex.Common.Helpers
 {
     /// <summary>
     /// Хелперы

@@ -3,7 +3,7 @@ using Gurrex.Common.Interfaces;
 using System.ComponentModel.DataAnnotations.Schema;
 using YouTubeVideoDownloader.Interfaces.Entities;
 using System.Reflection;
-using Gurrex.Helpers;
+using Gurrex.Common.Helpers;
 using Gurrex.Common.Validations;
 using System.Diagnostics;
 

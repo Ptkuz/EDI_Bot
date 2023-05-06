@@ -3,7 +3,7 @@ using Gurrex.Common.Interfaces.Entities;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Validations;
-using Gurrex.Helpers;
+using Gurrex.Common.Helpers;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
@@ -91,8 +91,8 @@ namespace Gurrex.Common.DAL.Entities
         /// <returns>Информация о сущности</returns>
         public override string ToString()
         {
-            string localizationString = LocalizationString.GetString(new Resource(ResourcesPath, "EntityInfo", StaticHelpers.GetAssemblyInfo().Assembly));
-            return LocalizationString.GetResultString(localizationString, Id);
+            string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "EntityInfo", StaticHelpers.GetAssemblyInfo().Assembly));
+            return ManagerResources.GetResultString(localizationString, Id);
         }
     }
 }

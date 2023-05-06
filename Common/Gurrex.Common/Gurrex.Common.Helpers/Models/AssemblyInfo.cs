@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gurrex.Helpers.Models
+namespace Gurrex.Common.Helpers.Models
 {
     /// <summary>
     /// Вся информация о сборке

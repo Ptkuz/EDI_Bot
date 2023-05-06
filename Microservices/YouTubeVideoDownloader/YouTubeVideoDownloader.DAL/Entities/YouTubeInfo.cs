@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
 using YouTubeVideoDownloader.Interfaces.Entities;
 using System.Reflection;
-using Gurrex.Helpers;
+using Gurrex.Common.Helpers;
 using Gurrex.Common.Validations;
 
 namespace YouTubeVideoDownloader.DAL.Entities

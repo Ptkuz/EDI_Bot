@@ -117,12 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ExceptionCheckStringForNullOrEmpty" xml:space="preserve">
-    <value>Значение строки "{0}" не может быть пустым или null</value>
-    <comment>Искючение, возникающее при передаче пустого значения строки</comment>
+  <data name="ExceptionNoContainsToString" xml:space="preserve">
+    <value>В строке "{0}" не содержится подстрока "{1}"</value>
   </data>
-  <data name="ExceptionCheckValueForNull" xml:space="preserve">
-    <value>Значение "{0}" не может быть равно null</value>
-    <comment>Исключение, возникающее при передаче пустой ссылки, в методе проверки</comment>
+  <data name="ExceptionRemoveEndToString" xml:space="preserve">
+    <value>Длина строки "{0}" меньше длины подстроки "{1}" </value>
   </data>
 </root>

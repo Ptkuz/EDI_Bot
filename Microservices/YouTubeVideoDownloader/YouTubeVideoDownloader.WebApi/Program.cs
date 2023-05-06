@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllers();
-builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.AddLocalization(options => options.ResourcesPath = "ManagerResources");
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

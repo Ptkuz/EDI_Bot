@@ -23,27 +23,32 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.Response
         /// <summary>
         /// Перечисление доступных аудио битрейтов
         /// </summary>
-        public IEnumerable<int> AudioBitrates { get; set; } = null!;
+        public IEnumerable<string> AudioBitrates { get; set; } = null!;
 
         /// <summary>
         /// Пееречисление доступных
         /// </summary>
-        public IEnumerable<int> Resolutions { get; set; } = null!;
+        public IEnumerable<string> Resolutions { get; set; } = null!;
 
         /// <summary>
         /// Перечисление доступных аудио форматов
         /// </summary>
-        public IEnumerable<AudioFormat> AudioFormats { get; set; } = null!;
+        public IEnumerable<string> AudioFormats { get; set; } = null!;
 
         /// <summary>
         /// Перечисление видео форматов
         /// </summary>
-        public IEnumerable<VideoFormat> VideoFormats { get; set; } = null!;
+        public IEnumerable<string> VideoFormats { get; set; } = null!;
 
         /// <summary>
         /// Перечисление доступных Fps
         /// </summary>
-        public IEnumerable<int> Fps { get; set; } = null!;
+        public IEnumerable<string> Fps { get; set; } = null!;
+
+        /// <summary>
+        /// Картинка в формате Base64
+        /// </summary>
+        public byte[] Image { get; set; } = null!;
 
         /// <summary>
         /// Конструктор инициализатор
@@ -54,7 +59,8 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.Response
         /// <param name="audioFormats">Перечисление аудио форматов</param>
         /// <param name="videoFormats">Перечислене видео форматов</param>
         /// <param name="fps">Перечислене Fps</param>
-        public YouTubeVideoInfoResponse(MainInfo mainInfo, IEnumerable<int> audioBitrates, IEnumerable<int> resolutions, IEnumerable<AudioFormat> audioFormats, IEnumerable<VideoFormat> videoFormats, IEnumerable<int> fps)
+        /// <param name="image">Массив байтов картинки</param>
+        public YouTubeVideoInfoResponse(MainInfo mainInfo, IEnumerable<string> audioBitrates, IEnumerable<string> resolutions, IEnumerable<string> audioFormats, IEnumerable<string> videoFormats, IEnumerable<string> fps, byte[] image)
            : base()
         {
             MainInfo = mainInfo;
@@ -63,6 +69,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.Response
             AudioFormats = audioFormats;
             VideoFormats = videoFormats;
             Fps = fps;
+            Image = image;
         }
     }
 }

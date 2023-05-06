@@ -1,12 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VideoLibrary;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
 using YouTubeVideoDownloader.Interfaces.Services.Sync;
+using YouTubeVideoDownloader.YouTubeDataOperations.Models.Request;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.Response;
 using YouTubeVideoDownloader.YouTubeDataOperations.Services.Async;
 using YouTubeVideoDownloader.YouTubeDataOperations.Services.Sync;
@@ -25,7 +20,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
         /// <returns></returns>
         public static IServiceCollection AddDownloadServices(this IServiceCollection services) => services
             .AddTransient<IDataInformation<YouTubeVideoInfoResponse>, DataInformations>()
-            .AddTransient<IDataInformationAsync<YouTubeVideoInfoResponse>, DataInformationsAsync>()
+            .AddTransient<IDataInformationAsync<YouTubeVideoInfoResponse, SpecificVideoInfoRequest>, DataInformationsAsync>()
             ;
     }
 }

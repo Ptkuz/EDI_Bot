@@ -24,23 +24,23 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Sync
         /// <returns></returns>
         public YouTubeVideoInfoResponse GetYouTubeVideoInfo(string url)
         {
-            YouTube youTube = YouTube.Default;
+            //YouTube youTube = YouTube.Default;
 
-            IEnumerable<YouTubeVideo> videos = youTube
-                .GetAllVideos(url);
+            //IEnumerable<YouTubeVideo> videos = youTube
+            //    .GetAllVideos(url);
 
-            YouTubeVideo youTubeVideo = GetYouTubeVideo(videos);
-            MainInfo mainInfo = GetMainInfo(youTubeVideo);
+            //YouTubeVideo youTubeVideo = GetYouTubeVideo(videos);
+            //MainInfo mainInfo = GetMainInfo(youTubeVideo);
 
-            IEnumerable<int> audioBitrates = GetEnumerableAudioBitrates(videos);
-            IEnumerable<int> resolutions = GetEnumerableResolutions(videos);
-            IEnumerable<AudioFormat> audioFormats = GetEnumerableAudioFormat(videos);
-            IEnumerable<VideoFormat> videoFormats = GetEnumerableVideoFormat(videos);
-            IEnumerable<int> fps = GetEnumerableFps(videos);
+            //IEnumerable<int> audioBitrates = GetEnumerableAudioBitrates(videos);
+            //IEnumerable<int> resolutions = GetEnumerableResolutions(videos);
+            //IEnumerable<AudioFormat> audioFormats = GetEnumerableAudioFormat(videos);
+            //IEnumerable<VideoFormat> videoFormats = GetEnumerableVideoFormat(videos);
+            //IEnumerable<int> fps = GetEnumerableFps(videos);
 
-            YouTubeVideoInfoResponse youTubeVideoInfo = new YouTubeVideoInfoResponse(mainInfo, audioBitrates, resolutions, audioFormats, videoFormats, fps);
+            //YouTubeVideoInfoResponse youTubeVideoInfo = new YouTubeVideoInfoResponse(mainInfo, audioBitrates, resolutions, audioFormats, videoFormats, fps);
 
-            return youTubeVideoInfo;
+            return null;
 
         }
     }
