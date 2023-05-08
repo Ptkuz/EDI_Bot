@@ -1,3 +1,4 @@
+using Gurrex.Web.SignalR.Hubs.Async;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using NLog;
@@ -18,6 +19,8 @@ builder.Services.AddLocalization(options => options.ResourcesPath = "ManagerReso
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddSignalR();
 
 
 string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -53,6 +56,8 @@ app.UseRequestLocalization(new RequestLocalizationOptions
     SupportedCultures = supportedCultures,
     SupportedUICultures = supportedCultures
 });
+
+app.MapHub<SenderInfoHubAsync>("/statusInfo");
 
 app.UseHttpsRedirection();
 

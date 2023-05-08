@@ -5,29 +5,13 @@ using Gurrex.Common.Localization.Models;
 using VideoLibrary;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.Base;
 
-namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.Request
+namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Request
 {
     /// <summary>
     /// Информация о конкретном видео
     /// </summary>
     public class SpecificVideoInfoRequest : BaseModel
     {
-
-        /// <summary>
-        /// Тип, из которого брать ресурсы
-        /// </summary>
-        public override string? TypeName { get; set; } = null!;
-
-        /// <summary>
-        /// Путь до ресурсов
-        /// </summary>
-        public override string ResourcesPath
-        {
-            get =>
-                 TypeName is not nameof(SpecificVideoInfoRequest) ?
-                    base.ResourcesPath :
-                    $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Request.SpecificVideoInfoRequest";
-        }
 
         /// <summary>
         /// Ссылка на видео
@@ -42,7 +26,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.Request
         /// <summary>
         /// Разрешение
         /// </summary>
-        public string Resolution { get; set; } = null!;
+        public string? Resolution { get; set; }
 
         /// <summary>
         /// Аудио формат
@@ -52,12 +36,12 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.Request
         /// <summary>
         /// Видео формат
         /// </summary>
-        public string VideoFormat { get; set; } = null!;
+        public string? VideoFormat { get; set; }
 
         /// <summary>
         /// Fps
         /// </summary>
-        public string Fps { get; set; } = null!;
+        public string? Fps { get; set; }
 
         /// <summary>
         /// Конвертировать строку в Int
@@ -81,12 +65,12 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.Request
         {
             try
             {
-                bool check = Enum.TryParse<AudioFormat>(text, out AudioFormat audioFormat);
+                bool check = Enum.TryParse(text, out AudioFormat audioFormat);
 
                 if (!check)
                 {
                     string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "ExceptionParseEnum", StaticHelpers.GetAssemblyInfo().Assembly));
-                    string errorMessage = String.Format(localizationString, nameof(text));
+                    string errorMessage = string.Format(localizationString, nameof(text));
                     throw new FormatException(errorMessage);
                 }
 
@@ -111,12 +95,12 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.Request
         {
             try
             {
-                bool check = Enum.TryParse<VideoFormat>(text, out VideoFormat audioFormat);
+                bool check = Enum.TryParse(text, out VideoFormat audioFormat);
 
                 if (!check)
                 {
                     string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "ExceptionParseEnum", StaticHelpers.GetAssemblyInfo().Assembly));
-                    string errorMessage = String.Format(localizationString, nameof(text));
+                    string errorMessage = string.Format(localizationString, nameof(text));
                     throw new FormatException(errorMessage);
                 }
 

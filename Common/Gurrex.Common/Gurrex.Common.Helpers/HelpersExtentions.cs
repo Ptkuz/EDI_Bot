@@ -2,6 +2,8 @@
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Validations;
+using System.Diagnostics;
+using System.Management;
 using System.Reflection;
 
 namespace Gurrex.Common.Helpers
@@ -108,6 +110,23 @@ namespace Gurrex.Common.Helpers
             {
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Получить подпроцессы процесса Windows
+        /// </summary>
+        /// <param name="process">Процесс</param>
+        /// <returns>Список подпроцессов процесса Windows</returns>
+        public static IList<Process> GetChildProcessesFromWindows(this Process process) 
+        {
+            List<Process> childrenProcesses = new List<Process>();
+            ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher($"SELECT * FROM Win32_Process WHERE ParentProcessID={process.Id}");
+
+            foreach (var item in managementObjectSearcher.Get()) 
+            {
+                childrenProcesses.Add(Process.GetProcessById(Convert.ToInt32(item["ProcessID"])));
+            }
+            return childrenProcesses;
         }
     }
 }

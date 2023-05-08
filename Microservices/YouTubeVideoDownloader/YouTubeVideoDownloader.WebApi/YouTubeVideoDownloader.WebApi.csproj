@@ -39,8 +39,17 @@
     <Reference Include="Gurrex.Common.Localization">
       <HintPath>..\..\..\Common\Gurrex.Common\Gurrex.Common.Localization\bin\Debug\net7.0\Gurrex.Common.Localization.dll</HintPath>
     </Reference>
+    <Reference Include="Gurrex.Common.Services">
+      <HintPath>..\..\..\Common\Gurrex.Common\Gurrex.Common.Services\bin\Debug\net7.0\Gurrex.Common.Services.dll</HintPath>
+    </Reference>
     <Reference Include="Gurrex.Common.Validations">
       <HintPath>..\..\..\Common\Gurrex.Common\Gurrex.Common.Validations\bin\Debug\net7.0\Gurrex.Common.Validations.dll</HintPath>
+    </Reference>
+    <Reference Include="Gurrex.Web.Interfaces">
+      <HintPath>..\..\..\Common\Gurrex.Web\Gurrex.Web.Interfaces\bin\Debug\net7.0\Gurrex.Web.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Gurrex.Web.SignalR">
+      <HintPath>..\..\..\Common\Gurrex.Web\Gurrex.Web.SignalR\bin\Debug\net7.0\Gurrex.Web.SignalR.dll</HintPath>
     </Reference>
   </ItemGroup>
 

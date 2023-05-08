@@ -1,7 +1,6 @@
 ﻿using Gurrex.Common.Helpers;
 using Gurrex.Common.Interfaces;
 using YouTubeVideoDownloader.Interfaces.Models.Base;
-using YouTubeVideoDownloader.YouTubeDataOperations.Models.Request;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.Base
 {

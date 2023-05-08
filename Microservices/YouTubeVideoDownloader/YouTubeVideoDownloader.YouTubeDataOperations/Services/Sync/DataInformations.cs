@@ -7,7 +7,7 @@ using VideoLibrary;
 using YouTubeVideoDownloader.Interfaces.Models;
 using YouTubeVideoDownloader.Interfaces.Services.Sync;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
-using YouTubeVideoDownloader.YouTubeDataOperations.Models.Response;
+using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Response;
 using YouTubeVideoDownloader.YouTubeDataOperations.Services.Base;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Sync

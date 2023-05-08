@@ -7,31 +7,14 @@ using System.Threading.Tasks;
 using VideoLibrary;
 using YouTubeVideoDownloader.Interfaces.Models;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.Base;
-using YouTubeVideoDownloader.YouTubeDataOperations.Models.Request;
 
-namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.Response
+namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Response
 {
     /// <summary>
     /// Информация о YouTube ролике, полученном по ссылке
     /// </summary>
     public class YouTubeVideoInfoResponse : BaseModel
     {
-
-        /// <summary>
-        /// Тип, из которого брать ресурсы
-        /// </summary>
-        public override string? TypeName { get; set; } = null!;
-
-        /// <summary>
-        /// Путь до ресурсов
-        /// </summary>
-        public override string ResourcesPath
-        {
-            get =>
-                 TypeName is not nameof(YouTubeVideoInfoResponse) ?
-                    base.ResourcesPath :
-                    $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Request.YouTubeVideoInfoResponse";
-        }
 
         /// <summary>
         /// Главная информация о видео

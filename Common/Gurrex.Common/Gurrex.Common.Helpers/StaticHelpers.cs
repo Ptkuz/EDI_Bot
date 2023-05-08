@@ -1,5 +1,6 @@
 ﻿using Gurrex.Common.Helpers.Models;
 using Gurrex.Common.Validations;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace Gurrex.Common.Helpers
@@ -22,6 +23,52 @@ namespace Gurrex.Common.Helpers
             AssemblyInfo assemblyInfo = new AssemblyInfo(assembly, assemblyName);
 
             return assemblyInfo;
+        }
+
+        /// <summary>
+        /// Закрытие процесса со всеми подпроцессами
+        /// </summary>
+        /// <param name="processName">Имя процесса</param>
+        public static async Task CloseProcessesWindows(string processName)
+        {
+            Process[] processes = Process.GetProcessesByName(processName);
+
+            if (processes != null)
+            {
+                foreach (var process in processes)
+                {
+                    process.Kill(true);
+                    await process.WaitForExitAsync();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Закрыть подпроцессы процесса Windows
+        /// </summary>
+        /// <param name="processName"></param>
+        /// <returns></returns>
+        public static async Task CloseSubprocessesWindows(string processName) 
+        {
+            try
+            {
+                Process[] processes = Process.GetProcessesByName(processName);
+                foreach (Process process in processes)
+                {
+                    IList<Process> childsProcess = process.GetChildProcessesFromWindows();
+                    childsProcess.CheckObjectForNull(nameof(childsProcess));
+
+                    foreach (var child in childsProcess) 
+                    {
+                        child.Kill(true);
+                        await child.WaitForExitAsync();
+                    }
+                }
+            }
+            catch (Exception) 
+            {
+                throw;
+            }
         }
     }
 }

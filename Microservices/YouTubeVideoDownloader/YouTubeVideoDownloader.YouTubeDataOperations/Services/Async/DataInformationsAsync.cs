@@ -4,20 +4,20 @@ using Gurrex.Common.Validations;
 using VideoLibrary;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
-using YouTubeVideoDownloader.YouTubeDataOperations.Models.Response;
 using YouTubeVideoDownloader.YouTubeDataOperations.Services.Base;
 using Gurrex.Common.Conversion;
-using YouTubeVideoDownloader.YouTubeDataOperations.Models.Request;
 using Gurrex.Common.Helpers;
 using YouTubeVideoDownloader.YouTubeDataOperations.Helpers;
 using System;
+using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Request;
+using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Response;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
 {
     /// <summary>
     /// Информация о видео и аудио асинхронно
     /// </summary>
-    public class DataInformationsAsync : DataInformation, IDataInformationAsync<YouTubeVideoInfoResponse, SpecificVideoInfoRequest>
+    public class DataInformationsAsync : DataInformation, IDataInformationAsync<YouTubeVideoInfoResponse, SpecificVideoInfoRequest, InfoStreams>
     {
 
         /// <summary>
@@ -65,11 +65,11 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// </summary>
         /// <param name="specificVideoInfoRequest">Запрашиваемые свойства видео</param>
         /// <returns>Объект <see cref="YouTubeVideo"/></returns>
-        public async Task<YouTubeVideo> GetSpecisicVideoInfoAsync(SpecificVideoInfoRequest specificVideoInfoRequest) 
+        public async Task<InfoStreams> GetSpecisicVideoInfoAsync(SpecificVideoInfoRequest specificVideoInfoRequest) 
         {
             IEnumerable<YouTubeVideo> videos = await GetEnumerableYouTubeVideo(specificVideoInfoRequest.Url);
-            YouTubeVideo youTubeVideo = GetYouTubeVideo(videos, specificVideoInfoRequest);
-            return youTubeVideo;
+            InfoStreams infoStreams = GetYouTubeVideo(videos, specificVideoInfoRequest);
+            return infoStreams;
 
         }
 

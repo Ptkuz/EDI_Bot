@@ -1,33 +1,46 @@
+using Gurrex.Common.Helpers;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Validations;
-using Gurrex.Common.Helpers;
+using Gurrex.Web.Interfaces.SignalR;
+using Gurrex.Web.SignalR.Hubs.Async;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Net.Mime;
 using System.Reflection;
-using YouTubeVideoDownloader.DAL.Entities;
-using YouTubeVideoDownloader.Interfaces.Repositories.Async;
+using YouTubeVideoDownloader.Interfaces.Models.Services;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
-using YouTubeVideoDownloader.YouTubeDataOperations.Models.Request;
-using YouTubeVideoDownloader.YouTubeDataOperations.Models.Response;
-using YouTubeVideoDownloader.YouTubeDataOperations.Services.Base;
-using VideoLibrary;
+using YouTubeVideoDownloader.WebApi.Controllers.Base;
+using YouTubeVideoDownloader.YouTubeDataOperations.Models;
+using YouTubeVideoDownloader.YouTubeDataOperations.Models.Services;
+using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Request;
+using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Response;
 
 namespace YouTubeVideoDownloader.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class YouTubeDownloadController : ControllerBase
+    public class YouTubeDownloadController : MainController
     {
+        private CancellationTokenSource CancellationTokenSource;
+
         /// <summary>
         /// Сврвис логирования
         /// </summary>
-        private readonly ILogger<YouTubeDownloadController> _logger;
+        private readonly ILogger<YouTubeDownloadController> _logger = null!;
 
         /// <summary>
         /// Сервис информации о видео
         /// </summary>
-        private readonly IDataInformationAsync<YouTubeVideoInfoResponse, SpecificVideoInfoRequest> _dataInformationsAsync;
+        private readonly IDataInformationAsync<YouTubeVideoInfoResponse, SpecificVideoInfoRequest, InfoStreams> _dataInformationsAsync = null!;
+
+        private readonly IDownloadStreamAsync<InfoStreams, SenderInfoHubAsync> _downloadStreamAsync = null!;
+
+        private readonly IConvertationServiceAsync _convertationServiceAsync = null!;
+
+        private readonly ISenderInfoHubAsync<SenderInfoHubAsync> _senderInfoHubAsync = null!;
+
+        private readonly IHubContext<SenderInfoHubAsync> _hubContext;
 
         /// <summary>
         /// Сборка
@@ -45,26 +58,18 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
         /// <summary>
         /// Имя сборки
         /// </summary>
-        public virtual string AssemblyName
-        {
-            get
-            {
-                AssemblyName assemblyName = Assembly.GetName();
-                string? name = assemblyName.Name;
-                name.CheckObjectForNull(nameof(name));
-                return name;
-            }
-        }
+        public override string? TypeName { get; set; } = nameof(YouTubeDownloadController);
+
 
         /// <summary>
         /// Путь до ресурсов
         /// </summary>
-        public virtual string ResourcesPath
+        public override string ResourcesPath
         {
-            get
-            {
-                return $"{AssemblyName}.Resources.Controllers.YouTubeDownloadController";
-            }
+            get =>
+                TypeName is not nameof(YouTubeDownloadController) ?
+                   base.ResourcesPath :
+                   $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Controllers.YouTubeDownloadController";
         }
 
         /// <summary>
@@ -72,11 +77,21 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
         /// </summary>
         /// <param name="logger">Сервис логирования</param>
         /// <param name="dataInformationsAsync">Сервис информации о видео</param>
-        public YouTubeDownloadController(ILogger<YouTubeDownloadController> logger, IDataInformationAsync<YouTubeVideoInfoResponse, SpecificVideoInfoRequest> dataInformationsAsync)
+        public YouTubeDownloadController(
+            ILogger<YouTubeDownloadController> logger,
+            IDataInformationAsync<YouTubeVideoInfoResponse, SpecificVideoInfoRequest, InfoStreams> dataInformationsAsync,
+            IDownloadStreamAsync<InfoStreams, SenderInfoHubAsync> downloadStreamAsync,
+            ISenderInfoHubAsync<SenderInfoHubAsync> senderInfoHubAsync,
+            IHubContext<SenderInfoHubAsync> hubContext,
+            IConvertationServiceAsync convertationServiceAsync
+            )
         {
             _logger = logger;
             _dataInformationsAsync = dataInformationsAsync;
-
+            _downloadStreamAsync = downloadStreamAsync;
+            _senderInfoHubAsync = senderInfoHubAsync;
+            _hubContext = hubContext;
+            _convertationServiceAsync = convertationServiceAsync;
         }
 
         /// <summary>
@@ -116,55 +131,15 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         public async Task DownloadVideoAsync([FromBody] SpecificVideoInfoRequest specificVideoInfoRequest)
         {
-            YouTubeVideo youTubeVideo = await _dataInformationsAsync.GetSpecisicVideoInfoAsync(specificVideoInfoRequest);
-            throw new Exception();
+            CancellationTokenSource = new CancellationTokenSource();
+
+            InfoStreams infoStreams = await _dataInformationsAsync.GetSpecisicVideoInfoAsync(specificVideoInfoRequest);
+            //bool result = await _downloadStreamAsync.DownloadAsync(infoStreams, _senderInfoHubAsync, _hubContext, CancellationTokenSource.Token);
+            IConvertationModel convertationModel =
+                new ConvertationModel(@"F:\MyProjects\VideoData\", infoStreams.AudioFileName, infoStreams.VideoFileName, infoStreams.VideoStream.Fps.ToString(), infoStreams.VideoStream.Title, infoStreams.VideoStream.FileExtension);
+            await _convertationServiceAsync.MergeAudioVideoData(convertationModel, Assembly.GetName().Name, CancellationTokenSource.Token);
+
+
         }
-
-        //private void Method()
-        //{
-        //    Channel channel = new Channel();
-        //    channel.Id = Guid.NewGuid();
-        //    channel.Name = "Alina Gindertail";
-
-        //    _logger.LogInformation("Работает!!!");
-
-        //    await _channelRerositoryAsync.AddEntityAsync(channel);
-
-
-
-        //    var youTube = YouTube.Default;
-        //    var video = await youTube.GetVideoAsync("https://www.youtube.com/watch?v=X7RDKkTGDUw&ab_channel=AlinaGingertail");
-        //    Console.WriteLine($"Info - {video.Info} \n " +
-        //        $"AudioFormat - {video.AudioFormat} \n " +
-        //        $"Format - {video.Format} \n " +
-        //        $"FPS - {video.Fps} \n " +
-        //        $"Extention - {video.FileExtension} \n " +
-        //        $"Length - {video.ContentLength} \n" +
-        //        $"AdaptiveKind - {video.AdaptiveKind} \n" +
-        //        $"AudioBitrate - {video.AudioBitrate} \n" +
-        //        $"FullName - {video.FullName} \n" +
-        //        $"FotmatCode - {video.FormatCode} \n" +
-        //        $"IsAdaptive - {video.IsAdaptive} \n" +
-        //        $"IsEncrypted - {video.IsEncrypted} \n" +
-        //        $"Resolution - {video.Resolution} \n" +
-        //        $"Title - {video.Title} \n" +
-        //        $"uri - {video.Uri} \n" +
-        //        $"WebSite - {video.WebSite}");
-
-        //    var stream = await video.StreamAsync();
-
-        //    using (stream)
-        //    {
-        //        using (Stream file = System.IO.File.Create("alina.mp4"))
-        //        {
-        //            byte[] buffer = new byte[8 * 1024];
-        //            int len;
-        //            while ((len = stream.Read(buffer, 0, buffer.Length)) > 0)
-        //            {
-        //                file.Write(buffer, 0, len);
-        //            }
-        //        }
-        //    }
-        //}
     }
 }

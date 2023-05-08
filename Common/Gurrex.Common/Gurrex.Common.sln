@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gurrex.Common.Conversion", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gurrex.Common.Helpers", "Gurrex.Common.Helpers\Gurrex.Common.Helpers.csproj", "{563F1F76-6667-415E-9AFB-67DC97371748}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gurrex.Common.Services", "Gurrex.Common.Services\Gurrex.Common.Services.csproj", "{1B0F2539-C6E8-4889-9DDA-C9FA447F6BA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{563F1F76-6667-415E-9AFB-67DC97371748}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{563F1F76-6667-415E-9AFB-67DC97371748}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{563F1F76-6667-415E-9AFB-67DC97371748}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B0F2539-C6E8-4889-9DDA-C9FA447F6BA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B0F2539-C6E8-4889-9DDA-C9FA447F6BA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B0F2539-C6E8-4889-9DDA-C9FA447F6BA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B0F2539-C6E8-4889-9DDA-C9FA447F6BA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

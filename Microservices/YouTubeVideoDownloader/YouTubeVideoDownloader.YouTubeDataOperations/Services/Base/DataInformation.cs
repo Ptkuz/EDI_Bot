@@ -1,20 +1,14 @@
-﻿using Gurrex.Common.Interfaces;
+﻿using Gurrex.Common.Helpers;
+using Gurrex.Common.Interfaces;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Validations;
-using Gurrex.Common.Helpers;
 using System.Collections.Specialized;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 using System.Web;
 using VideoLibrary;
-using YouTubeVideoDownloader.Interfaces.Models;
 using YouTubeVideoDownloader.YouTubeDataOperations.Exceptions;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
-using YouTubeVideoDownloader.YouTubeDataOperations.Models.Request;
-using YouTubeVideoDownloader.YouTubeDataOperations.Models.Response;
-using YouTubeVideoDownloader.YouTubeDataOperations.Helpers;
+using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Request;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
 {
@@ -130,10 +124,10 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
         /// </summary>
         /// <param name="videos">Перечисление объектов <see cref="YouTubeVideo"/></param>
         /// <returns>Объект <see cref="YouTubeVideo"/> с информацией о видео</returns>
-        protected YouTubeVideo GetYouTubeVideo(IEnumerable<YouTubeVideo> videos) 
+        protected YouTubeVideo GetYouTubeVideo(IEnumerable<YouTubeVideo> videos)
         {
-                YouTubeVideo? video = videos.FirstOrDefault();
-                video.CheckObjectForNull(nameof(video));
+            YouTubeVideo? video = videos.FirstOrDefault();
+            video.CheckObjectForNull(nameof(video));
             return video;
         }
 
@@ -143,27 +137,42 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
         /// <param name="videos">Перечисление объектов <see cref="YouTubeVideo"/></param>
         /// <param name="specificVideoInfoRequest">Объект <see cref="SpecificVideoInfoRequest"/> со свойствами запрашиваемого видео</param>
         /// <returns>Объект <see cref="YouTubeVideo"/> с информацией о видео</returns>
-        protected YouTubeVideo GetYouTubeVideo(IEnumerable<YouTubeVideo> videos, SpecificVideoInfoRequest specificVideoInfoRequest)
+        protected InfoStreams GetYouTubeVideo(IEnumerable<YouTubeVideo> videos, SpecificVideoInfoRequest specificVideoInfoRequest)
         {
             try
             {
-                int audioBitrate = specificVideoInfoRequest.ConvertToInt(specificVideoInfoRequest.AudioBitrate, " kbps");
-                int resolution = specificVideoInfoRequest.ConvertToInt(specificVideoInfoRequest.Resolution, "p");
+                YouTubeVideo? video = default;
+                YouTubeVideo? audio = default;
+
+                int resolution = default;
+                VideoFormat videoFormat = default;
+                int fps = default;
                 AudioFormat audioFormat = specificVideoInfoRequest.ConvertToAudioFormat(specificVideoInfoRequest.AudioFormat);
-                VideoFormat videoFormat = specificVideoInfoRequest.ConvertToVideoFormat(specificVideoInfoRequest.VideoFormat);
-                int fps = specificVideoInfoRequest.ConvertToInt(specificVideoInfoRequest.Fps, " FPS");
+                int audioBitrate = specificVideoInfoRequest.ConvertToInt(specificVideoInfoRequest.AudioBitrate, " kbps");
 
-                YouTubeVideo? video = videos
-                    .FirstOrDefault(x =>
-                    x.Format == videoFormat && x.Fps == fps &&
-                    x.Resolution == resolution);
-                video.CheckObjectForNull(nameof(video));
-
-                YouTubeVideo? audio = videos
+                audio = videos
                     .FirstOrDefault(x =>
                     x.AudioBitrate == audioBitrate && x.AudioFormat == audioFormat);
-                video.CheckObjectForNull(nameof(audio));
-                return audio;
+
+                audio.CheckObjectForNull(nameof(audio));
+
+                if (!String.IsNullOrWhiteSpace(specificVideoInfoRequest.Resolution) &&
+                    !String.IsNullOrWhiteSpace(specificVideoInfoRequest.VideoFormat) &&
+                    !String.IsNullOrWhiteSpace(specificVideoInfoRequest.Fps))
+                {
+                    resolution = specificVideoInfoRequest.ConvertToInt(specificVideoInfoRequest.Resolution, "p");
+                    videoFormat = specificVideoInfoRequest.ConvertToVideoFormat(specificVideoInfoRequest.VideoFormat);
+                    fps = specificVideoInfoRequest.ConvertToInt(specificVideoInfoRequest.Fps, " FPS");
+
+                    video = videos
+                        .FirstOrDefault(x =>
+                        x.Format == videoFormat && x.Fps == fps &&
+                        x.Resolution == resolution);
+
+                    video.CheckObjectForNull(nameof(video));
+                }
+
+                return new InfoStreams(audio, video);
             }
             catch (ArgumentNullException)
             {
