@@ -6,6 +6,7 @@ using Gurrex.Common.Validations;
 using System.Collections.Specialized;
 using System.Web;
 using VideoLibrary;
+using YouTubeVideoDownloader.Interfaces.Models.Services;
 using YouTubeVideoDownloader.YouTubeDataOperations.Exceptions;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Request;
@@ -136,8 +137,9 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
         /// </summary>
         /// <param name="videos">Перечисление объектов <see cref="YouTubeVideo"/></param>
         /// <param name="specificVideoInfoRequest">Объект <see cref="SpecificVideoInfoRequest"/> со свойствами запрашиваемого видео</param>
+        /// <param name="serverSettings">Настройки приложения</param>
         /// <returns>Объект <see cref="YouTubeVideo"/> с информацией о видео</returns>
-        protected InfoStreams GetYouTubeVideo(IEnumerable<YouTubeVideo> videos, SpecificVideoInfoRequest specificVideoInfoRequest)
+        protected InfoStreams GetYouTubeVideo(IEnumerable<YouTubeVideo> videos, SpecificVideoInfoRequest specificVideoInfoRequest, IServerSettings serverSettings)
         {
             try
             {
@@ -172,7 +174,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
                     video.CheckObjectForNull(nameof(video));
                 }
 
-                return new InfoStreams(audio, video);
+                return new InfoStreams(audio, video, serverSettings);
             }
             catch (ArgumentNullException)
             {

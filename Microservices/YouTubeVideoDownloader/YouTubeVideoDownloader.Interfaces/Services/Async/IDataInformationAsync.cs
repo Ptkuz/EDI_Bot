@@ -1,5 +1,7 @@
 ﻿using VideoLibrary;
 using YouTubeVideoDownloader.Interfaces.Models.Base;
+using YouTubeVideoDownloader.Interfaces.Models.Services;
+using YouTubeVideoDownloader.Interfaces.Services.Base;
 
 namespace YouTubeVideoDownloader.Interfaces.Services.Async
 {
@@ -23,7 +25,7 @@ namespace YouTubeVideoDownloader.Interfaces.Services.Async
         /// </summary>
         /// <param name="specificVideoInfoRequest">Свойства видео</param>
         /// <returns>Информация о потоках</returns>
-        Task<U> GetSpecisicVideoInfoAsync(K specificVideoInfoRequest);
+        Task<U> GetSpecisicVideoInfoAsync(K specificVideoInfoRequest, IServerSettings serverSettings);
 
 
     }

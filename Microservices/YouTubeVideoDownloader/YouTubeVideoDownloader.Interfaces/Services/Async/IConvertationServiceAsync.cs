@@ -1,18 +1,25 @@
-﻿using Gurrex.Common.Services.Models.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Gurrex.Common.Interfaces.Services;
+using Gurrex.Common.Services.Models.Events;
+using Gurrex.Web.Interfaces.SignalR;
+using Microsoft.AspNetCore.SignalR;
 using YouTubeVideoDownloader.Interfaces.Models.Services;
+using YouTubeVideoDownloader.Interfaces.Services.Base;
 
 namespace YouTubeVideoDownloader.Interfaces.Services.Async
 {
-    public interface IConvertationServiceAsync
+    /// <summary>
+    /// Асинхронный сервис конвертации
+    /// </summary>
+    /// <typeparam name="T">Хаб</typeparam>
+    /// <typeparam name="K">Событие изменения данных</typeparam>
+    public interface IConvertationServiceAsync<T, K> : IHub<T>, IProcessOperations<K> where T : Hub where K : EventArgs
     {
-        delegate void ProcessHandler(object sender, ProcessEventArgs e);
-        event ProcessHandler? OutputDataChanged;
-
-        Task MergeAudioVideoData(IConvertationModel convertationModel, string assemblyName, CancellationToken cancel);
+        /// <summary>
+        /// Асинхронно объеденить видео и аудио дорожки
+        /// </summary>
+        /// <param name="convertationModel">Модель конвертации</param>
+        /// <param name="assemblyName">Имя сборки</param>
+        /// <param name="cancel">Токен отмены</param>
+        Task MergeAudioVideoDataAsync(IConvertationModel convertationModel, string assemblyName, CancellationToken cancel);
     }
 }

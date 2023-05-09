@@ -1,15 +1,18 @@
 using Gurrex.Common.Helpers;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
+using Gurrex.Common.Services.Models.Events;
 using Gurrex.Common.Validations;
 using Gurrex.Web.Interfaces.SignalR;
 using Gurrex.Web.SignalR.Hubs.Async;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Options;
 using System.Net.Mime;
 using System.Reflection;
 using YouTubeVideoDownloader.Interfaces.Models.Services;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
+using YouTubeVideoDownloader.WebApi.ConfigurationSettings;
 using YouTubeVideoDownloader.WebApi.Controllers.Base;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.Services;
@@ -29,18 +32,17 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
         /// </summary>
         private readonly ILogger<YouTubeDownloadController> _logger = null!;
 
+        private readonly IServerSettings _serverSettings;
+
         /// <summary>
         /// Сервис информации о видео
         /// </summary>
         private readonly IDataInformationAsync<YouTubeVideoInfoResponse, SpecificVideoInfoRequest, InfoStreams> _dataInformationsAsync = null!;
 
-        private readonly IDownloadStreamAsync<InfoStreams, SenderInfoHubAsync> _downloadStreamAsync = null!;
+        private readonly IDownloadStreamAsync<InfoStreams, SenderInfoHubAsync, ProcessEventArgs> _downloadStreamAsync = null!;
 
-        private readonly IConvertationServiceAsync _convertationServiceAsync = null!;
+        private readonly IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs> _convertationServiceAsync = null!;
 
-        private readonly ISenderInfoHubAsync<SenderInfoHubAsync> _senderInfoHubAsync = null!;
-
-        private readonly IHubContext<SenderInfoHubAsync> _hubContext;
 
         /// <summary>
         /// Сборка
@@ -80,18 +82,24 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
         public YouTubeDownloadController(
             ILogger<YouTubeDownloadController> logger,
             IDataInformationAsync<YouTubeVideoInfoResponse, SpecificVideoInfoRequest, InfoStreams> dataInformationsAsync,
-            IDownloadStreamAsync<InfoStreams, SenderInfoHubAsync> downloadStreamAsync,
+            IDownloadStreamAsync<InfoStreams, SenderInfoHubAsync, ProcessEventArgs> downloadStreamAsync,
             ISenderInfoHubAsync<SenderInfoHubAsync> senderInfoHubAsync,
             IHubContext<SenderInfoHubAsync> hubContext,
-            IConvertationServiceAsync convertationServiceAsync
+            IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs> convertationServiceAsync,
+            IOptions<ServerSettings> serverSettings
             )
         {
             _logger = logger;
             _dataInformationsAsync = dataInformationsAsync;
             _downloadStreamAsync = downloadStreamAsync;
-            _senderInfoHubAsync = senderInfoHubAsync;
-            _hubContext = hubContext;
             _convertationServiceAsync = convertationServiceAsync;
+            _serverSettings = serverSettings.Value;
+
+            _downloadStreamAsync.HubContext = hubContext;
+            _downloadStreamAsync.SenderInfoHubAsync = senderInfoHubAsync;
+
+            _convertationServiceAsync.HubContext = hubContext;
+            _convertationServiceAsync.SenderInfoHubAsync = senderInfoHubAsync;
         }
 
         /// <summary>
@@ -129,17 +137,28 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
         /// <exception cref="Exception"></exception>
         [HttpPost("DownloadVideoAsync")]
         [Consumes(MediaTypeNames.Application.Json)]
-        public async Task DownloadVideoAsync([FromBody] SpecificVideoInfoRequest specificVideoInfoRequest)
+        public async Task<ActionResult<bool>> DownloadVideoAsync([FromBody] SpecificVideoInfoRequest specificVideoInfoRequest)
         {
-            CancellationTokenSource = new CancellationTokenSource();
+            try
+            {
+                CancellationTokenSource = new CancellationTokenSource();
+                InfoStreams infoStreams = await _dataInformationsAsync.GetSpecisicVideoInfoAsync(specificVideoInfoRequest, _serverSettings);
+                bool result = await _downloadStreamAsync.DownloadAsync(infoStreams, CancellationTokenSource.Token);
 
-            InfoStreams infoStreams = await _dataInformationsAsync.GetSpecisicVideoInfoAsync(specificVideoInfoRequest);
-            //bool result = await _downloadStreamAsync.DownloadAsync(infoStreams, _senderInfoHubAsync, _hubContext, CancellationTokenSource.Token);
-            IConvertationModel convertationModel =
-                new ConvertationModel(@"F:\MyProjects\VideoData\", infoStreams.AudioFileName, infoStreams.VideoFileName, infoStreams.VideoStream.Fps.ToString(), infoStreams.VideoStream.Title, infoStreams.VideoStream.FileExtension);
-            await _convertationServiceAsync.MergeAudioVideoData(convertationModel, Assembly.GetName().Name, CancellationTokenSource.Token);
-
-
+                if (!String.IsNullOrWhiteSpace(specificVideoInfoRequest.Resolution) && infoStreams.VideoStream is not null)
+                {
+                    IConvertationModel convertationModel =
+                        new ConvertationModel(_serverSettings.PathToVideoStorage, infoStreams.AudioFileName, infoStreams.AudioFileExtention, infoStreams.VideoFileName, infoStreams.VideoFileExtention, infoStreams.VideoStream.Fps, infoStreams.FinalFileFullName);
+                    await _convertationServiceAsync.MergeAudioVideoDataAsync(convertationModel, Assembly.GetName().Name, CancellationTokenSource.Token);
+                }
+                return Ok();
+            }
+            catch (Exception ex) 
+            {
+                string resource = ManagerResources.GetString(new Resource(ResourcesPath, "DownloadVideoInfoAsyncException", Assembly));
+                string resultStringLog = ManagerResources.GetResultString(resource, specificVideoInfoRequest.Url, ex);
+                return StatusCode(500, resultStringLog);
+            }
         }
     }
 }

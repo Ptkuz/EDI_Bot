@@ -1,4 +1,6 @@
-﻿using Gurrex.Web.Interfaces.SignalR;
+﻿using Gurrex.Common.Interfaces.Services;
+using Gurrex.Common.Services.Models.Events;
+using Gurrex.Web.Interfaces.SignalR;
 using Gurrex.Web.SignalR.Hubs.Async;
 using Microsoft.AspNetCore.SignalR;
 using VideoLibrary;
@@ -11,35 +13,58 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
     /// <summary>
     /// Асинхронная работа с потоком
     /// </summary>
-    public class DownloadStreamAsync : IDownloadStreamAsync<InfoStreams, SenderInfoHubAsync>
+    public class DownloadStreamAsync : IDownloadStreamAsync<InfoStreams, SenderInfoHubAsync, ProcessEventArgs>
     {
+
+        /// <summary>
+        /// Хаб для передачи статусов клиенту
+        /// </summary>
+        public ISenderInfoHubAsync<SenderInfoHubAsync> SenderInfoHubAsync { get; set; } = null!;
+
+        /// <summary>
+        /// Контекст хаба
+        /// </summary>
+        public IHubContext<SenderInfoHubAsync> HubContext { get; set; } = null!;
+
+        /// <summary>
+        /// Событие изменения прогресса
+        /// </summary>
+        public event IProcessOperations<ProcessEventArgs>.ProcessHandler OutputDataChanged;
+
         /// <summary>
         /// Асинхронно скачать поток
         /// </summary>
         /// <returns>True - скачивание завершено успешно, False - Скачивание завершено неудачно</returns>
-        public async Task<bool> DownloadAsync(InfoStreams infoStreams, ISenderInfoHubAsync<SenderInfoHubAsync> senderInfoHubAsync, IHubContext<SenderInfoHubAsync> hubContext, CancellationToken cancel)
+        public async Task<bool> DownloadAsync(InfoStreams infoStreams, CancellationToken cancel)
         {
-            YouTubeVideo youTubeAudio = infoStreams.AudioStream;
-            Stream audioStream = await youTubeAudio.StreamAsync();
-            var audio = DownloadDataAsync(audioStream, infoStreams.AudioFileName, senderInfoHubAsync, TypeData.Audio, hubContext, cancel);
-
-            YouTubeVideo? youTubeVideo = default;
-            Stream? videoStream = default;
-            Task<bool>? video = default;
-
-
-            if (infoStreams.VideoStream is not null && infoStreams.VideoFileName is not null)
+            try
             {
-                youTubeVideo = infoStreams.VideoStream;
-                videoStream = await youTubeVideo.StreamAsync();
-                video = DownloadDataAsync(videoStream, infoStreams.VideoFileName, senderInfoHubAsync, TypeData.Video, hubContext, cancel);
-                await Task.WhenAll(audio, video);
+                YouTubeVideo youTubeAudio = infoStreams.AudioStream;
+                Stream audioStream = await youTubeAudio.StreamAsync();
+                var audio = DownloadDataAsync(audioStream, infoStreams.AudioFileFullName, SenderInfoHubAsync, TypeData.Audio, HubContext, cancel);
+
+                YouTubeVideo? youTubeVideo = default;
+                Stream? videoStream = default;
+                Task<bool>? video = default;
+
+
+                if (infoStreams.VideoStream is not null && infoStreams.VideoFileName is not null)
+                {
+                    youTubeVideo = infoStreams.VideoStream;
+                    videoStream = await youTubeVideo.StreamAsync();
+                    video = DownloadDataAsync(videoStream, infoStreams.VideoFileFullName, SenderInfoHubAsync, TypeData.Video, HubContext, cancel);
+                    await Task.WhenAll(audio, video);
+                }
+                else
+                {
+                    await DownloadDataAsync(audioStream, infoStreams.AudioFileName, SenderInfoHubAsync, TypeData.Audio, HubContext, cancel);
+                }
+                return true;
             }
-            else
+            catch (HttpRequestException) 
             {
-                await DownloadDataAsync(audioStream, infoStreams.AudioFileName, senderInfoHubAsync, TypeData.Audio, hubContext, cancel);
+                throw;
             }
-            return true;
         }
 
         private async Task<bool> DownloadDataAsync(Stream stream, string fileName, ISenderInfoHubAsync<SenderInfoHubAsync> senderInfoHubAsync, TypeData typeData, IHubContext<SenderInfoHubAsync> hubContext, CancellationToken cancel)

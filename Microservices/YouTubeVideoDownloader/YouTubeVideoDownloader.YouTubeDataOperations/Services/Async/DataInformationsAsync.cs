@@ -11,6 +11,7 @@ using YouTubeVideoDownloader.YouTubeDataOperations.Helpers;
 using System;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Request;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Response;
+using YouTubeVideoDownloader.Interfaces.Models.Services;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
 {
@@ -64,11 +65,12 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// Получить объект <see cref="YouTubeVideo"/>
         /// </summary>
         /// <param name="specificVideoInfoRequest">Запрашиваемые свойства видео</param>
+        /// <param name="serverSettings">Настройки приложения</param>
         /// <returns>Объект <see cref="YouTubeVideo"/></returns>
-        public async Task<InfoStreams> GetSpecisicVideoInfoAsync(SpecificVideoInfoRequest specificVideoInfoRequest) 
+        public async Task<InfoStreams> GetSpecisicVideoInfoAsync(SpecificVideoInfoRequest specificVideoInfoRequest, IServerSettings serverSettings) 
         {
             IEnumerable<YouTubeVideo> videos = await GetEnumerableYouTubeVideo(specificVideoInfoRequest.Url);
-            InfoStreams infoStreams = GetYouTubeVideo(videos, specificVideoInfoRequest);
+            InfoStreams infoStreams = GetYouTubeVideo(videos, specificVideoInfoRequest, serverSettings);
             return infoStreams;
 
         }

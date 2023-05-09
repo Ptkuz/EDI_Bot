@@ -117,13 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DownloadVideoInfoAsyncException" xml:space="preserve">
-    <value>При скачивании видео "{0}" произошла ошибка "{1}". Попробуйте еще раз или повторите попытку позже</value>
+  <data name="DirectoryNotFoundEcxeption" xml:space="preserve">
+    <value>Директория "{0}" не найден</value>
   </data>
-  <data name="GetVideoInfoAsyncException" xml:space="preserve">
-    <value>В процессе получения информации о видео произошла ошибка: {0}</value>
-  </data>
-  <data name="GetVideoInfoAsyncSuccess" xml:space="preserve">
-    <value>Пользователь "{0}" получил информацию о видео по ссылке "{1}" </value>
+  <data name="FileNotFoundEcxeption" xml:space="preserve">
+    <value>Файл "{0}" не найден</value>
   </data>
 </root>
