@@ -1,4 +1,4 @@
-﻿using Gurrex.Common.Interfaces.Services;
+﻿using Gurrex.Common.Interfaces.Events;
 using Gurrex.Common.Services.Models.Events;
 using Gurrex.Web.Interfaces.SignalR;
 using Gurrex.Web.SignalR.Hubs.Async;
@@ -29,7 +29,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// <summary>
         /// Событие изменения прогресса
         /// </summary>
-        public event IProcessOperations<ProcessEventArgs>.ProcessHandler OutputDataChanged;
+        public event IEvents<ProcessEventArgs>.ProcessHandler? OutputDataChanged;
 
         /// <summary>
         /// Асинхронно скачать поток

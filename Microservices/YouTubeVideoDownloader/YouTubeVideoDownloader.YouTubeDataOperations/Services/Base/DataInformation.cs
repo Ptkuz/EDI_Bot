@@ -4,6 +4,7 @@ using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Validations;
 using System.Collections.Specialized;
+using System.Reflection;
 using System.Web;
 using VideoLibrary;
 using YouTubeVideoDownloader.Interfaces.Models.Services;
@@ -18,22 +19,22 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
     /// </summary>
     public class DataInformation : IResources
     {
+        /// <summary>
+        /// Сборка
+        /// </summary>
+        public Assembly Assembly => StaticHelpers.GetAssemblyInfo().Assembly;
 
         /// <summary>
-        /// Имя вызывающего типа
+        /// Имя сборки
         /// </summary>
-        public string? TypeName { get; set; }
-
+        public AssemblyName AssemblyName => StaticHelpers.GetAssemblyInfo().AssemblyName;
 
         /// <summary>
         /// Путь до ресурсов
         /// </summary>
         public virtual string ResourcesPath
         {
-            get
-            {
-                return $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Services.Base.DataInformation";
-            }
+            get => $"{AssemblyName.Name}.Resources.Services.Base.DataInformation";
         }
 
 

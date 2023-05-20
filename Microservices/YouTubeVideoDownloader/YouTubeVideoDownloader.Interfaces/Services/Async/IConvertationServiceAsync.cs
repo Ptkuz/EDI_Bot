@@ -1,4 +1,4 @@
-﻿using Gurrex.Common.Interfaces.Services;
+﻿using Gurrex.Common.Interfaces.Events;
 using Gurrex.Common.Services.Models.Events;
 using Gurrex.Web.Interfaces.SignalR;
 using Microsoft.AspNetCore.SignalR;
@@ -12,7 +12,7 @@ namespace YouTubeVideoDownloader.Interfaces.Services.Async
     /// </summary>
     /// <typeparam name="T">Хаб</typeparam>
     /// <typeparam name="K">Событие изменения данных</typeparam>
-    public interface IConvertationServiceAsync<T, K> : IHub<T>, IProcessOperations<K> where T : Hub where K : EventArgs
+    public interface IConvertationServiceAsync<T, K> : IHub<T>, IEvents<K> where T : Hub where K : EventArgs
     {
         /// <summary>
         /// Асинхронно объеденить видео и аудио дорожки

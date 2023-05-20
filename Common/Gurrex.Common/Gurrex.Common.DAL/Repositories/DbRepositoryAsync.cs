@@ -1,8 +1,11 @@
 ﻿using Gurrex.Common.DAL.Entities;
 using Gurrex.Common.DAL.Repositories.Base;
 using Gurrex.Common.Interfaces.Repositories;
+using Gurrex.Common.Localization;
+using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Validations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Gurrex.Common.DAL.Repositories
 {
@@ -13,13 +16,23 @@ namespace Gurrex.Common.DAL.Repositories
     public class DbRepositoryAsync<T> : BaseDbRepository<T>, IRepositoryEntitiesAsync<T> where T : Entity, new()
     {
 
+        private readonly ILogger _logger;
+
+        /// <summary>
+        /// Путь до ресурсов
+        /// </summary>
+        public override string ResourcesPath => $"{Assembly}.Repositories.DbRepositoryAsync";
+
         /// <summary>
         /// Конструктор инициализатор
         /// </summary>
         /// <param name="dbContext">Контекст базы данных</param>
-        protected DbRepositoryAsync(DbContext dbContext) : base(dbContext)
+        /// <param name="logger">Контекст базы данных</param>
+        protected DbRepositoryAsync(DbContext dbContext, ILogger<DbRepositoryAsync<T>> logger) : base(dbContext, logger)
         {
-
+            _logger = logger;
+            string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugInitializationDbRepositoryAsync", Assembly));
+            _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T)));
         }
 
         /// <summary>
@@ -34,10 +47,16 @@ namespace Gurrex.Common.DAL.Repositories
             {
                 T? entity = await Items.SingleOrDefaultAsync(item => item.Id == id).ConfigureAwait(false);
                 entity.CheckObjectForNull(nameof(entity));
+
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugGetEntityByIdAsync", Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T), id));
+
                 return entity!;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugExceptionGetEntityByIdAsync", Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T), ex));
                 throw;
             }
         }
@@ -52,10 +71,17 @@ namespace Gurrex.Common.DAL.Repositories
             try
             {
                 IEnumerable<T> entityList = await Items.ToListAsync().ConfigureAwait(false);
-                return entityList.Last();
+                T entity = entityList.Last();
+
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugGetLastEntityAsync", Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T)));
+
+                return entity;
             }
             catch (Exception)
             {
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugExceptionGetLastEntityAsync", Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T)));
                 throw;
             }
         }
@@ -73,6 +99,9 @@ namespace Gurrex.Common.DAL.Repositories
                 entity.CheckObjectForNull(nameof(entity));
                 _dbContext.Entry(entity).State = EntityState.Added;
 
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugAddEntityAsync", Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T)));
+
                 if (autoSaveChanges)
                 {
                     await SaveChangesAsync(cancel);
@@ -80,8 +109,10 @@ namespace Gurrex.Common.DAL.Repositories
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugExceptionAddEntityAsync", Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T), ex));
                 throw;
             }
 
@@ -100,6 +131,9 @@ namespace Gurrex.Common.DAL.Repositories
                 entity.CheckObjectForNull(nameof(entity));
                 _dbContext.Entry(entity).State = EntityState.Modified;
 
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugUpdateEntityAsync", Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T)));
+
                 if (autoSaveChanges)
                 {
                     await SaveChangesAsync();
@@ -107,8 +141,10 @@ namespace Gurrex.Common.DAL.Repositories
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugExceptionUpdateEntityAsync", Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T), ex));
                 throw;
             }
         }
@@ -126,15 +162,20 @@ namespace Gurrex.Common.DAL.Repositories
                 T entity = new T { Id = id };
                 _dbContext.Remove(entity);
 
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugRemoveEntityByIdAsync", Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T), id));
+
                 if (autoSaveChanges)
                 {
                     await SaveChangesAsync(cancel);
-                    return true;
                 }
-                return false;
+
+                return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugExceptionRemoveEntityByIdAsync", Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T), ex));
                 throw;
             }
         }
@@ -149,10 +190,16 @@ namespace Gurrex.Common.DAL.Repositories
             try
             {
                 await _dbContext.SaveChangesAsync(cancel).ConfigureAwait(false);
+
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugSaveChangesAsync", Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T)));
+
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugExceptionSaveChangesAsync", Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T), ex));
                 throw;
             }
         }

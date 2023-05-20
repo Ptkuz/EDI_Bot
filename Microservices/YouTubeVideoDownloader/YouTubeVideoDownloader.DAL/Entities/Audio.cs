@@ -1,5 +1,6 @@
 ﻿using Gurrex.Common.DAL.Entities;
 using Gurrex.Common.Helpers;
+using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations.Schema;
 using YouTubeVideoDownloader.Interfaces.Entities;
 
@@ -10,11 +11,11 @@ namespace YouTubeVideoDownloader.DAL.Entities
     /// </summary>
     public class Audio : Entity, IAudio
     {
-
         /// <summary>
-        /// Имя типа, вызывающий свойство <see cref="ResourcesPath"/>
+        /// Логирование
         /// </summary>
-        public override string? TypeName { get; set; }
+        [NotMapped]
+        private readonly ILogger<Audio> _logger = null!;
 
         /// <summary>
         /// Путь до ресурсов
@@ -22,10 +23,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         [NotMapped]
         public override string ResourcesPath
         {
-            get =>
-                 TypeName is not nameof(Audio) ?
-                    base.ResourcesPath :
-                    $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.Audio";   
+            get => $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.Audio";   
         }
 
 
@@ -54,9 +52,9 @@ namespace YouTubeVideoDownloader.DAL.Entities
         public ServerInfo ServerInfo { get; set; } = null!;
 
         /// <summary>
-        /// Конструктор по умолчанию
+        /// Конструктор инициализатор
         /// </summary>
-        public Audio()
+        public Audio() 
         {
 
         }
@@ -64,15 +62,17 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <summary>
         /// Инициализатор конструктор
         /// </summary>
+        /// <param name="logger">Логирование</param>
         /// <param name="id">Id сущности</param>
         /// <param name="dateAdded">Дата добавления</param>
         /// <param name="dateModified">Дата изменения</param>
         /// <param name="dateDeleted">Дата удаления</param>
         /// <param name="formatAudio">Формат аудио</param>
         /// <param name="bitrate">Битрейт</param>
-        public Audio(Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted, string formatAudio, string bitrate)
-            : base(id, dateAdded, dateModified, dateDeleted)
+        public Audio(ILogger<Audio> logger, Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted, string formatAudio, string bitrate)
+            : base(logger, id, dateAdded, dateModified, dateDeleted)
         {
+            _logger = logger;
             FormatAudio = formatAudio;
             Bitrate = bitrate;
         }

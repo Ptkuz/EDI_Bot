@@ -1,4 +1,5 @@
 ﻿using Gurrex.Common.Helpers;
+using Gurrex.Common.Interfaces.Events;
 using Gurrex.Common.Services.Models;
 using Gurrex.Common.Validations;
 using System;

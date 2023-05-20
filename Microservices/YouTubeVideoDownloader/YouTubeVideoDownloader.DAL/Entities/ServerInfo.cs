@@ -4,6 +4,7 @@ using YouTubeVideoDownloader.Interfaces.Entities;
 using System.Reflection;
 using Gurrex.Common.Helpers;
 using Gurrex.Common.Validations;
+using Microsoft.Extensions.Logging;
 
 namespace YouTubeVideoDownloader.DAL.Entities
 {
@@ -13,10 +14,9 @@ namespace YouTubeVideoDownloader.DAL.Entities
     public class ServerInfo : Entity, IServerInfo
     {
         /// <summary>
-        /// Тип
+        /// Логирование
         /// </summary>
-        [NotMapped]
-        public override string? TypeName { get; set; }
+        private readonly ILogger<ServerInfo> _logger = null!;
 
         /// <summary>
         /// Путь до ресурсов
@@ -24,10 +24,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         [NotMapped]
         public override string ResourcesPath
         {
-            get =>
-            TypeName is not nameof(ServerInfo) ?
-               base.ResourcesPath :
-               $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.ServerInfo";
+            get => $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.ServerInfo";
         }
 
         /// <summary>
@@ -79,9 +76,10 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <param name="dateDeleted">Дата удаления</param>
         /// <param name="reference">Ссылка на видео</param>
         /// <param name="size">Размер видео</param>
-        public ServerInfo(Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted, string reference, int size)
-            : base(id, dateAdded, dateModified, dateDeleted)
+        public ServerInfo(ILogger<ServerInfo> logger, Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted, string reference, int size)
+            : base(logger, id, dateAdded, dateModified, dateDeleted)
         {
+            _logger = logger;
             Ref = reference;
             Size = size;
         }

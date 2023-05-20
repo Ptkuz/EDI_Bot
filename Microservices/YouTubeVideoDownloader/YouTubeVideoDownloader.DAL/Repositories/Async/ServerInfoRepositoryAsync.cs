@@ -1,4 +1,5 @@
 ﻿using Gurrex.Common.DAL.Repositories;
+using Microsoft.Extensions.Logging;
 using YouTubeVideoDownloader.DAL.Context;
 using YouTubeVideoDownloader.DAL.Entities;
 using YouTubeVideoDownloader.Interfaces.Repositories.Async;
@@ -14,7 +15,9 @@ namespace YouTubeVideoDownloader.DAL.Repositories.Async
         /// Конструктор инициализатор
         /// </summary>
         /// <param name="downloaderContext">Контекст базы данных</param>
-        public ServerInfoRepositoryAsync(DownloaderContext downloaderContext) : base(downloaderContext)
+        /// <param name="logger">Логирование</param>
+        public ServerInfoRepositoryAsync(DownloaderContext downloaderContext, ILogger<ServerInfoRepositoryAsync> logger) 
+            : base(downloaderContext, logger)
         {
 
         }

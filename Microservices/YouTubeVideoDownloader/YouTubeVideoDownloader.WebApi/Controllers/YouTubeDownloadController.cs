@@ -2,7 +2,6 @@ using Gurrex.Common.Helpers;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Services.Models.Events;
-using Gurrex.Common.Validations;
 using Gurrex.Web.Interfaces.SignalR;
 using Gurrex.Web.SignalR.Hubs.Async;
 using Microsoft.AspNetCore.Mvc;
@@ -45,33 +44,11 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
 
 
         /// <summary>
-        /// Сборка
-        /// </summary>
-        public virtual Assembly Assembly
-        {
-            get
-            {
-                Assembly? assembly = Assembly.GetAssembly(typeof(YouTubeDownloadController));
-                assembly.CheckObjectForNull(nameof(assembly));
-                return assembly;
-            }
-        }
-
-        /// <summary>
-        /// Имя сборки
-        /// </summary>
-        public override string? TypeName { get; set; } = nameof(YouTubeDownloadController);
-
-
-        /// <summary>
         /// Путь до ресурсов
         /// </summary>
         public override string ResourcesPath
         {
-            get =>
-                TypeName is not nameof(YouTubeDownloadController) ?
-                   base.ResourcesPath :
-                   $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Controllers.YouTubeDownloadController";
+            get => $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Controllers.YouTubeDownloadController";
         }
 
         /// <summary>
@@ -153,7 +130,7 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
                 }
                 return Ok();
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 string resource = ManagerResources.GetString(new Resource(ResourcesPath, "DownloadVideoInfoAsyncException", Assembly));
                 string resultStringLog = ManagerResources.GetResultString(resource, specificVideoInfoRequest.Url, ex);

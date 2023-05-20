@@ -26,15 +26,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// </summary>
         public override string ResourcesPath
         {
-            get
-            {
-                if (TypeName is not nameof(DataInformationsAsync))
-                {
-                    return base.ResourcesPath;
-                }
-
-                return $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Services.Async.DataInformationsAsync";
-            }
+            get => $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Services.Async.DataInformationsAsync";
         }
 
         /// <summary>
@@ -94,7 +86,6 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
             string? id = GetUrlValueByKey(url, "v");
             id.CheckObjectForNull(nameof(id));
 
-            TypeName = nameof(DataInformationsAsync);
             string resource = ManagerResources.GetString(new Resource(ResourcesPath, "VideoImageUrl", StaticHelpers.GetAssemblyInfo().Assembly));
             string resultString = ManagerResources.GetResultString(resource, id, "maxresdefault.jpg");
 

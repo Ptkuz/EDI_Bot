@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gurrex.Common.Interfaces.Services
+namespace Gurrex.Common.Interfaces.Events
 {
     /// <summary>
     /// Прогресс
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IProcessOperations<T> where T : EventArgs
+    public interface IEvents<T> where T : EventArgs
     {
         /// <summary>
         /// Делегат события

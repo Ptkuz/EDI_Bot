@@ -6,6 +6,7 @@ using YouTubeVideoDownloader.Interfaces.Entities;
 using System.Reflection;
 using Gurrex.Common.Helpers;
 using Gurrex.Common.Validations;
+using Microsoft.Extensions.Logging;
 
 namespace YouTubeVideoDownloader.DAL.Entities
 {
@@ -14,10 +15,11 @@ namespace YouTubeVideoDownloader.DAL.Entities
     /// </summary>
     public class YouTubeInfo : Entity, IYouTubeInfo
     {
+
         /// <summary>
-        /// Тип
+        /// Логирование
         /// </summary>
-        public override string? TypeName { get; set; }
+        private readonly ILogger<YouTubeInfo> _logger = null!;
 
         /// <summary>
         /// Путь до ресурсов
@@ -25,10 +27,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         [NotMapped]
         public override string ResourcesPath
         {
-            get =>
-            TypeName is not nameof(YouTubeInfo) ?
-               base.ResourcesPath :
-               $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.YouTubeInfo";
+            get => $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.YouTubeInfo";
         }
 
         /// <summary>
@@ -82,6 +81,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <summary>
         /// Конструктор инициализатор
         /// </summary>
+        /// <param name="logger">Логирование</param>
         /// <param name="id">Id сущности</param>
         /// <param name="dateAdded">Дата добавления</param>
         /// <param name="dateModified">Дата изменения</param>
@@ -89,9 +89,10 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <param name="title">Заголовок видео</param>
         /// <param name="url">Ссылка на видео</param>
         /// <param name="duration">Длина видео</param>
-        public YouTubeInfo(Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted, string title, string url, int duration)
-            : base(id, dateAdded, dateModified, dateDeleted)
+        public YouTubeInfo(Logger<YouTubeInfo> logger, Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted, string title, string url, int duration)
+            : base(logger, id, dateAdded, dateModified, dateDeleted)
         {
+            _logger = logger;
             Title = title;
             Url = url;
             Duration = duration;
