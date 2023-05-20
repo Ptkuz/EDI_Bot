@@ -1,4 +1,6 @@
-﻿namespace Gurrex.Common.Interfaces
+﻿using System.Reflection;
+
+namespace Gurrex.Common.Interfaces
 {
     /// <summary>
     /// Информация о сборке
@@ -7,7 +9,7 @@
     {
 
         /// <summary>
-        ///// Путь до ресурсов
+        /// Путь до ресурсов
         /// </summary>
         string ResourcesPath { get; }
 

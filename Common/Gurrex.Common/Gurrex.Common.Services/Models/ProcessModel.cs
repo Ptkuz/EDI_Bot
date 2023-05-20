@@ -14,22 +14,22 @@ namespace Gurrex.Common.Services.Models
         /// <summary>
         /// Имя процесса
         /// </summary>
-        public string ProcessName { get; set; }
+        public string ProcessName { get; set; } = null!;
 
         /// <summary>
         /// Имя сборки, откуда происходит запуск процесса
         /// </summary>
-        public string AssemblyName { get; set; }
+        public string? AssemblyName { get; set; } = null!;
 
         /// <summary>
         /// Директория, откуда происходит запуск
         /// </summary>
-        public string Directory { get; set; }
+        public string Directory { get; set; } = null!;
 
         /// <summary>
         /// Консольная команда
         /// </summary>
-        public string CmdCommand { get; set; }
+        public string CmdCommand { get; set; } = null!;
 
         /// <summary>
         /// Использовать ли Shell
@@ -55,7 +55,7 @@ namespace Gurrex.Common.Services.Models
         /// <param name="directory">Директория, откуда происходит запуск</param>
         /// <param name="cmdCommand">Консольная команда</param>
         /// <param name="isWindow">Запускать ли окно</param>
-        public ProcessModel(string processName, string assemblyName, string directory, string cmdCommand, bool isShellExecute, bool isWindow) 
+        public ProcessModel(string processName, string? assemblyName, string directory, string cmdCommand, bool isShellExecute, bool isWindow) 
         {
             ProcessName = processName;
             AssemblyName = assemblyName;
