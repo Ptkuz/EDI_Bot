@@ -12,11 +12,6 @@ namespace YouTubeVideoDownloader.DAL.Entities
     /// </summary>
     public class ServerInfo : Entity, IServerInfo
     {
-        /// <summary>
-        /// Тип
-        /// </summary>
-        [NotMapped]
-        public override string? TypeName { get; set; }
 
         /// <summary>
         /// Путь до ресурсов
@@ -24,10 +19,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         [NotMapped]
         public override string ResourcesPath
         {
-            get =>
-            TypeName is not nameof(ServerInfo) ?
-               base.ResourcesPath :
-               $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.ServerInfo";
+            get => $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.ServerInfo";
         }
 
         /// <summary>

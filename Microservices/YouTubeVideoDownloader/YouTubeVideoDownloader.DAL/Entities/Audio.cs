@@ -11,10 +11,6 @@ namespace YouTubeVideoDownloader.DAL.Entities
     public class Audio : Entity, IAudio
     {
 
-        /// <summary>
-        /// Имя типа, вызывающий свойство <see cref="ResourcesPath"/>
-        /// </summary>
-        public override string? TypeName { get; set; }
 
         /// <summary>
         /// Путь до ресурсов
@@ -22,10 +18,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         [NotMapped]
         public override string ResourcesPath
         {
-            get =>
-                 TypeName is not nameof(Audio) ?
-                    base.ResourcesPath :
-                    $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.Audio";   
+            get =>  $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.Audio";   
         }
 
 

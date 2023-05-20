@@ -12,21 +12,12 @@ namespace YouTubeVideoDownloader.DAL.Entities
     {
 
         /// <summary>
-        /// Тип
-        /// </summary>
-        [NotMapped]
-        public override string? TypeName { get; set; }
-
-        /// <summary>
         /// Путь до ресурсов
         /// </summary>
         [NotMapped]
         public override string ResourcesPath
         {
-            get =>
-            TypeName is not nameof(Channel) ?
-               base.ResourcesPath :
-               $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.Channel";
+            get => $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.Channel";
         }
 
         /// <summary>

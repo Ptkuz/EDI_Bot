@@ -4,6 +4,7 @@ using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Validations;
 using System.Collections.Specialized;
+using System.Reflection;
 using System.Web;
 using VideoLibrary;
 using YouTubeVideoDownloader.Interfaces.Models.Services;
@@ -20,9 +21,14 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
     {
 
         /// <summary>
-        /// Имя вызывающего типа
+        /// Сборка
         /// </summary>
-        public string? TypeName { get; set; }
+        public Assembly Assembly => StaticHelpers.GetAssemblyInfo().Assembly;
+
+        /// <summary>
+        /// Имя сборки
+        /// </summary>
+        public AssemblyName? AssemblyName => StaticHelpers.GetAssemblyInfo().AssemblyName;
 
 
         /// <summary>
@@ -30,10 +36,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
         /// </summary>
         public virtual string ResourcesPath
         {
-            get
-            {
-                return $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Services.Base.DataInformation";
-            }
+            get => $"{AssemblyName?.Name}.Resources.Services.Base.DataInformation";
         }
 
 
@@ -217,7 +220,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
                     return query[key];
                 else
                 {
-                    string resource = ManagerResources.GetString(new Resource(ResourcesPath, "ExceptionNoContainsKeyV", StaticHelpers.GetAssemblyInfo().Assembly));
+                    string resource = ManagerResources.GetString(new Resource(ResourcesPath, "ExceptionNoContainsKeyV", Assembly));
                     string resultString = ManagerResources.GetResultString(resource, url);
                     throw new NoContainsKeyException(resultString, key);
                 }

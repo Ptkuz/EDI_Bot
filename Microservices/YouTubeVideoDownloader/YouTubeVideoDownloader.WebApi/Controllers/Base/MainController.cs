@@ -1,5 +1,7 @@
-﻿using Gurrex.Common.Interfaces;
+﻿using Gurrex.Common.Helpers;
+using Gurrex.Common.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 
 namespace YouTubeVideoDownloader.WebApi.Controllers.Base
 {
@@ -9,14 +11,17 @@ namespace YouTubeVideoDownloader.WebApi.Controllers.Base
     public class MainController : ControllerBase, IResources
     {
 
-        /// <summary>
-        /// Тип, который вызывает <see cref="ResourcesPath"/>
-        /// </summary>
-        public virtual string? TypeName { get; set; } = nameof(MainController);
+        public Assembly Assembly => StaticHelpers.GetAssemblyInfo().Assembly;
+
+        public AssemblyName? AssemblyName => StaticHelpers.GetAssemblyInfo().AssemblyName;
 
         /// <summary>
         /// Путь до ресурсов
         /// </summary>
-        public virtual string ResourcesPath { get; } = null!;
+        public virtual string ResourcesPath 
+        {
+            get => $"{AssemblyName?.Name}.Resources.Controllers.MainController";
+        }
+
     }
 }

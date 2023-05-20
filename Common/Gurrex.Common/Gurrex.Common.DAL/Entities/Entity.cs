@@ -5,6 +5,7 @@ using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection;
 
 namespace Gurrex.Common.DAL.Entities
 {
@@ -15,10 +16,16 @@ namespace Gurrex.Common.DAL.Entities
     {
 
         /// <summary>
-        /// Имя типа, вызывающий свойство <see cref="ResourcesPath"/>
+        /// Сборка
         /// </summary>
         [NotMapped]
-        public abstract string? TypeName { get; set; }
+        public Assembly Assembly => StaticHelpers.GetAssemblyInfo().Assembly;
+
+        /// <summary>
+        /// Название сборки
+        /// </summary>
+        [NotMapped]
+        public AssemblyName? AssemblyName => StaticHelpers.GetAssemblyInfo().AssemblyName;
 
         /// <summary>
         /// Путь до ресурсов
@@ -28,7 +35,7 @@ namespace Gurrex.Common.DAL.Entities
         {
             get
             {
-                return $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.Entity";
+                return $"{AssemblyName?.Name}.Resources.Entities.Entity";
             }
         }
 
@@ -89,7 +96,7 @@ namespace Gurrex.Common.DAL.Entities
         /// <returns>Информация о сущности</returns>
         public override string ToString()
         {
-            string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "EntityInfo", StaticHelpers.GetAssemblyInfo().Assembly));
+            string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "EntityInfo", Assembly));
             return ManagerResources.GetResultString(localizationString, Id);
         }
     }

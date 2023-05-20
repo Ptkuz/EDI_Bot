@@ -1,4 +1,3 @@
-using Gurrex.Common.Helpers;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Services.Models.Events;
@@ -25,7 +24,7 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
     [Route("[controller]")]
     public class YouTubeDownloadController : MainController
     {
-        private CancellationTokenSource CancellationTokenSource;
+        private CancellationTokenSource CancellationTokenSource = null!;
 
         /// <summary>
         /// Сврвис логирования
@@ -45,33 +44,11 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
 
 
         /// <summary>
-        /// Сборка
-        /// </summary>
-        public virtual Assembly Assembly
-        {
-            get
-            {
-                Assembly? assembly = Assembly.GetAssembly(typeof(YouTubeDownloadController));
-                assembly.CheckObjectForNull(nameof(assembly));
-                return assembly;
-            }
-        }
-
-        /// <summary>
-        /// Имя сборки
-        /// </summary>
-        public override string? TypeName { get; set; } = nameof(YouTubeDownloadController);
-
-
-        /// <summary>
         /// Путь до ресурсов
         /// </summary>
         public override string ResourcesPath
         {
-            get =>
-                TypeName is not nameof(YouTubeDownloadController) ?
-                   base.ResourcesPath :
-                   $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Controllers.YouTubeDownloadController";
+            get => $"{AssemblyName?.Name}.Resources.Controllers.YouTubeDownloadController";
         }
 
         /// <summary>
@@ -147,13 +124,18 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
 
                 if (!String.IsNullOrWhiteSpace(specificVideoInfoRequest.Resolution) && infoStreams.VideoStream is not null)
                 {
+                    AssemblyName.CheckObjectForNull(nameof(AssemblyName));
+                    AssemblyName.Name.CheckStringForNullOrWhiteSpace();
+                    infoStreams.VideoFileName.CheckStringForNullOrWhiteSpace();
+                    infoStreams.VideoFileExtention.CheckStringForNullOrWhiteSpace();
+
                     IConvertationModel convertationModel =
                         new ConvertationModel(_serverSettings.PathToVideoStorage, infoStreams.AudioFileName, infoStreams.AudioFileExtention, infoStreams.VideoFileName, infoStreams.VideoFileExtention, infoStreams.VideoStream.Fps, infoStreams.FinalFileFullName);
-                    await _convertationServiceAsync.MergeAudioVideoDataAsync(convertationModel, Assembly.GetName().Name, CancellationTokenSource.Token);
+                    await _convertationServiceAsync.MergeAudioVideoDataAsync(convertationModel, AssemblyName.Name, CancellationTokenSource.Token);
                 }
                 return Ok();
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 string resource = ManagerResources.GetString(new Resource(ResourcesPath, "DownloadVideoInfoAsyncException", Assembly));
                 string resultStringLog = ManagerResources.GetResultString(resource, specificVideoInfoRequest.Url, ex);

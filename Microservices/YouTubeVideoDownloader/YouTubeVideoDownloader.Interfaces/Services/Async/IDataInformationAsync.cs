@@ -24,6 +24,7 @@ namespace YouTubeVideoDownloader.Interfaces.Services.Async
         /// Асинхронно получить конкретное видео на основе свойств
         /// </summary>
         /// <param name="specificVideoInfoRequest">Свойства видео</param>
+        /// <param name="serverSettings">Настройки сервера</param>
         /// <returns>Информация о потоках</returns>
         Task<U> GetSpecisicVideoInfoAsync(K specificVideoInfoRequest, IServerSettings serverSettings);
 

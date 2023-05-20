@@ -1,5 +1,6 @@
 ﻿using Gurrex.Common.Interfaces.Services;
 using Gurrex.Common.Services.Models.Events;
+using Gurrex.Common.Validations;
 using Gurrex.Web.Interfaces.SignalR;
 using Gurrex.Web.SignalR.Hubs.Async;
 using Microsoft.AspNetCore.SignalR;
@@ -29,7 +30,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// <summary>
         /// Событие изменения прогресса
         /// </summary>
-        public event IProcessOperations<ProcessEventArgs>.ProcessHandler OutputDataChanged;
+        public event IProcessOperations<ProcessEventArgs>.ProcessHandler? OutputDataChanged;
 
         /// <summary>
         /// Асинхронно скачать поток
@@ -52,6 +53,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
                 {
                     youTubeVideo = infoStreams.VideoStream;
                     videoStream = await youTubeVideo.StreamAsync();
+                    infoStreams.VideoFileFullName.CheckStringForNullOrWhiteSpace();
                     video = DownloadDataAsync(videoStream, infoStreams.VideoFileFullName, SenderInfoHubAsync, TypeData.Video, HubContext, cancel);
                     await Task.WhenAll(audio, video);
                 }
@@ -61,7 +63,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
                 }
                 return true;
             }
-            catch (HttpRequestException) 
+            catch (HttpRequestException)
             {
                 throw;
             }
@@ -82,13 +84,13 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
                         file.Write(buffer, 0, len);
                         length += len;
 
-                        switch (typeData) 
+                        switch (typeData)
                         {
                             case TypeData.Audio:
                                 await senderInfoHubAsync.ContextSendInfoAllClientsAsync(hubContext, "ReceiveAudioStatusAsync", cancel, $"Скачивание аудио дорожки {fileName} - ({length})");
                                 break;
                             case TypeData.Video:
-                                 await senderInfoHubAsync.ContextSendInfoAllClientsAsync(hubContext, "ReceiceVideoStatusAsync", cancel, $"Скачивание видео дорожки {fileName} - ({length})");
+                                await senderInfoHubAsync.ContextSendInfoAllClientsAsync(hubContext, "ReceiceVideoStatusAsync", cancel, $"Скачивание видео дорожки {fileName} - ({length})");
                                 break;
                             default:
                                 break;

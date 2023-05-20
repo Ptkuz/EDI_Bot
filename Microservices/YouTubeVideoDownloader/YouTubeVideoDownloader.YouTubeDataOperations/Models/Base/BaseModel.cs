@@ -1,5 +1,6 @@
 ﻿using Gurrex.Common.Helpers;
 using Gurrex.Common.Interfaces;
+using System.Reflection;
 using YouTubeVideoDownloader.Interfaces.Models.Base;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.Base
@@ -9,23 +10,30 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.Base
     /// </summary>
     public class BaseModel : IBaseModel, IResources
     {
+
         /// <summary>
-        /// Тип, который обращается к свойству <see cref="ResourcesPath"/>
+        /// Сборка
         /// </summary>
-        public virtual string? TypeName { get; set; } = null!;
+        public Assembly Assembly => StaticHelpers.GetAssemblyInfo().Assembly;
+
+        /// <summary>
+        /// Имя сборки
+        /// </summary>
+        public AssemblyName? AssemblyName => StaticHelpers.GetAssemblyInfo().AssemblyName;
 
         /// <summary>
         /// Путь до ресурсов
         /// </summary>
         public virtual string ResourcesPath 
         {
-            get => $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Base.BaseModel";
+            get => $"{AssemblyName?.Name}.Resources.Base.BaseModel";
         }
 
         /// <summary>
         /// Id
         /// </summary>
         public Guid Id { get; set; }
+
 
         /// <summary>
         /// Конструктор инициализатор
