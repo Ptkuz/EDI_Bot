@@ -1,5 +1,6 @@
 ﻿using Gurrex.Common.DAL.Entities;
 using Gurrex.Common.Helpers;
+using Gurrex.Common.Helpers.Models;
 using Gurrex.Common.Interfaces;
 using Gurrex.Common.Interfaces.Repositories.Base;
 using Gurrex.Common.Localization;
@@ -14,23 +15,17 @@ namespace Gurrex.Common.DAL.Repositories.Base
     /// Базовый класс работы с сущностью, унаследованной от <see cref="Entity"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class BaseDbRepository<T> : IRepository<T>, IResources where T : Entity, new()
+    public class BaseDbRepository<T> : IRepository<T>, IResources<AssemblyInfo> where T : Entity, new()
     {
+        /// <summary>
+        /// Сборка
+        /// </summary>
+        public AssemblyInfo AssemblyInfo => StaticHelpers.GetAssemblyInfo();
 
         /// <summary>
         /// Путь до ресурсов
         /// </summary>
-        public virtual string ResourcesPath => $"{Assembly}.Repositories.Base.BaseDbRepository";
-
-        /// <summary>
-        /// Сборка
-        /// </summary>
-        public Assembly Assembly => StaticHelpers.GetAssemblyInfo().Assembly;
-
-        /// <summary>
-        /// Имя сборки
-        /// </summary>
-        public AssemblyName AssemblyName => StaticHelpers.GetAssemblyInfo().AssemblyName;
+        public virtual string ResourcesPath => $"{AssemblyInfo.AssemblyName.Name}.Repositories.Base.BaseDbRepository";
 
         /// <summary>
         /// Логирование
@@ -62,7 +57,7 @@ namespace Gurrex.Common.DAL.Repositories.Base
             _dbContext = dbContext;
             _entities = dbContext.Set<T>();
             _logger = logger;
-            string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugInitializationBaseRepository", Assembly));
+            string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugInitializationBaseRepository", AssemblyInfo.Assembly));
             _logger.LogDebug(ManagerResources.GetResultString(localizationString));
         }
 

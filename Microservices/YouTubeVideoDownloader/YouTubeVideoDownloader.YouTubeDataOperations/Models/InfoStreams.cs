@@ -91,6 +91,13 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models
         /// </summary>
         public string FinalFileFullName { get; private set; } = null!;
 
+        /// <summary>
+        /// Конструктор инициализатор
+        /// </summary>
+        public InfoStreams() 
+        {
+            
+        }
 
         /// <summary>
         /// Конструктор инициализатор
@@ -98,20 +105,26 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models
         /// <param name="audioStream">Аудио поток</param>
         /// <param name="videoStream">Видео поток</param>
         /// <param name="serverSettings">Настройки приложения</param>
-        public InfoStreams(YouTubeVideo audioStream, YouTubeVideo? videoStream, IServerSettings serverSettings)
+        public InfoStreams(YouTubeVideo? videoStream,  YouTubeVideo audioStream, IServerSettings serverSettings)
+            : this(audioStream, serverSettings)
+        {
+            VideoStream = videoStream;
+            VideoFileName = $"video_{Id}";
+            VideoFileExtention = videoStream?.FileExtension;
+            VideoFileFullName = SetPathVideoFileName(serverSettings);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="audioStream"></param>
+        /// <param name="serverSettings"></param>
+        public InfoStreams(YouTubeVideo audioStream, IServerSettings serverSettings)
         {
             AudioStream = audioStream;
-            VideoStream = videoStream;
-
             AudioFileName = $"audio_{Id}";
-            VideoFileName = $"video_{Id}";
-
             AudioFileExtention = $".{audioStream.AudioFormat}";
-            VideoFileExtention = videoStream!.FileExtension;
-
             AudioFileFullName = SetPathAudioFileName(serverSettings);
-            VideoFileFullName = SetPathVideoFileName(serverSettings);
-
             FinalFileFullName = SetPathFinalAudioFileFullName(serverSettings);
         }
 
@@ -121,7 +134,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models
         /// <returns>Название видео файла</returns>
         private string? SetPathVideoFileName(IServerSettings serverSettings)
         {
-            if (VideoFileName is not null)
+            if (!String.IsNullOrWhiteSpace(VideoFileName))
             {
                 string path = Path.Combine(serverSettings.PathToVideoStorage, VideoFileName);
                 return $"{path}{VideoFileExtention}";
@@ -135,7 +148,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models
         /// <returns>Название аудио файла</returns>
         private string SetPathAudioFileName(IServerSettings serverSettings)
         {
-            if (VideoFileName is null)
+            if (String.IsNullOrWhiteSpace(VideoFileName))
             {
                 string path = Path.Combine(serverSettings.PathToAudioStorage, AudioFileName);
                 return $"{path}{AudioFileExtention}";

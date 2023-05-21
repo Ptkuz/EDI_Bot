@@ -13,11 +13,6 @@ namespace YouTubeVideoDownloader.DAL.Entities
     {
 
         /// <summary>
-        /// Логирование
-        /// </summary>
-        private readonly ILogger<Video> _logger = null!;
-
-        /// <summary>
         /// Путь до ресурсов
         /// </summary>
         [NotMapped]
@@ -90,10 +85,32 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <param name="frameRate">Количество кадров в секунду</param>
         /// <param name="formatAudio">Формат аудио</param>
         /// <param name="bitrate">Битрейт</param>
-        public Video(ILogger<Video> logger, Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted, string formatVideo, string resolution, string frameRate, string formatAudio, string bitrate)
-            : base(logger, id, dateAdded, dateModified, dateDeleted)
+        public Video(string formatVideo, string resolution, string frameRate, string formatAudio, string bitrate)
+            : base()
         {
-            _logger = logger;
+            FormatVideo = formatVideo;
+            Resolution = resolution;
+            FrameRate = frameRate;
+            FormatAudio = formatAudio;
+            Bitrate = bitrate;
+        }
+
+        /// <summary>
+        /// Инициализатор конструктор
+        /// </summary>
+        /// <param name="logger">Логирование</param>
+        /// <param name="id">Id сущности</param>
+        /// <param name="dateAdded">Дата добавления</param>
+        /// <param name="dateModified">Дата изменения</param>
+        /// <param name="dateDeleted">Дата удаления</param>
+        /// <param name="formatVideo">Формат видео</param>
+        /// <param name="resolution">Разрешение</param>
+        /// <param name="frameRate">Количество кадров в секунду</param>
+        /// <param name="formatAudio">Формат аудио</param>
+        /// <param name="bitrate">Битрейт</param>
+        public Video(Guid id, string formatVideo, string resolution, string frameRate, string formatAudio, string bitrate)
+            : base(id)
+        {
             FormatVideo = formatVideo;
             Resolution = resolution;
             FrameRate = frameRate;

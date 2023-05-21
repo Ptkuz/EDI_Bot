@@ -11,11 +11,6 @@ namespace YouTubeVideoDownloader.DAL.Entities
     /// </summary>
     public class Audio : Entity, IAudio
     {
-        /// <summary>
-        /// Логирование
-        /// </summary>
-        [NotMapped]
-        private readonly ILogger<Audio> _logger = null!;
 
         /// <summary>
         /// Путь до ресурсов
@@ -64,15 +59,25 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// </summary>
         /// <param name="logger">Логирование</param>
         /// <param name="id">Id сущности</param>
-        /// <param name="dateAdded">Дата добавления</param>
-        /// <param name="dateModified">Дата изменения</param>
-        /// <param name="dateDeleted">Дата удаления</param>
         /// <param name="formatAudio">Формат аудио</param>
         /// <param name="bitrate">Битрейт</param>
-        public Audio(ILogger<Audio> logger, Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted, string formatAudio, string bitrate)
-            : base(logger, id, dateAdded, dateModified, dateDeleted)
+        public Audio(Guid id, string formatAudio, string bitrate)
+            : base(id)
         {
-            _logger = logger;
+            FormatAudio = formatAudio;
+            Bitrate = bitrate;
+        }
+
+        /// <summary>
+        /// Инициализатор конструктор
+        /// </summary>
+        /// <param name="logger">Логирование</param>
+        /// <param name="id">Id сущности</param>
+        /// <param name="formatAudio">Формат аудио</param>
+        /// <param name="bitrate">Битрейт</param>
+        public Audio(string formatAudio, string bitrate)
+            : base()
+        {
             FormatAudio = formatAudio;
             Bitrate = bitrate;
         }

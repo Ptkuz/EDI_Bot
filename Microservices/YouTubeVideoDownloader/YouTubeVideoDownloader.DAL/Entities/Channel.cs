@@ -53,8 +53,22 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <param name="dateModified">Дата изменения</param>
         /// <param name="dateDeleted">Дата удаления</param>
         /// <param name="name">Название канала</param>
-        public Channel(ILogger<Channel> logger, Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted, string name)
-            : base(logger, id, dateAdded, dateModified, dateDeleted)
+        public Channel(string name)
+            : base()
+        {
+            Name = name;
+        }
+
+        /// <summary>
+        /// Конструктор инициализатор
+        /// </summary>
+        /// <param name="id">Id сущности</param>
+        /// <param name="dateAdded">Дата добавления</param>
+        /// <param name="dateModified">Дата изменения</param>
+        /// <param name="dateDeleted">Дата удаления</param>
+        /// <param name="name">Название канала</param>
+        public Channel(ILogger<Channel> logger, Guid id, string name)
+            : base(id)
         {
             _logger = logger;
             Name = name;

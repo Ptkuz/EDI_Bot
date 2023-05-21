@@ -12,10 +12,11 @@ using Microsoft.AspNetCore.SignalR;
 using YouTubeVideoDownloader.Interfaces.Models.Services;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
 using System.Reflection;
+using Gurrex.Common.Helpers.Models;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
 {
-    public class ConvertationServiceAsync : ProcessOperations, IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs>, IResources
+    public class ConvertationServiceAsync : ProcessOperations, IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs>, IResources<AssemblyInfo>
     {
         /// <summary>
         /// Токен отмены
@@ -35,19 +36,14 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// <summary>
         /// Сборка
         /// </summary>
-        public Assembly Assembly => StaticHelpers.GetAssemblyInfo().Assembly;
-
-        /// <summary>
-        /// Название сборки
-        /// </summary>
-        public AssemblyName? AssemblyName => StaticHelpers.GetAssemblyInfo().AssemblyName;
+        public AssemblyInfo AssemblyInfo => StaticHelpers.GetAssemblyInfo();
 
         /// <summary>
         /// Путь до файла ресурсов
         /// </summary>
         public string ResourcesPath 
         { 
-            get =>  $"{AssemblyName?.Name}.Resources.Services.Async.ConvertationServiceAsync";
+            get =>  $"{AssemblyInfo.AssemblyName?.Name}.Resources.Services.Async.ConvertationServiceAsync";
         }
 
         /// <summary>
@@ -83,10 +79,10 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
                 audioFilePath = $"{IOHelpers.PathCombine(true, false, convertationModel.FilesPath, $"{convertationModel.AudioFileName}{convertationModel.AudioFileExtention}")}";
                 tempraryName = $"{IOHelpers.PathCombine(false, false, convertationModel.FilesPath, $"convert_{convertationModel.VideoFileName}{convertationModel.VideoFileExnetion}")}";
 
-                string resource = ManagerResources.GetString(new Resource(ResourcesPath, "ConvertCommand", Assembly));
+                string resource = ManagerResources.GetString(new Resource(ResourcesPath, "ConvertCommand", AssemblyInfo.Assembly));
                 string cmdCommand = ManagerResources.GetResultString(videoFilePath, audioFilePath, convertationModel.Fps, tempraryName);
 
-                ProcessModel processModel = new ProcessModel(appName, AssemblyName?.Name!, directory, cmdCommand, false, false, cancel);
+                ProcessModel processModel = new ProcessModel(appName, AssemblyInfo.AssemblyName?.Name!, directory, cmdCommand, false, false, cancel);
 
                 await StartProcessAsync(processModel);
                 IOHelpers.ReplaceFile(tempraryName, convertationModel.FinalFileName);

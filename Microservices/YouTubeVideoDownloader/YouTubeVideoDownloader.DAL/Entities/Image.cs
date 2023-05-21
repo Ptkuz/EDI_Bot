@@ -13,10 +13,6 @@ namespace YouTubeVideoDownloader.DAL.Entities
     /// </summary>
     public class Image : Entity, IImage
     {
-        /// <summary>
-        /// Логирование
-        /// </summary>
-        private readonly ILogger<Image> _logger = null!;
 
         /// <summary>
         /// Путь до ресурсов
@@ -74,10 +70,28 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <param name="imageBytes">Массив байтов картинки</param>
         /// <param name="extention">Расширение</param>
         /// <param name="resolution">Разрешение</param>
-        public Image(ILogger<Image> logger, Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted, byte[] imageBytes, string extention, string resolution)
-            : base(logger, id, dateAdded, dateModified, dateDeleted)
+        public Image(byte[] imageBytes, string extention, string resolution)
+            : base()
         {
-            _logger = logger;
+            ImageBytes = imageBytes;
+            Extention = extention;
+            Resolution = resolution;
+        }
+
+        /// <summary>
+        /// Конструктор инициализатор
+        /// </summary>
+        /// <param name="logger">Id сущности</param>
+        /// <param name="id">Id сущности</param>
+        /// <param name="dateAdded">Дата добавления</param>
+        /// <param name="dateModified">Дата изменения</param>
+        /// <param name="dateDeleted">Дата удаления</param>
+        /// <param name="imageBytes">Массив байтов картинки</param>
+        /// <param name="extention">Расширение</param>
+        /// <param name="resolution">Разрешение</param>
+        public Image(Guid id, byte[] imageBytes, string extention, string resolution)
+            : base(id)
+        {
             ImageBytes = imageBytes;
             Extention = extention;
             Resolution = resolution;

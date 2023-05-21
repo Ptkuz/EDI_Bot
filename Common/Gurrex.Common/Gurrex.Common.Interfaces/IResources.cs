@@ -5,7 +5,7 @@ namespace Gurrex.Common.Interfaces
     /// <summary>
     /// Информация о сборке
     /// </summary>
-    public interface IResources : IAssembly
+    public interface IResources<T> : IAssembly<T> where T : class
     {
 
         /// <summary>

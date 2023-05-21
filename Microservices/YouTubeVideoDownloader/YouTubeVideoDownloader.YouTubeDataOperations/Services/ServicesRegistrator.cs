@@ -2,7 +2,9 @@
 using Gurrex.Web.Interfaces.SignalR;
 using Gurrex.Web.SignalR.Hubs.Async;
 using Microsoft.Extensions.DependencyInjection;
-using VideoLibrary;
+using YouTubeVideoDownloader.DAL.Entities;
+using YouTubeVideoDownloader.DAL.Repositories.Async;
+using YouTubeVideoDownloader.Interfaces.Repositories.Async;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
 using YouTubeVideoDownloader.Interfaces.Services.Sync;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
@@ -24,11 +26,19 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
         /// <param name="services">Коллекция сервисов</param>
         /// <returns></returns>
         public static IServiceCollection AddDownloadServices(this IServiceCollection services) => services
+
             .AddTransient<IDataInformation<YouTubeVideoInfoResponse>, DataInformations>()
             .AddTransient<IDataInformationAsync<YouTubeVideoInfoResponse, SpecificVideoInfoRequest, InfoStreams>, DataInformationsAsync>()
             .AddTransient<IDownloadStreamAsync<InfoStreams, SenderInfoHubAsync, ProcessEventArgs>, DownloadStreamAsync>()
             .AddTransient<ISenderInfoHubAsync<SenderInfoHubAsync>, SenderInfoHubAsync>()
             .AddTransient<IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs>, ConvertationServiceAsync>()
+
+            .AddTransient<IAudioRepositoryAsync<Audio>, AudioRepositoryAsync>()
+            .AddTransient<IChannelRerositoryAsync<Channel>, ChannelRepositoryAsync>()
+            .AddTransient<IImageRepositoryAsync<Image>, ImageRepositoryAsync>()
+            .AddTransient<IServerInfoRepositoryAsync<ServerInfo>, ServerInfoRepositoryAsync>()
+            .AddTransient<IVideoRepositoryAsync<Video>, VideoRepositoryAsync>()
+            .AddTransient<IYouTubeInfoRepositoryAsync<YouTubeInfo>, YouTubeInfoRepositoryAsync>()
             ;
     }
 }

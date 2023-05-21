@@ -17,11 +17,6 @@ namespace YouTubeVideoDownloader.DAL.Entities
     {
 
         /// <summary>
-        /// Логирование
-        /// </summary>
-        private readonly ILogger<YouTubeInfo> _logger = null!;
-
-        /// <summary>
         /// Путь до ресурсов
         /// </summary>
         [NotMapped]
@@ -89,10 +84,28 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <param name="title">Заголовок видео</param>
         /// <param name="url">Ссылка на видео</param>
         /// <param name="duration">Длина видео</param>
-        public YouTubeInfo(Logger<YouTubeInfo> logger, Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted, string title, string url, int duration)
-            : base(logger, id, dateAdded, dateModified, dateDeleted)
+        public YouTubeInfo(string title, string url, int duration)
+            : base()
         {
-            _logger = logger;
+            Title = title;
+            Url = url;
+            Duration = duration;
+        }
+
+        /// <summary>
+        /// Конструктор инициализатор
+        /// </summary>
+        /// <param name="logger">Логирование</param>
+        /// <param name="id">Id сущности</param>
+        /// <param name="dateAdded">Дата добавления</param>
+        /// <param name="dateModified">Дата изменения</param>
+        /// <param name="dateDeleted">Дата удаления</param>
+        /// <param name="title">Заголовок видео</param>
+        /// <param name="url">Ссылка на видео</param>
+        /// <param name="duration">Длина видео</param>
+        public YouTubeInfo(Guid id, string title, string url, int duration)
+            : base(id)
+        {
             Title = title;
             Url = url;
             Duration = duration;

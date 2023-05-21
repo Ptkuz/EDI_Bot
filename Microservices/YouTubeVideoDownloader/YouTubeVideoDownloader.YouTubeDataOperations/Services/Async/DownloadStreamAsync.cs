@@ -4,6 +4,7 @@ using Gurrex.Web.Interfaces.SignalR;
 using Gurrex.Web.SignalR.Hubs.Async;
 using Microsoft.AspNetCore.SignalR;
 using VideoLibrary;
+using YouTubeVideoDownloader.DAL.Entities;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
 using YouTubeVideoDownloader.YouTubeDataOperations.Enums;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
@@ -35,7 +36,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// Асинхронно скачать поток
         /// </summary>
         /// <returns>True - скачивание завершено успешно, False - Скачивание завершено неудачно</returns>
-        public async Task<bool> DownloadAsync(InfoStreams infoStreams, CancellationToken cancel)
+        public async Task<ServerInfo> DownloadAsync(InfoStreams infoStreams, Predicate<InfoStreams> predicate, CancellationToken cancel)
         {
             try
             {
@@ -48,7 +49,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
                 Task<bool>? video = default;
 
 
-                if (infoStreams.VideoStream is not null && infoStreams.VideoFileName is not null)
+                if (predicate(infoStreams))
                 {
                     youTubeVideo = infoStreams.VideoStream;
                     videoStream = await youTubeVideo.StreamAsync();
@@ -57,7 +58,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
                 }
                 else
                 {
-                    await DownloadDataAsync(audioStream, infoStreams.AudioFileName, SenderInfoHubAsync, TypeData.Audio, HubContext, cancel);
+                    await Task.WhenAll(audio);
                 }
                 return true;
             }

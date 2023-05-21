@@ -13,10 +13,6 @@ namespace YouTubeVideoDownloader.DAL.Entities
     /// </summary>
     public class ServerInfo : Entity, IServerInfo
     {
-        /// <summary>
-        /// Логирование
-        /// </summary>
-        private readonly ILogger<ServerInfo> _logger = null!;
 
         /// <summary>
         /// Путь до ресурсов
@@ -76,10 +72,25 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <param name="dateDeleted">Дата удаления</param>
         /// <param name="reference">Ссылка на видео</param>
         /// <param name="size">Размер видео</param>
-        public ServerInfo(ILogger<ServerInfo> logger, Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted, string reference, int size)
-            : base(logger, id, dateAdded, dateModified, dateDeleted)
+        public ServerInfo(string reference, int size)
+            : base()
         {
-            _logger = logger;
+            Ref = reference;
+            Size = size;
+        }
+
+        /// <summary>
+        /// Конструктор инициализатор
+        /// </summary>
+        /// <param name="id">Id сущности</param>
+        /// <param name="dateAdded">Дата добавления</param>
+        /// <param name="dateModified">Дата изменения</param>
+        /// <param name="dateDeleted">Дата удаления</param>
+        /// <param name="reference">Ссылка на видео</param>
+        /// <param name="size">Размер видео</param>
+        public ServerInfo(Guid id, string reference, int size)
+            : base(id)
+        {
             Ref = reference;
             Size = size;
         }

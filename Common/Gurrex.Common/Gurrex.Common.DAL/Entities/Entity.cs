@@ -1,4 +1,5 @@
 ﻿using Gurrex.Common.Helpers;
+using Gurrex.Common.Helpers.Models;
 using Gurrex.Common.Interfaces;
 using Gurrex.Common.Interfaces.Entities;
 using Gurrex.Common.Localization;
@@ -6,33 +7,21 @@ using Gurrex.Common.Localization.Models;
 using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Reflection;
 
 namespace Gurrex.Common.DAL.Entities
 {
     /// <summary>
     /// Базовая сущность
     /// </summary>
-    public class Entity : IEntity, IResources
+    public class Entity : IEntity, IResources<AssemblyInfo>
     {
-        /// <summary>
-        /// Логирование
-        /// </summary>
-        [NotMapped]
-        private readonly ILogger<Entity> _logger;
 
         /// <summary>
         /// Сборка
         /// </summary>
         [NotMapped]
-        public Assembly Assembly => StaticHelpers.GetAssemblyInfo().Assembly;
+        public AssemblyInfo AssemblyInfo => StaticHelpers.GetAssemblyInfo();
 
-
-        /// <summary>
-        /// Название сборки
-        /// </summary>
-        [NotMapped]
-        public AssemblyName AssemblyName => StaticHelpers.GetAssemblyInfo().AssemblyName;
 
         /// <summary>
         /// Путь до ресурсов
@@ -40,7 +29,7 @@ namespace Gurrex.Common.DAL.Entities
         [NotMapped]
         public virtual string ResourcesPath
         {
-            get => $"{AssemblyName.Name}.Resources.Entities.Entity";
+            get => $"{AssemblyInfo.AssemblyName.Name}.Resources.Entities.Entity";
         }
 
         /// <summary>
@@ -71,36 +60,25 @@ namespace Gurrex.Common.DAL.Entities
         /// <summary>
         /// Конструктор инициализатор
         /// </summary>
-        public Entity() 
+        /// <param name="logger">Логирование</param>
+        public Entity()
         {
-            
+            Id = Guid.NewGuid();
+            DateAdded = DateTime.Now;
+            DateModified = DateTime.Now;
+            DateDeleted = null;
         }
 
         /// <summary>
         /// Конструктор инициализатор
         /// </summary>
         /// <param name="logger">Логирование</param>
-        public Entity(ILogger<Entity> logger)
-        {
-            _logger = logger;
-        }
-
-        /// <summary>
-        /// Конструктор инициализатор
-        /// </summary>
-        /// <param name="logger">Логирование</param>
-        /// <param name="id">Id сущности</param>
-        /// <param name="dateAdded">Дата добавления</param>
-        /// <param name="dateModified">Дата изменения</param>
-        /// <param name="dateDeleted">Дата удаления</param>
-        public Entity(ILogger<Entity> logger, Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted)
-            : this(logger)
+        public Entity(Guid id)
         {
             Id = id;
-            DateAdded = dateAdded;
-            DateModified = dateModified;
-            DateDeleted = dateDeleted;
-
+            DateAdded = DateTime.Now;
+            DateModified = DateTime.Now;
+            DateDeleted = null;
         }
 
 
@@ -110,9 +88,8 @@ namespace Gurrex.Common.DAL.Entities
         /// <returns>Информация о сущности</returns>
         public override string ToString()
         {
-            string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "EntityInfo", Assembly));
+            string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "EntityInfo", AssemblyInfo.Assembly));
             string resultString = ManagerResources.GetResultString(localizationString, Id);
-            _logger.LogInformation(resultString);
             return resultString;
         }
     }

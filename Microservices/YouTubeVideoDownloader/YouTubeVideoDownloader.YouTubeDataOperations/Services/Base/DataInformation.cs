@@ -1,4 +1,5 @@
 ﻿using Gurrex.Common.Helpers;
+using Gurrex.Common.Helpers.Models;
 using Gurrex.Common.Interfaces;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
@@ -17,24 +18,19 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
     /// <summary>
     /// Получение данных о видео
     /// </summary>
-    public class DataInformation : IResources
+    public class DataInformation : IResources<AssemblyInfo>
     {
         /// <summary>
         /// Сборка
         /// </summary>
-        public Assembly Assembly => StaticHelpers.GetAssemblyInfo().Assembly;
-
-        /// <summary>
-        /// Имя сборки
-        /// </summary>
-        public AssemblyName AssemblyName => StaticHelpers.GetAssemblyInfo().AssemblyName;
+        public AssemblyInfo AssemblyInfo => StaticHelpers.GetAssemblyInfo();
 
         /// <summary>
         /// Путь до ресурсов
         /// </summary>
         public virtual string ResourcesPath
         {
-            get => $"{AssemblyName.Name}.Resources.Services.Base.DataInformation";
+            get => $"{AssemblyInfo.AssemblyName.Name}.Resources.Services.Base.DataInformation";
         }
 
 
@@ -173,9 +169,10 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
                         x.Resolution == resolution);
 
                     video.CheckObjectForNull(nameof(video));
+                    return new InfoStreams(audio, video, serverSettings);
                 }
 
-                return new InfoStreams(audio, video, serverSettings);
+                return new InfoStreams(audio, serverSettings);
             }
             catch (ArgumentNullException)
             {

@@ -24,6 +24,6 @@ namespace YouTubeVideoDownloader.Interfaces.Services.Async
         /// Асинхронно скачать поток
         /// </summary>
         /// <returns>True - скачивание завершено успешно, False - Скачивание завершено неудачно</returns>
-        Task<bool> DownloadAsync(T infoStreams, CancellationToken cancel);
+        Task<bool> DownloadAsync(T infoStreams, Predicate<T> predicate, CancellationToken cancel);
     }
 }
