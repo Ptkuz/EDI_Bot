@@ -2,6 +2,9 @@
 using Gurrex.Common.Interfaces;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using VideoLibrary;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.Base;
 
@@ -10,8 +13,26 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse
     /// <summary>
     /// Информация о конкретном видео
     /// </summary>
-    public class SpecificVideoInfoRequest : BaseModel
+    public class SpecificVideoInfoRequest : BaseModel, IResources
     {
+
+        /// <summary>
+        /// Сборка
+        /// </summary>
+        [JsonIgnore]
+        public Assembly Assembly => StaticHelpers.GetAssemblyInfo().Assembly;
+
+        /// <summary>
+        /// Имя сборки
+        /// </summary>
+        [JsonIgnore]
+        public AssemblyName AssemblyName => StaticHelpers.GetAssemblyInfo().AssemblyName;
+
+        /// <summary>
+        /// Путь до ресурсов
+        /// </summary>
+        [JsonIgnore]
+        public string ResourcesPath => $"{Assembly}.Resources.Request.SpecificVideoInfoRequest";
 
         /// <summary>
         /// Ссылка на видео
