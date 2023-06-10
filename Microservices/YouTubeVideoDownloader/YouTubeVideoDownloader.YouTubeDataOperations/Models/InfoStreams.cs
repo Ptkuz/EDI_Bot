@@ -18,6 +18,11 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models
         private string? videoFileExtention;
 
         /// <summary>
+        /// Ссылка на поток
+        /// </summary>
+        public string Url { get; set; } = null!;
+
+        /// <summary>
         /// Аудио поток
         /// </summary>
         public YouTubeVideo AudioStream { get; set; } = null!;
@@ -105,13 +110,18 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models
         /// <param name="audioStream">Аудио поток</param>
         /// <param name="videoStream">Видео поток</param>
         /// <param name="serverSettings">Настройки приложения</param>
-        public InfoStreams(YouTubeVideo? videoStream,  YouTubeVideo audioStream, IServerSettings serverSettings)
-            : this(audioStream, serverSettings)
+        public InfoStreams(string url, YouTubeVideo? videoStream,  YouTubeVideo audioStream, IServerSettings serverSettings)
         {
+            Url = url;
             VideoStream = videoStream;
             VideoFileName = $"video_{Id}";
             VideoFileExtention = videoStream?.FileExtension;
             VideoFileFullName = SetPathVideoFileName(serverSettings);
+            AudioStream = audioStream;
+            AudioFileName = $"audio_{Id}";
+            AudioFileExtention = $".{audioStream.AudioFormat}";
+            AudioFileFullName = SetPathAudioFileName(serverSettings);
+            FinalFileFullName = SetPathFinalFileFullName(serverSettings);
         }
 
         /// <summary>
@@ -119,13 +129,14 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models
         /// </summary>
         /// <param name="audioStream"></param>
         /// <param name="serverSettings"></param>
-        public InfoStreams(YouTubeVideo audioStream, IServerSettings serverSettings)
+        public InfoStreams(string url, YouTubeVideo audioStream, IServerSettings serverSettings)
         {
+            Url = url;
             AudioStream = audioStream;
             AudioFileName = $"audio_{Id}";
             AudioFileExtention = $".{audioStream.AudioFormat}";
             AudioFileFullName = SetPathAudioFileName(serverSettings);
-            FinalFileFullName = SetPathFinalAudioFileFullName(serverSettings);
+            FinalFileFullName = SetPathFinalFileFullName(serverSettings);
         }
 
         /// <summary>
@@ -160,7 +171,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models
             }
         }
 
-        private string SetPathFinalAudioFileFullName(IServerSettings serverSettings) 
+        private string SetPathFinalFileFullName(IServerSettings serverSettings) 
         {
             if (VideoStream is null)
             {

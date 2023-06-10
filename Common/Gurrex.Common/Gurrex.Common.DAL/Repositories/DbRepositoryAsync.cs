@@ -21,7 +21,7 @@ namespace Gurrex.Common.DAL.Repositories
         /// <summary>
         /// Путь до ресурсов
         /// </summary>
-        public override string ResourcesPath => $"{AssemblyInfo.AssemblyName.Name}.Repositories.DbRepositoryAsync";
+        public override string ResourcesPath => $"{AssemblyInfo.AssemblyName.Name}.Resources.Repositories.DbRepositoryAsync";
 
         /// <summary>
         /// Конструктор инициализатор
@@ -31,8 +31,6 @@ namespace Gurrex.Common.DAL.Repositories
         protected DbRepositoryAsync(DbContext dbContext, ILogger<DbRepositoryAsync<T>> logger) : base(dbContext, logger)
         {
             _logger = logger;
-            string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugInitializationDbRepositoryAsync", AssemblyInfo.Assembly));
-            _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T)));
         }
 
         /// <summary>
@@ -115,6 +113,10 @@ namespace Gurrex.Common.DAL.Repositories
                 _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T), ex));
                 throw;
             }
+            finally 
+            {
+                _dbContext.Entry(entity).State = EntityState.Detached;
+            }
 
         }
 
@@ -146,6 +148,10 @@ namespace Gurrex.Common.DAL.Repositories
                 string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugExceptionUpdateEntityAsync", AssemblyInfo.Assembly));
                 _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T), ex));
                 throw;
+            }
+            finally
+            {
+                _dbContext.Entry(entity).State = EntityState.Detached;
             }
         }
 

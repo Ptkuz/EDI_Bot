@@ -2,11 +2,13 @@ using Gurrex.Common.Helpers;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Services.Models.Events;
+using Gurrex.Common.Validations;
 using Gurrex.Web.Interfaces.SignalR;
 using Gurrex.Web.SignalR.Hubs.Async;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Options;
+using System.Diagnostics;
 using System.Net.Mime;
 using YouTubeVideoDownloader.DAL.Entities;
 using YouTubeVideoDownloader.Interfaces.Models.Services;
@@ -18,6 +20,7 @@ using YouTubeVideoDownloader.YouTubeDataOperations.Models;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.Services;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Request;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Response;
+using YouTubeVideoDownloader.YouTubeDataOperations.Services.Async;
 
 namespace YouTubeVideoDownloader.WebApi.Controllers
 {
@@ -31,6 +34,7 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
         /// Сврвис логирования
         /// </summary>
         private readonly ILogger<YouTubeDownloadController> _logger = null!;
+        private readonly ILogger<DataBaseServiceAsync> _loggerDataBaseService = null!;
 
         private readonly IServerSettings _serverSettings;
 
@@ -43,12 +47,7 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
 
         private readonly IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs> _convertationServiceAsync = null!;
 
-        private readonly IAudioRepositoryAsync<Audio> _audioRepositoryAsync = null!;
-        private readonly IChannelRerositoryAsync<Channel> _channelRerositoryAsync = null!;
-        private readonly IImageRepositoryAsync<Image> _imageRepositoryAsync = null!;
-        private readonly IServerInfoRepositoryAsync<ServerInfo> _serverInfoRepositoryAsync = null!;
-        private readonly IVideoRepositoryAsync<Video> _videoRepositoryAsync = null!;
-        private readonly IYouTubeInfoRepositoryAsync<YouTubeInfo> _youTubeInfoRepositoryAsync = null!;
+        private readonly IDataBaseServiceAsync<Audio, Video, Channel, Image, ServerInfo, YouTubeInfo, InfoStreams, VideoInfoRequest, YouTubeVideoInfoResponse, MainInfo> _dataBaseServiceAsync = null!;
 
         /// <summary>
         /// Путь до ресурсов
@@ -70,6 +69,7 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
             ISenderInfoHubAsync<SenderInfoHubAsync> senderInfoHubAsync,
             IHubContext<SenderInfoHubAsync> hubContext,
             IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs> convertationServiceAsync,
+            IDataBaseServiceAsync<Audio, Video, Channel, Image, ServerInfo, YouTubeInfo, InfoStreams, VideoInfoRequest, YouTubeVideoInfoResponse, MainInfo> dataBaseServiceAsync,
             IOptions<ServerSettings> serverSettings,
             IAudioRepositoryAsync<Audio> audioRepositoryAsync,
             IChannelRerositoryAsync<Channel> channelRerositoryAsync,
@@ -83,6 +83,16 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
             _dataInformationsAsync = dataInformationsAsync;
             _downloadStreamAsync = downloadStreamAsync;
             _convertationServiceAsync = convertationServiceAsync;
+            _dataBaseServiceAsync = dataBaseServiceAsync;
+
+            _dataBaseServiceAsync.Logger = _loggerDataBaseService;
+            _dataBaseServiceAsync.AudioRepositoryAsync = audioRepositoryAsync;
+            _dataBaseServiceAsync.ChannelRepositoryAsync = channelRerositoryAsync;
+            _dataBaseServiceAsync.ServerInfoRepositoryAsync = serverInfoRepositoryAsync;
+            _dataBaseServiceAsync.VideoRepositoryAsync = videoRepositoryAsync;
+            _dataBaseServiceAsync.ImageRepositoryAsync = imageRepositoryAsync;
+            _dataBaseServiceAsync.YouTubeInfoRepositoryAsync = youTubeInfoRepositoryAsync;
+
             _serverSettings = serverSettings.Value;
 
             _downloadStreamAsync.HubContext = hubContext;
@@ -90,13 +100,6 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
 
             _convertationServiceAsync.HubContext = hubContext;
             _convertationServiceAsync.SenderInfoHubAsync = senderInfoHubAsync;
-
-            _audioRepositoryAsync = audioRepositoryAsync;
-            _channelRerositoryAsync = channelRerositoryAsync;
-            _imageRepositoryAsync = imageRepositoryAsync;
-            _serverInfoRepositoryAsync = serverInfoRepositoryAsync;
-            _videoRepositoryAsync = videoRepositoryAsync;
-            _youTubeInfoRepositoryAsync = youTubeInfoRepositoryAsync;
         }
 
         /// <summary>
@@ -110,7 +113,9 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
         {
             try
             {
+                CancellationTokenSource = new CancellationTokenSource();
                 YouTubeVideoInfoResponse youtubeVideoInfo = await _dataInformationsAsync.GetYouTubeVideoInfoAsync(videoInfoRequest.Url);
+                await _dataBaseServiceAsync.AfterGetYouTubeInfoAsync(youtubeVideoInfo, videoInfoRequest, CancellationTokenSource.Token);
                 string resource = ManagerResources.GetString(new Resource(ResourcesPath, "GetVideoInfoAsyncSuccess", AssemblyInfo.Assembly));
                 string resultString = ManagerResources.GetResultString(resource, videoInfoRequest.Id, videoInfoRequest.Url);
                 _logger.LogInformation(resultString);
@@ -140,25 +145,36 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
             {
                 CancellationTokenSource = new CancellationTokenSource();
                 InfoStreams infoStreams = await _dataInformationsAsync.GetSpecisicVideoInfoAsync(specificVideoInfoRequest, _serverSettings);
-                bool result = await _downloadStreamAsync.DownloadAsync(infoStreams, infoStreams => !String.IsNullOrWhiteSpace(infoStreams.VideoFileName), CancellationTokenSource.Token);
+                //bool result = await _downloadStreamAsync.DownloadAsync(infoStreams, infoStreams => !String.IsNullOrWhiteSpace(infoStreams.VideoFileName), CancellationTokenSource.Token);
 
-                if (result && !String.IsNullOrWhiteSpace(specificVideoInfoRequest.Resolution) && infoStreams.VideoStream is not null)
-                {
-                    IConvertationModel convertationModel =
-                        new ConvertationModel(
-                            _serverSettings.PathToVideoStorage, 
-                            infoStreams.AudioFileName, 
-                            infoStreams.AudioFileExtention, 
-                            infoStreams.VideoFileName, 
-                            infoStreams.VideoFileExtention, 
-                            infoStreams.VideoStream.Fps, 
-                            infoStreams.FinalFileFullName);
+                //if (true && !String.IsNullOrWhiteSpace(specificVideoInfoRequest.Resolution) && infoStreams.VideoStream is not null)
+                //{
+                //    IConvertationModel convertationModel =
+                //        new ConvertationModel(
+                //            _serverSettings.PathToVideoStorage,
+                //            infoStreams.AudioFileName,
+                //            infoStreams.AudioFileExtention,
+                //            infoStreams.VideoFileName,
+                //            infoStreams.VideoFileExtention,
+                //            infoStreams.VideoStream.Fps,
+                //            infoStreams.FinalFileFullName);
 
-                    await _convertationServiceAsync.MergeAudioVideoDataAsync(convertationModel, AssemblyInfo.AssemblyName.Name, CancellationTokenSource.Token);
-                }
-                else if (result)
+                //    await _convertationServiceAsync.MergeAudioVideoDataAsync(convertationModel, AssemblyInfo.AssemblyName.Name, CancellationTokenSource.Token);
+
+                //}
+
+                if (true)
                 {
-                    IOHelpers.ReplaceFile(infoStreams.AudioFileFullName, infoStreams.FinalFileFullName);
+                    _dataBaseServiceAsync.InfoStream = infoStreams;
+                    if (infoStreams.VideoStream is not null)
+                    {
+                        await _dataBaseServiceAsync.AfterDownloadVideoAsync(CancellationTokenSource.Token);
+                    }
+                    else
+                    {
+                        await _dataBaseServiceAsync.AfterDownloadAudioAsync(CancellationTokenSource.Token);
+                    }
+                    
                 }
 
                 return Ok(infoStreams);

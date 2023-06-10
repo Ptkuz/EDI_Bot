@@ -70,12 +70,13 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <param name="imageBytes">Массив байтов картинки</param>
         /// <param name="extention">Расширение</param>
         /// <param name="resolution">Разрешение</param>
-        public Image(byte[] imageBytes, string extention, string resolution)
+        public Image(byte[] imageBytes, string extention, string resolution, YouTubeInfo youTubeInfo)
             : base()
         {
             ImageBytes = imageBytes;
             Extention = extention;
             Resolution = resolution;
+            YouTubeInfo = youTubeInfo;
         }
 
         /// <summary>
@@ -89,12 +90,13 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <param name="imageBytes">Массив байтов картинки</param>
         /// <param name="extention">Расширение</param>
         /// <param name="resolution">Разрешение</param>
-        public Image(Guid id, byte[] imageBytes, string extention, string resolution)
+        public Image(Guid id, byte[] imageBytes, string extention, string resolution, YouTubeInfo youTubeInfo)
             : base(id)
         {
             ImageBytes = imageBytes;
             Extention = extention;
             Resolution = resolution;
+            YouTubeInfo = youTubeInfo;  
         }
 
     }

@@ -14,6 +14,7 @@ namespace YouTubeVideoDownloader.Interfaces.Services.Async
     /// <typeparam name="K">Событие изменения данных</typeparam>
     public interface IConvertationServiceAsync<T, K> : IHub<T>, IEvents<K> where T : Hub where K : EventArgs
     {
+
         /// <summary>
         /// Асинхронно объеденить видео и аудио дорожки
         /// </summary>

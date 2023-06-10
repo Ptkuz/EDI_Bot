@@ -15,6 +15,6 @@ namespace YouTubeVideoDownloader.Interfaces.Entities
         /// <summary>
         /// Размер файла
         /// </summary>
-        public int Size { get; set; }
+        public long Size { get; set; }
     }
 }

@@ -83,6 +83,13 @@ namespace Gurrex.Common.Helpers
             File.Delete(fileName);
         }
 
+        public static long GetLengthFile(string fileName) 
+        {
+            CheckExistFile(fileName);
+            long length = new FileInfo(fileName).Length;
+            return length;
+        }
+
         /// <summary>
         /// Проверить существование файла
         /// </summary>

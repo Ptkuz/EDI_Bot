@@ -169,10 +169,10 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
                         x.Resolution == resolution);
 
                     video.CheckObjectForNull(nameof(video));
-                    return new InfoStreams(audio, video, serverSettings);
+                    return new InfoStreams(specificVideoInfoRequest.Url, video, audio, serverSettings);
                 }
 
-                return new InfoStreams(audio, serverSettings);
+                return new InfoStreams(specificVideoInfoRequest.Url, audio, serverSettings);
             }
             catch (ArgumentNullException)
             {

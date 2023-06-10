@@ -52,6 +52,33 @@ namespace Gurrex.Common.Validations
         }
 
         /// <summary>
+        /// Проверяет Long? на null
+        /// </summary>
+        /// <param name="value">Значение типа long?</param>
+        /// <param name="argument">Аргумент</param>
+        public static void CheckLongForNull([NotNull] this long? value, string argument) 
+        {
+            try
+            {
+                argument.CheckStringForNullOrWhiteSpace();
+                if (value is null)
+                {
+                    string localizationString = ManagerResources.GetString(new Resource(fileResourceName, "ExceptionCheckValueForNull", currentAssembly));
+                    string errorMessage = String.Format(localizationString, argument);
+                    throw new ArgumentNullException(argument, errorMessage);
+                }
+            }
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Проверка строки на null и пустое пространство
         /// </summary>
         /// <param name="text"></param>

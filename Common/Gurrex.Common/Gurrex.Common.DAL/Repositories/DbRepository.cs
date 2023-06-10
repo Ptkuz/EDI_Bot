@@ -24,7 +24,7 @@ namespace Gurrex.Common.DAL.Repositories
         /// <summary>
         /// Путь до ресурсов
         /// </summary>
-        public override string ResourcesPath => $"{AssemblyInfo.AssemblyName.Name}.Repositories.DbRepository";
+        public override string ResourcesPath => $"{AssemblyInfo.AssemblyName.Name}.Resources.Repositories.DbRepository";
 
         /// <summary>
         /// Конструктор инициализатор
@@ -34,8 +34,6 @@ namespace Gurrex.Common.DAL.Repositories
         protected DbRepository(DbContext dbContext, ILogger<DbRepository<T>> logger) : base(dbContext, logger)
         {
             _logger = logger;
-            string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugInitializationDbRepository", AssemblyInfo.Assembly));
-            _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T)));
         }
 
         /// <summary>

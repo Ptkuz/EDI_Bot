@@ -1,18 +1,20 @@
 ﻿using Gurrex.Common.Helpers;
+using Gurrex.Common.Helpers.Models;
 using Gurrex.Common.Interfaces;
-using Gurrex.Common.Localization.Models;
+using Gurrex.Common.Interfaces.Events;
 using Gurrex.Common.Localization;
+using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Services.Base;
+using Gurrex.Common.Services.Enums;
 using Gurrex.Common.Services.Models;
 using Gurrex.Common.Services.Models.Events;
 using Gurrex.Common.Validations;
 using Gurrex.Web.Interfaces.SignalR;
 using Gurrex.Web.SignalR.Hubs.Async;
 using Microsoft.AspNetCore.SignalR;
+using System.Diagnostics;
 using YouTubeVideoDownloader.Interfaces.Models.Services;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
-using System.Reflection;
-using Gurrex.Common.Helpers.Models;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
 {
@@ -41,15 +43,12 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// <summary>
         /// Путь до файла ресурсов
         /// </summary>
-        public string ResourcesPath 
-        { 
-            get =>  $"{AssemblyInfo.AssemblyName?.Name}.Resources.Services.Async.ConvertationServiceAsync";
+        public string ResourcesPath
+        {
+            get => $"{AssemblyInfo.AssemblyName?.Name}.Resources.Services.Async.ConvertationServiceAsync";
         }
 
-        /// <summary>
-        /// Событие изменения выходных данных
-        /// </summary>
-        public event IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs>.ProcessHandler? OutputDataChanged;
+        public event IEvents<ProcessEventArgs>.ProcessHandler? OutputDataChanged;
 
         /// <summary>
         /// Объеденить аудио и видео дорожку
@@ -80,10 +79,11 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
                 tempraryName = $"{IOHelpers.PathCombine(false, false, convertationModel.FilesPath, $"convert_{convertationModel.VideoFileName}{convertationModel.VideoFileExnetion}")}";
 
                 string resource = ManagerResources.GetString(new Resource(ResourcesPath, "ConvertCommand", AssemblyInfo.Assembly));
-                string cmdCommand = ManagerResources.GetResultString(videoFilePath, audioFilePath, convertationModel.Fps, tempraryName);
+                string cmdCommand = ManagerResources.GetResultString(resource, videoFilePath, audioFilePath, convertationModel.Fps, tempraryName);
 
-                ProcessModel processModel = new ProcessModel(appName, AssemblyInfo.AssemblyName?.Name!, directory, cmdCommand, false, false, cancel);
+                ProcessModel processModel = new ProcessModel(appName, AssemblyInfo.AssemblyName?.Name!, directory, cmdCommand, false, true, cancel);
 
+                OutputDataChanged += SendDataSignalR;
                 await StartProcessAsync(processModel);
                 IOHelpers.ReplaceFile(tempraryName, convertationModel.FinalFileName);
             }
@@ -99,9 +99,9 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
                 IOHelpers.DeleteFile(convertationModel.FinalFileName);
                 throw;
             }
-            finally 
+            finally
             {
-                if (!exception) 
+                if (!exception)
                 {
                     audioFilePath.CheckStringForNullOrWhiteSpace();
                     videoFilePath.CheckStringForNullOrWhiteSpace();
@@ -109,6 +109,50 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
                     IOHelpers.DeleteFile(videoFilePath);
                 }
             }
+        }
+
+        protected override void HandleError(object sender, DataReceivedEventArgs e)
+        {
+            base.HandleError(sender, e);
+
+            string time = "";
+            string size;
+            if (CurrentData == null)
+                return;
+            if (CurrentData.Contains("time="))
+            {
+                time = CurrentData.Substring(CurrentData.IndexOf('t'), 16);
+                time = time.Substring(5, 8);
+                int fullSeconds = time.ConvertTimeStringToIntSeconds();
+                ProcessEventArgs processEventArgs = new ProcessEventArgs(ProcessOutputLevel.Information, fullSeconds.ToString());
+
+                if (!string.IsNullOrEmpty(e.Data) && OutputDataChanged is not null)
+                    OutputDataChanged.Invoke(this, processEventArgs, CancellationToken);
+            }
+        }
+        protected override async void HandleOutput(object sender, DataReceivedEventArgs e)
+        {
+            base.HandleOutput(sender, e);
+
+            string time = "";
+            string size;
+            if (CurrentData == null)
+                return;
+            if (CurrentData.Contains("time="))
+            {
+                time = CurrentData.Substring(CurrentData.IndexOf('t'), 16);
+                time = time.Substring(5, 8);
+                int fullSeconds = time.ConvertTimeStringToIntSeconds();
+                ProcessEventArgs processEventArgs = new ProcessEventArgs(ProcessOutputLevel.Information, fullSeconds.ToString());
+
+                if (!string.IsNullOrEmpty(e.Data) && OutputDataChanged is not null)
+                    OutputDataChanged.Invoke(this, processEventArgs, CancellationToken);
+            }
+        }
+
+        private async Task SendDataSignalR(object sender, ProcessEventArgs data, CancellationToken cancel) 
+        {
+            await SenderInfoHubAsync.ContextSendInfoAllClientsAsync(HubContext, "ReceiceMergeAsync", cancel, data.Output);
         }
 
     }

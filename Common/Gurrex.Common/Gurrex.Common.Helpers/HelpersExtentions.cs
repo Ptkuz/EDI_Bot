@@ -128,5 +128,22 @@ namespace Gurrex.Common.Helpers
             }
             return childrenProcesses;
         }
+
+        /// <summary>
+        /// Конвертировать строковое представление времени в числовое
+        /// </summary>
+        /// <param name="time">Строковое время</param>
+        /// <returns>Количество секунд</returns>
+        public static int ConvertTimeStringToIntSeconds(this string time)
+        {
+            int fullSeconds = 0;
+            bool parseHours = Int32.TryParse(time.Substring(0, 2), out int hours);
+            bool parseMinutes = Int32.TryParse(time.Substring(3, 2), out int minutes);
+            bool parseSeconds = Int32.TryParse(time.Substring(6, 2), out int seconds);
+            if (parseHours && parseMinutes && parseSeconds)
+                fullSeconds = (hours * 3600) + (minutes * 60) + seconds;
+
+            return fullSeconds;
+        }
     }
 }

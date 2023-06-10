@@ -33,7 +33,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// Размер файла
         /// </summary>
         [Column("Size", Order = 5)]
-        public int Size { get; set; }
+        public long Size { get; set; }
 
         /// <summary>
         /// Внешний ключ Video
@@ -72,7 +72,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <param name="dateDeleted">Дата удаления</param>
         /// <param name="reference">Ссылка на видео</param>
         /// <param name="size">Размер видео</param>
-        public ServerInfo(string reference, int size)
+        public ServerInfo(string reference, long size)
             : base()
         {
             Ref = reference;
@@ -88,7 +88,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <param name="dateDeleted">Дата удаления</param>
         /// <param name="reference">Ссылка на видео</param>
         /// <param name="size">Размер видео</param>
-        public ServerInfo(Guid id, string reference, int size)
+        public ServerInfo(Guid id, string reference, long size)
             : base(id)
         {
             Ref = reference;

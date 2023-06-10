@@ -20,7 +20,7 @@ namespace YouTubeVideoDownloader.Interfaces.Entities
         /// <summary>
         /// Продолжительность
         /// </summary>
-        public int Duration { get; set; }
+        public int? Duration { get; set; }
 
     }
 }

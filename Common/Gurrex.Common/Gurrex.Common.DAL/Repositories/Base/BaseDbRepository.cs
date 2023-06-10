@@ -8,6 +8,7 @@ using Gurrex.Common.Localization.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
+using System.Security.AccessControl;
 
 namespace Gurrex.Common.DAL.Repositories.Base
 {
@@ -25,7 +26,7 @@ namespace Gurrex.Common.DAL.Repositories.Base
         /// <summary>
         /// Путь до ресурсов
         /// </summary>
-        public virtual string ResourcesPath => $"{AssemblyInfo.AssemblyName.Name}.Repositories.Base.BaseDbRepository";
+        public virtual string ResourcesPath => $"{AssemblyInfo.AssemblyName.Name}.Resources.Repositories.Base.BaseDbRepository";
 
         /// <summary>
         /// Логирование
@@ -47,6 +48,11 @@ namespace Gurrex.Common.DAL.Repositories.Base
         /// </summary>
         protected bool autoSaveChanges = true;
 
+        private BaseDbRepository() 
+        {
+            
+        }
+
         /// <summary>
         /// Конструктор инициализатор
         /// </summary>
@@ -57,8 +63,6 @@ namespace Gurrex.Common.DAL.Repositories.Base
             _dbContext = dbContext;
             _entities = dbContext.Set<T>();
             _logger = logger;
-            string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugInitializationBaseRepository", AssemblyInfo.Assembly));
-            _logger.LogDebug(ManagerResources.GetResultString(localizationString));
         }
 
         /// <summary>

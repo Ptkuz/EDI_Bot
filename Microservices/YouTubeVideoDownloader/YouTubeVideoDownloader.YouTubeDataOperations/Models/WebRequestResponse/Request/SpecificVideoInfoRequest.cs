@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using VideoLibrary;
+using YouTubeVideoDownloader.Interfaces.Models.Requests;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.Base;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Request
@@ -15,7 +16,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse
     /// Информация о конкретном видео
     /// </summary>
     [DataContract]
-    public class SpecificVideoInfoRequest : BaseModel
+    public class SpecificVideoInfoRequest : BaseModel, ISpecificVideoInfoRequest
     {
 
         /// <summary>

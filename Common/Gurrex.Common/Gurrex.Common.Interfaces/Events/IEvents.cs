@@ -17,7 +17,7 @@ namespace Gurrex.Common.Interfaces.Events
         /// </summary>
         /// <param name="sender">Источник</param>
         /// <param name="e">Модель события</param>
-        delegate void ProcessHandler(object sender, T e);
+        delegate Task ProcessHandler(object sender, T e, CancellationToken cancel);
 
         /// <summary>
         /// Событие изменения прогресса

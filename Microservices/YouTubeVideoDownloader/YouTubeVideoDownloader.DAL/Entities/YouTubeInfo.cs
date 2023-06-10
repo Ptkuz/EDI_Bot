@@ -7,6 +7,8 @@ using System.Reflection;
 using Gurrex.Common.Helpers;
 using Gurrex.Common.Validations;
 using Microsoft.Extensions.Logging;
+using static System.Net.Mime.MediaTypeNames;
+using System.Threading.Channels;
 
 namespace YouTubeVideoDownloader.DAL.Entities
 {
@@ -41,7 +43,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// Продолжительность
         /// </summary>
         [Column("Duration", Order = 6)]
-        public int Duration { get; set; }
+        public int? Duration { get; set; }
 
         /// <summary>
         /// Канал
@@ -84,12 +86,15 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <param name="title">Заголовок видео</param>
         /// <param name="url">Ссылка на видео</param>
         /// <param name="duration">Длина видео</param>
-        public YouTubeInfo(string title, string url, int duration)
+        public YouTubeInfo(string title, string url, int? duration, Channel channel, Image image)
             : base()
         {
             Title = title;
             Url = url;
             Duration = duration;
+            Channel = channel;
+            Image = image;
+
         }
 
         /// <summary>
@@ -103,12 +108,14 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <param name="title">Заголовок видео</param>
         /// <param name="url">Ссылка на видео</param>
         /// <param name="duration">Длина видео</param>
-        public YouTubeInfo(Guid id, string title, string url, int duration)
+        public YouTubeInfo(Guid id, string title, string url, int duration, Channel channel, Image image)
             : base(id)
         {
             Title = title;
             Url = url;
             Duration = duration;
+            Channel = channel;
+            Image = image;
         }
     }
 }

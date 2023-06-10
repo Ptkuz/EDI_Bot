@@ -12,6 +12,7 @@ using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Req
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Response;
 using YouTubeVideoDownloader.YouTubeDataOperations.Services.Async;
 using YouTubeVideoDownloader.YouTubeDataOperations.Services.Sync;
+using Image = YouTubeVideoDownloader.DAL.Entities.Image;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
 {
@@ -32,13 +33,14 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
             .AddTransient<IDownloadStreamAsync<InfoStreams, SenderInfoHubAsync, ProcessEventArgs>, DownloadStreamAsync>()
             .AddTransient<ISenderInfoHubAsync<SenderInfoHubAsync>, SenderInfoHubAsync>()
             .AddTransient<IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs>, ConvertationServiceAsync>()
+            .AddTransient<IDataBaseServiceAsync<Audio, Video, Channel, Image, ServerInfo, YouTubeInfo, InfoStreams, VideoInfoRequest, YouTubeVideoInfoResponse, MainInfo>, DataBaseServiceAsync>()
 
-            .AddTransient<IAudioRepositoryAsync<Audio>, AudioRepositoryAsync>()
-            .AddTransient<IChannelRerositoryAsync<Channel>, ChannelRepositoryAsync>()
-            .AddTransient<IImageRepositoryAsync<Image>, ImageRepositoryAsync>()
-            .AddTransient<IServerInfoRepositoryAsync<ServerInfo>, ServerInfoRepositoryAsync>()
-            .AddTransient<IVideoRepositoryAsync<Video>, VideoRepositoryAsync>()
-            .AddTransient<IYouTubeInfoRepositoryAsync<YouTubeInfo>, YouTubeInfoRepositoryAsync>()
+            .AddScoped<IAudioRepositoryAsync<Audio>, AudioRepositoryAsync>()
+            .AddScoped<IChannelRerositoryAsync<Channel>, ChannelRepositoryAsync>()
+            .AddScoped<IImageRepositoryAsync<Image>, ImageRepositoryAsync>()
+            .AddScoped<IServerInfoRepositoryAsync<ServerInfo>, ServerInfoRepositoryAsync>()
+            .AddScoped<IVideoRepositoryAsync<Video>, VideoRepositoryAsync>()
+            .AddScoped<IYouTubeInfoRepositoryAsync<YouTubeInfo>, YouTubeInfoRepositoryAsync>()
             ;
     }
 }
