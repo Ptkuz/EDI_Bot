@@ -11,8 +11,9 @@ using Microsoft.Extensions.Options;
 using System.Diagnostics;
 using System.Net.Mime;
 using YouTubeVideoDownloader.DAL.Entities;
+using YouTubeVideoDownloader.Interfaces.DAL;
+using YouTubeVideoDownloader.Interfaces.DAL.Repositories.Async;
 using YouTubeVideoDownloader.Interfaces.Models.Services;
-using YouTubeVideoDownloader.Interfaces.Repositories.Async;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
 using YouTubeVideoDownloader.WebApi.ConfigurationSettings;
 using YouTubeVideoDownloader.WebApi.Controllers.Base;
@@ -49,6 +50,8 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
 
         private readonly IDataBaseServiceAsync<Audio, Video, Channel, Image, ServerInfo, YouTubeInfo, InfoStreams, VideoInfoRequest, YouTubeVideoInfoResponse, MainInfo> _dataBaseServiceAsync = null!;
 
+        private readonly IUnitOfWork<Audio, Channel, Image, ServerInfo, Video, YouTubeInfo> _unitOfWork = null!;
+
         /// <summary>
         /// Путь до ресурсов
         /// </summary>
@@ -71,12 +74,7 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
             IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs> convertationServiceAsync,
             IDataBaseServiceAsync<Audio, Video, Channel, Image, ServerInfo, YouTubeInfo, InfoStreams, VideoInfoRequest, YouTubeVideoInfoResponse, MainInfo> dataBaseServiceAsync,
             IOptions<ServerSettings> serverSettings,
-            IAudioRepositoryAsync<Audio> audioRepositoryAsync,
-            IChannelRerositoryAsync<Channel> channelRerositoryAsync,
-            IImageRepositoryAsync<Image> imageRepositoryAsync,
-            IServerInfoRepositoryAsync<ServerInfo> serverInfoRepositoryAsync,
-            IVideoRepositoryAsync<Video> videoRepositoryAsync,
-            IYouTubeInfoRepositoryAsync<YouTubeInfo> youTubeInfoRepositoryAsync
+            IUnitOfWork<Audio, Channel, Image, ServerInfo, Video, YouTubeInfo> unitOfWork
             )
         {
             _logger = logger;
@@ -84,14 +82,9 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
             _downloadStreamAsync = downloadStreamAsync;
             _convertationServiceAsync = convertationServiceAsync;
             _dataBaseServiceAsync = dataBaseServiceAsync;
-
+            _unitOfWork = unitOfWork;
             _dataBaseServiceAsync.Logger = _loggerDataBaseService;
-            _dataBaseServiceAsync.AudioRepositoryAsync = audioRepositoryAsync;
-            _dataBaseServiceAsync.ChannelRepositoryAsync = channelRerositoryAsync;
-            _dataBaseServiceAsync.ServerInfoRepositoryAsync = serverInfoRepositoryAsync;
-            _dataBaseServiceAsync.VideoRepositoryAsync = videoRepositoryAsync;
-            _dataBaseServiceAsync.ImageRepositoryAsync = imageRepositoryAsync;
-            _dataBaseServiceAsync.YouTubeInfoRepositoryAsync = youTubeInfoRepositoryAsync;
+            _dataBaseServiceAsync.UnitOfWork = _unitOfWork;
 
             _serverSettings = serverSettings.Value;
 
@@ -100,6 +93,7 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
 
             _convertationServiceAsync.HubContext = hubContext;
             _convertationServiceAsync.SenderInfoHubAsync = senderInfoHubAsync;
+
         }
 
         /// <summary>

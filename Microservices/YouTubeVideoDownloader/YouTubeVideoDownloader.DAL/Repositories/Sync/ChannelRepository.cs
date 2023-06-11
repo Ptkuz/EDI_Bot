@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using YouTubeVideoDownloader.DAL.Context;
 using YouTubeVideoDownloader.DAL.Entities;
-using YouTubeVideoDownloader.Interfaces.Repositories.Sync;
+using YouTubeVideoDownloader.Interfaces.DAL.Repositories.Sync;
 
 namespace YouTubeVideoDownloader.DAL.Repositories.Sync
 {

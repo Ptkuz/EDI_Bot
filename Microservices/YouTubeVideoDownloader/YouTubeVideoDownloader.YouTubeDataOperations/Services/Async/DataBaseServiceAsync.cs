@@ -1,12 +1,9 @@
-﻿using Gurrex.Common.DAL.Entities;
-using Gurrex.Common.Helpers;
-using Gurrex.Common.Validations;
+﻿using Gurrex.Common.Helpers;
 using Microsoft.Extensions.Logging;
 using YouTubeVideoDownloader.DAL.Entities;
-using YouTubeVideoDownloader.DAL.Repositories.Async;
-using YouTubeVideoDownloader.Interfaces.Repositories.Async;
+using YouTubeVideoDownloader.Interfaces.DAL;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
-using YouTubeVideoDownloader.Interfaces.Services.Base;
+using YouTubeVideoDownloader.YouTubeDataOperations.Helpers;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Request;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Response;
@@ -21,12 +18,8 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// Логирование
         /// </summary>
         public ILogger Logger { get; set; }
-        public IAudioRepositoryAsync<Audio> AudioRepositoryAsync { get; set; }
-        public IVideoRepositoryAsync<Video> VideoRepositoryAsync { get; set; }
-        public IChannelRerositoryAsync<Channel> ChannelRepositoryAsync { get; set; }
-        public IImageRepositoryAsync<Image> ImageRepositoryAsync { get; set; }
-        public IServerInfoRepositoryAsync<ServerInfo> ServerInfoRepositoryAsync { get; set; }
-        public IYouTubeInfoRepositoryAsync<YouTubeInfo> YouTubeInfoRepositoryAsync { get; set; }
+
+        public IUnitOfWork<Audio, Channel, Image, ServerInfo, Video, YouTubeInfo> UnitOfWork { get; set; }
         public InfoStreams InfoStream { get; set; }
 
         public async Task<bool> AfterDownloadAudioAsync(CancellationToken cancel)
@@ -37,8 +30,8 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
             Audio audio = new Audio(InfoStream.Id, InfoStream.AudioStream.AudioFormat.ToString(), $"{InfoStream.AudioStream.AudioBitrate} kbps");
             ServerInfo serverInfo = new ServerInfo(audioFileFullName, length);
 
-            await AudioRepositoryAsync.AddEntityAsync(audio, cancel);
-            await ServerInfoRepositoryAsync.AddEntityAsync(serverInfo, cancel);
+            //await AudioRepositoryAsync.AddEntityAsync(audio, cancel);
+            //await ServerInfoRepositoryAsync.AddEntityAsync(serverInfo, cancel);
             return true;
         }
 
@@ -50,8 +43,8 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
             Video video = new Video(InfoStream.Id, $"{InfoStream.VideoStream.Format}", $"{InfoStream.VideoStream.Resolution}", $"{InfoStream.VideoStream.Fps}", $"{InfoStream.AudioStream.AudioFormat}", $"{InfoStream.AudioStream.AudioBitrate}");
             ServerInfo serverInfo = new ServerInfo(videoFileFullName, length);
 
-            await VideoRepositoryAsync.AddEntityAsync(video, cancel);
-            await ServerInfoRepositoryAsync.AddEntityAsync(serverInfo, cancel);
+            //await VideoRepositoryAsync.AddEntityAsync(video, cancel);
+            //await ServerInfoRepositoryAsync.AddEntityAsync(serverInfo, cancel);
             return true;
         }
 
@@ -60,17 +53,28 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
 
             Image image = new Image();
             Channel channel = new Channel(youTubeVideoInfoResponse.MainInfo.Author);
-            YouTubeInfo youTubeInfo = new YouTubeInfo(youTubeVideoInfoResponse.MainInfo.Title, videoInfoRequest.Url, youTubeVideoInfoResponse.MainInfo.Duration, channel, image);
-            using (LibraryImage imageLibrary = LibraryImage.Load(youTubeVideoInfoResponse.Image)) 
+            YouTubeInfo youTubeInfo = new YouTubeInfo(youTubeVideoInfoResponse.MainInfo.Title, DataInformationHelpers.GetSimpleYouTubeUrl(videoInfoRequest.Url), youTubeVideoInfoResponse.MainInfo.Duration, channel, image);
+
+            using (LibraryImage imageLibrary = LibraryImage.Load(youTubeVideoInfoResponse.Image))
             {
                 image = new Image(youTubeVideoInfoResponse.Image, ".jpg", $"{imageLibrary.Width} X {imageLibrary.Height}", youTubeInfo);
             }
 
-            await ChannelRepositoryAsync.AddEntityAsync(channel, cancel);
-            await YouTubeInfoRepositoryAsync.AddEntityAsync(youTubeInfo, cancel);
-            await ImageRepositoryAsync.AddEntityAsync(image, cancel);
-            youTubeInfo.Image = image;
-            await YouTubeInfoRepositoryAsync.UpdateEntityAsync(youTubeInfo, cancel);
+            using (var transaction = await UnitOfWork.BeginTransactionAsync())
+            {
+                try
+                {
+                    await UnitOfWork.ChannelRerositoryAsync.AddEntityAsync(channel, cancel);
+                    await UnitOfWork.YouTubeInfoRepositoryAsync.AddEntityAsync(youTubeInfo, cancel);
+                    await UnitOfWork.ImageRepositoryAsync.AddEntityAsync(image, cancel);
+
+                    transaction.Commit();
+                }
+                catch (Exception) 
+                {
+                    transaction.Rollback();
+                }
+            }
             return true;
         }
     }

@@ -1,4 +1,4 @@
-﻿namespace YouTubeVideoDownloader.Interfaces.Entities
+﻿namespace YouTubeVideoDownloader.Interfaces.DAL.Entities
 {
     /// <summary>
     /// Видео

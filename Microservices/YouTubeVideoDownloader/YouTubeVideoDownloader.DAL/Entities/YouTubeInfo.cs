@@ -2,13 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
-using YouTubeVideoDownloader.Interfaces.Entities;
 using System.Reflection;
 using Gurrex.Common.Helpers;
 using Gurrex.Common.Validations;
 using Microsoft.Extensions.Logging;
 using static System.Net.Mime.MediaTypeNames;
 using System.Threading.Channels;
+using YouTubeVideoDownloader.Interfaces.DAL.Entities;
 
 namespace YouTubeVideoDownloader.DAL.Entities
 {
@@ -71,6 +71,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// Конструктор по умолчанию
         /// </summary>
         public YouTubeInfo()
+            : base()
         {
 
         }

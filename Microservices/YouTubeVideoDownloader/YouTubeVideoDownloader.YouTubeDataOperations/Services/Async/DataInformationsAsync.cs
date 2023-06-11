@@ -83,7 +83,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// <returns>Поток <see cref="Stream"/> с картинкой</returns>
         private async Task<byte[]> GetVideoImageAsync(string url)
         {
-            string? id = GetUrlValueByKey(url, "v");
+            string? id = DataInformationHelpers.GetUrlValueByKey(url, "v");
             id.CheckObjectForNull(nameof(id));
 
             string resource = ManagerResources.GetString(new Resource(ResourcesPath, "VideoImageUrl", StaticHelpers.GetAssemblyInfo().Assembly));

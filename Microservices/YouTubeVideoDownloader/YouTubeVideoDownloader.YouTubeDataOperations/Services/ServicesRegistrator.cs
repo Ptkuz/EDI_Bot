@@ -2,9 +2,11 @@
 using Gurrex.Web.Interfaces.SignalR;
 using Gurrex.Web.SignalR.Hubs.Async;
 using Microsoft.Extensions.DependencyInjection;
+using YouTubeVideoDownloader.DAL;
 using YouTubeVideoDownloader.DAL.Entities;
 using YouTubeVideoDownloader.DAL.Repositories.Async;
-using YouTubeVideoDownloader.Interfaces.Repositories.Async;
+using YouTubeVideoDownloader.Interfaces.DAL;
+using YouTubeVideoDownloader.Interfaces.DAL.Repositories.Async;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
 using YouTubeVideoDownloader.Interfaces.Services.Sync;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
@@ -34,13 +36,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
             .AddTransient<ISenderInfoHubAsync<SenderInfoHubAsync>, SenderInfoHubAsync>()
             .AddTransient<IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs>, ConvertationServiceAsync>()
             .AddTransient<IDataBaseServiceAsync<Audio, Video, Channel, Image, ServerInfo, YouTubeInfo, InfoStreams, VideoInfoRequest, YouTubeVideoInfoResponse, MainInfo>, DataBaseServiceAsync>()
-
-            .AddScoped<IAudioRepositoryAsync<Audio>, AudioRepositoryAsync>()
-            .AddScoped<IChannelRerositoryAsync<Channel>, ChannelRepositoryAsync>()
-            .AddScoped<IImageRepositoryAsync<Image>, ImageRepositoryAsync>()
-            .AddScoped<IServerInfoRepositoryAsync<ServerInfo>, ServerInfoRepositoryAsync>()
-            .AddScoped<IVideoRepositoryAsync<Video>, VideoRepositoryAsync>()
-            .AddScoped<IYouTubeInfoRepositoryAsync<YouTubeInfo>, YouTubeInfoRepositoryAsync>()
+            .AddTransient<IUnitOfWork<Audio, Channel, Image, ServerInfo, Video, YouTubeInfo>, UnitOfWork>()
             ;
     }
 }

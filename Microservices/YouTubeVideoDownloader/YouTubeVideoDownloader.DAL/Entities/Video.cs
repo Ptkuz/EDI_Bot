@@ -2,7 +2,7 @@
 using Gurrex.Common.Helpers;
 using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations.Schema;
-using YouTubeVideoDownloader.Interfaces.Entities;
+using YouTubeVideoDownloader.Interfaces.DAL.Entities;
 
 namespace YouTubeVideoDownloader.DAL.Entities
 {
@@ -68,6 +68,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// Конструктор инициализатор
         /// </summary>
         public Video()
+            : base()
         {
 
         }

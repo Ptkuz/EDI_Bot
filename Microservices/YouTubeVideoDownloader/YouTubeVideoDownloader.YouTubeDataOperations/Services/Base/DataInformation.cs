@@ -195,40 +195,5 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
             return mainInfo;
         }
 
-        /// <summary>
-        /// Получить значение по ключу в ссылке
-        /// </summary>
-        /// <param name="url">Ссылка</param>
-        /// <param name="key">Ключ</param>
-        /// <exception cref="NoContainsKeyException">Исключение, если такого ключа в ссылке нет</exception>
-        /// <returns>Значение по ключу в ссылке</returns>
-        protected string? GetUrlValueByKey(string url, string key)
-        {
-            try
-            {
-                Uri uri = new Uri(url);
-                NameValueCollection query = HttpUtility.ParseQueryString(uri.Query);
-
-                query.CheckObjectForNull(nameof(query));
-
-                if (query.AllKeys.Contains(key))
-                    return query[key];
-                else
-                {
-                    string resource = ManagerResources.GetString(new Resource(ResourcesPath, "ExceptionNoContainsKeyV", StaticHelpers.GetAssemblyInfo().Assembly));
-                    string resultString = ManagerResources.GetResultString(resource, url);
-                    throw new NoContainsKeyException(resultString, key);
-                }
-            }
-            catch (NoContainsKeyException)
-            {
-                throw;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
     }
 }

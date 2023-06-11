@@ -31,7 +31,8 @@ namespace Gurrex.Common.DAL.Repositories
         /// </summary>
         /// <param name="dbContext">Контекст базы данных</param>
         /// <param name="logger">Контекст базы данных</param>
-        protected DbRepository(DbContext dbContext, ILogger<DbRepository<T>> logger) : base(dbContext, logger)
+        protected DbRepository(DbContext dbContext, ILogger<DbRepository<T>> logger) 
+            : base(dbContext, logger)
         {
             _logger = logger;
         }

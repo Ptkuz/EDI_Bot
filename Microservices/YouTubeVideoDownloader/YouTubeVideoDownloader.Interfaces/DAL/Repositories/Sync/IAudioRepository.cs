@@ -1,7 +1,7 @@
 ﻿using Gurrex.Common.Interfaces.Repositories;
-using YouTubeVideoDownloader.Interfaces.Entities;
+using YouTubeVideoDownloader.Interfaces.DAL.Entities;
 
-namespace YouTubeVideoDownloader.Interfaces.Repositories.Sync
+namespace YouTubeVideoDownloader.Interfaces.DAL.Repositories.Sync
 {
     /// <summary>
     /// Репозиторий работы с <see cref="IAudio"/>

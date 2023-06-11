@@ -1,5 +1,6 @@
 ﻿using Gurrex.Common.Helpers;
 using Gurrex.Common.Validations;
+using SixLabors.ImageSharp.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Linq;

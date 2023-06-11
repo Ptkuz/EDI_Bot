@@ -1,6 +1,6 @@
 ﻿using Gurrex.Common.Interfaces.Entities;
 
-namespace YouTubeVideoDownloader.Interfaces.Entities
+namespace YouTubeVideoDownloader.Interfaces.DAL.Entities
 {
     /// <summary>
     /// Поток, полученный по ссылки на YouTube
