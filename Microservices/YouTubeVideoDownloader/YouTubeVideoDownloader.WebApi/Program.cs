@@ -1,3 +1,4 @@
+using Gurrex.Web.SignalR.Hubs.Async;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using NLog;
@@ -5,6 +6,7 @@ using NLog.Web;
 using System.Globalization;
 using YouTubeVideoDownloader.DAL.Context;
 using YouTubeVideoDownloader.DAL.Repositories;
+using YouTubeVideoDownloader.WebApi.ConfigurationSettings;
 using YouTubeVideoDownloader.YouTubeDataOperations.Services;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
@@ -19,6 +21,8 @@ builder.Services.AddLocalization(options => options.ResourcesPath = "ManagerReso
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSignalR();
+
 
 string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -30,6 +34,9 @@ if (String.IsNullOrEmpty(connectionString))
 builder.Services.AddDbContext<DownloaderContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Scoped);
 builder.Services.AddRepositoryInDB();
 builder.Services.AddDownloadServices();
+builder.Services.Configure<ServerSettings>(
+    builder.Configuration.GetSection("ServerSettings")
+);
 
 builder.Logging.ClearProviders();
 builder.Logging.SetMinimumLevel(LogLevel.Trace);
@@ -53,6 +60,8 @@ app.UseRequestLocalization(new RequestLocalizationOptions
     SupportedCultures = supportedCultures,
     SupportedUICultures = supportedCultures
 });
+
+app.MapHub<SenderInfoHubAsync>("/statusInfo");
 
 app.UseHttpsRedirection();
 

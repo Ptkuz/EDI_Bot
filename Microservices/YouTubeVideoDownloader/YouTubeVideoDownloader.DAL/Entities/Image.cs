@@ -1,9 +1,10 @@
 ﻿using Gurrex.Common.DAL.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
-using YouTubeVideoDownloader.Interfaces.Entities;
 using System.Reflection;
 using Gurrex.Common.Helpers;
 using Gurrex.Common.Validations;
+using Microsoft.Extensions.Logging;
+using YouTubeVideoDownloader.Interfaces.DAL.Entities;
 
 namespace YouTubeVideoDownloader.DAL.Entities
 {
@@ -12,11 +13,6 @@ namespace YouTubeVideoDownloader.DAL.Entities
     /// </summary>
     public class Image : Entity, IImage
     {
-        /// <summary>
-        /// Тип
-        /// </summary>
-        [NotMapped]
-        public override string? TypeName { get; set; }
 
         /// <summary>
         /// Путь до ресурсов
@@ -24,10 +20,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         [NotMapped]
         public override string ResourcesPath
         {
-            get =>
-            TypeName is not nameof(Image) ?
-               base.ResourcesPath :
-               $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.Image";
+            get => $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.Image";
         }
 
         /// <summary>
@@ -59,7 +52,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         public YouTubeInfo YouTubeInfo { get; set; } = null!;
 
         /// <summary>
-        /// Конструктор по умолчанию
+        /// Конструктор инициализатор
         /// </summary>
         public Image()
         {
@@ -69,6 +62,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <summary>
         /// Конструктор инициализатор
         /// </summary>
+        /// <param name="logger">Id сущности</param>
         /// <param name="id">Id сущности</param>
         /// <param name="dateAdded">Дата добавления</param>
         /// <param name="dateModified">Дата изменения</param>
@@ -76,12 +70,33 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <param name="imageBytes">Массив байтов картинки</param>
         /// <param name="extention">Расширение</param>
         /// <param name="resolution">Разрешение</param>
-        public Image(Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted, byte[] imageBytes, string extention, string resolution)
-            : base(id, dateAdded, dateModified, dateDeleted)
+        public Image(byte[] imageBytes, string extention, string resolution, YouTubeInfo youTubeInfo)
+            : base()
         {
             ImageBytes = imageBytes;
             Extention = extention;
             Resolution = resolution;
+            YouTubeInfo = youTubeInfo;
+        }
+
+        /// <summary>
+        /// Конструктор инициализатор
+        /// </summary>
+        /// <param name="logger">Id сущности</param>
+        /// <param name="id">Id сущности</param>
+        /// <param name="dateAdded">Дата добавления</param>
+        /// <param name="dateModified">Дата изменения</param>
+        /// <param name="dateDeleted">Дата удаления</param>
+        /// <param name="imageBytes">Массив байтов картинки</param>
+        /// <param name="extention">Расширение</param>
+        /// <param name="resolution">Разрешение</param>
+        public Image(Guid id, byte[] imageBytes, string extention, string resolution, YouTubeInfo youTubeInfo)
+            : base(id)
+        {
+            ImageBytes = imageBytes;
+            Extention = extention;
+            Resolution = resolution;
+            YouTubeInfo = youTubeInfo;  
         }
 
     }

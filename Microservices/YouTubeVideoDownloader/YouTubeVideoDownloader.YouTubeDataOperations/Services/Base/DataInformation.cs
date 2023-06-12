@@ -1,44 +1,36 @@
-﻿using Gurrex.Common.Interfaces;
+﻿using Gurrex.Common.Helpers;
+using Gurrex.Common.Helpers.Models;
+using Gurrex.Common.Interfaces;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Validations;
-using Gurrex.Common.Helpers;
 using System.Collections.Specialized;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Web;
 using VideoLibrary;
-using YouTubeVideoDownloader.Interfaces.Models;
+using YouTubeVideoDownloader.Interfaces.Models.Services;
 using YouTubeVideoDownloader.YouTubeDataOperations.Exceptions;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
-using YouTubeVideoDownloader.YouTubeDataOperations.Models.Request;
-using YouTubeVideoDownloader.YouTubeDataOperations.Models.Response;
-using YouTubeVideoDownloader.YouTubeDataOperations.Helpers;
+using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Request;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
 {
     /// <summary>
     /// Получение данных о видео
     /// </summary>
-    public class DataInformation : IResources
+    public class DataInformation : IResources<AssemblyInfo>
     {
-
         /// <summary>
-        /// Имя вызывающего типа
+        /// Сборка
         /// </summary>
-        public string? TypeName { get; set; }
-
+        public AssemblyInfo AssemblyInfo => StaticHelpers.GetAssemblyInfo();
 
         /// <summary>
         /// Путь до ресурсов
         /// </summary>
         public virtual string ResourcesPath
         {
-            get
-            {
-                return $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Services.Base.DataInformation";
-            }
+            get => $"{AssemblyInfo.AssemblyName.Name}.Resources.Services.Base.DataInformation";
         }
 
 
@@ -130,10 +122,10 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
         /// </summary>
         /// <param name="videos">Перечисление объектов <see cref="YouTubeVideo"/></param>
         /// <returns>Объект <see cref="YouTubeVideo"/> с информацией о видео</returns>
-        protected YouTubeVideo GetYouTubeVideo(IEnumerable<YouTubeVideo> videos) 
+        protected YouTubeVideo GetYouTubeVideo(IEnumerable<YouTubeVideo> videos)
         {
-                YouTubeVideo? video = videos.FirstOrDefault();
-                video.CheckObjectForNull(nameof(video));
+            YouTubeVideo? video = videos.FirstOrDefault();
+            video.CheckObjectForNull(nameof(video));
             return video;
         }
 
@@ -142,28 +134,45 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
         /// </summary>
         /// <param name="videos">Перечисление объектов <see cref="YouTubeVideo"/></param>
         /// <param name="specificVideoInfoRequest">Объект <see cref="SpecificVideoInfoRequest"/> со свойствами запрашиваемого видео</param>
+        /// <param name="serverSettings">Настройки приложения</param>
         /// <returns>Объект <see cref="YouTubeVideo"/> с информацией о видео</returns>
-        protected YouTubeVideo GetYouTubeVideo(IEnumerable<YouTubeVideo> videos, SpecificVideoInfoRequest specificVideoInfoRequest)
+        protected InfoStreams GetYouTubeVideo(IEnumerable<YouTubeVideo> videos, SpecificVideoInfoRequest specificVideoInfoRequest, IServerSettings serverSettings)
         {
             try
             {
-                int audioBitrate = specificVideoInfoRequest.ConvertToInt(specificVideoInfoRequest.AudioBitrate, " kbps");
-                int resolution = specificVideoInfoRequest.ConvertToInt(specificVideoInfoRequest.Resolution, "p");
+                YouTubeVideo? video = default;
+                YouTubeVideo? audio = default;
+
+                int resolution = default;
+                VideoFormat videoFormat = default;
+                int fps = default;
                 AudioFormat audioFormat = specificVideoInfoRequest.ConvertToAudioFormat(specificVideoInfoRequest.AudioFormat);
-                VideoFormat videoFormat = specificVideoInfoRequest.ConvertToVideoFormat(specificVideoInfoRequest.VideoFormat);
-                int fps = specificVideoInfoRequest.ConvertToInt(specificVideoInfoRequest.Fps, " FPS");
+                int audioBitrate = specificVideoInfoRequest.ConvertToInt(specificVideoInfoRequest.AudioBitrate, " kbps");
 
-                YouTubeVideo? video = videos
-                    .FirstOrDefault(x =>
-                    x.Format == videoFormat && x.Fps == fps &&
-                    x.Resolution == resolution);
-                video.CheckObjectForNull(nameof(video));
-
-                YouTubeVideo? audio = videos
+                audio = videos
                     .FirstOrDefault(x =>
                     x.AudioBitrate == audioBitrate && x.AudioFormat == audioFormat);
-                video.CheckObjectForNull(nameof(audio));
-                return audio;
+
+                audio.CheckObjectForNull(nameof(audio));
+
+                if (!String.IsNullOrWhiteSpace(specificVideoInfoRequest.Resolution) &&
+                    !String.IsNullOrWhiteSpace(specificVideoInfoRequest.VideoFormat) &&
+                    !String.IsNullOrWhiteSpace(specificVideoInfoRequest.Fps))
+                {
+                    resolution = specificVideoInfoRequest.ConvertToInt(specificVideoInfoRequest.Resolution, "p");
+                    videoFormat = specificVideoInfoRequest.ConvertToVideoFormat(specificVideoInfoRequest.VideoFormat);
+                    fps = specificVideoInfoRequest.ConvertToInt(specificVideoInfoRequest.Fps, " FPS");
+
+                    video = videos
+                        .FirstOrDefault(x =>
+                        x.Format == videoFormat && x.Fps == fps &&
+                        x.Resolution == resolution);
+
+                    video.CheckObjectForNull(nameof(video));
+                    return new InfoStreams(specificVideoInfoRequest.Url, video, audio, serverSettings);
+                }
+
+                return new InfoStreams(specificVideoInfoRequest.Url, audio, serverSettings);
             }
             catch (ArgumentNullException)
             {
@@ -184,41 +193,6 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
         {
             MainInfo mainInfo = new MainInfo(video.Info.Title, video.Info.Author, video.Info.LengthSeconds);
             return mainInfo;
-        }
-
-        /// <summary>
-        /// Получить значение по ключу в ссылке
-        /// </summary>
-        /// <param name="url">Ссылка</param>
-        /// <param name="key">Ключ</param>
-        /// <exception cref="NoContainsKeyException">Исключение, если такого ключа в ссылке нет</exception>
-        /// <returns>Значение по ключу в ссылке</returns>
-        protected string? GetUrlValueByKey(string url, string key)
-        {
-            try
-            {
-                Uri uri = new Uri(url);
-                NameValueCollection query = HttpUtility.ParseQueryString(uri.Query);
-
-                query.CheckObjectForNull(nameof(query));
-
-                if (query.AllKeys.Contains(key))
-                    return query[key];
-                else
-                {
-                    string resource = ManagerResources.GetString(new Resource(ResourcesPath, "ExceptionNoContainsKeyV", StaticHelpers.GetAssemblyInfo().Assembly));
-                    string resultString = ManagerResources.GetResultString(resource, url);
-                    throw new NoContainsKeyException(resultString, key);
-                }
-            }
-            catch (NoContainsKeyException)
-            {
-                throw;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
         }
 
     }

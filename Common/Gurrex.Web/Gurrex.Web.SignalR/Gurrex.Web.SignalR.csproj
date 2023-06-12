@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Gurrex.Web.Interfaces\Gurrex.Web.Interfaces.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Gurrex.Common.Localization">
+      <HintPath>..\..\Gurrex.Common\Gurrex.Common.Localization\bin\Debug\net7.0\Gurrex.Common.Localization.dll</HintPath>
+    </Reference>
+    <Reference Include="Gurrex.Common.Validations">
+      <HintPath>..\..\Gurrex.Common\Gurrex.Common.Validations\bin\Debug\net7.0\Gurrex.Common.Validations.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

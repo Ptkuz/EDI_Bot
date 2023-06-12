@@ -1,11 +1,17 @@
 ﻿using VideoLibrary;
+using YouTubeVideoDownloader.Interfaces.Models.Base;
+using YouTubeVideoDownloader.Interfaces.Models.Services;
+using YouTubeVideoDownloader.Interfaces.Services.Base;
 
 namespace YouTubeVideoDownloader.Interfaces.Services.Async
 {
     /// <summary>
-    /// Асинхронное получение информации
+    /// Асинхронное получение потока
     /// </summary>
-    public interface IDataInformationAsync<T, K> where T : class where K : class
+    /// <typeparam name="T">Ответ, реализующий интерфейс <see cref="IBaseModel"/></typeparam>
+    /// <typeparam name="K">Запрос, реализующий интерфейс <see cref="IBaseModel"/></typeparam>
+    /// /// <typeparam name="U">Возвращает информацию о поток</typeparam>
+    public interface IDataInformationAsync<T, K, U> where T : class, IBaseModel where K : class, IBaseModel
     {
         /// <summary>
         /// Асинхронно получить всю информацию о видео по ссылке
@@ -18,8 +24,9 @@ namespace YouTubeVideoDownloader.Interfaces.Services.Async
         /// Асинхронно получить конкретное видео на основе свойств
         /// </summary>
         /// <param name="specificVideoInfoRequest">Свойства видео</param>
-        /// <returns>Объект <see cref="YouTubeVideo"/></returns>
-        Task<YouTubeVideo> GetSpecisicVideoInfoAsync(K specificVideoInfoRequest);
+        /// <param name="serverSettings">Настройки сервера</param>
+        /// <returns>Информация о потоках</returns>
+        Task<U> GetSpecisicVideoInfoAsync(K specificVideoInfoRequest, IServerSettings serverSettings);
 
 
     }

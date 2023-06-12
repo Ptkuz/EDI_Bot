@@ -4,20 +4,21 @@ using Gurrex.Common.Validations;
 using VideoLibrary;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
-using YouTubeVideoDownloader.YouTubeDataOperations.Models.Response;
 using YouTubeVideoDownloader.YouTubeDataOperations.Services.Base;
 using Gurrex.Common.Conversion;
-using YouTubeVideoDownloader.YouTubeDataOperations.Models.Request;
 using Gurrex.Common.Helpers;
 using YouTubeVideoDownloader.YouTubeDataOperations.Helpers;
 using System;
+using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Request;
+using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Response;
+using YouTubeVideoDownloader.Interfaces.Models.Services;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
 {
     /// <summary>
     /// Информация о видео и аудио асинхронно
     /// </summary>
-    public class DataInformationsAsync : DataInformation, IDataInformationAsync<YouTubeVideoInfoResponse, SpecificVideoInfoRequest>
+    public class DataInformationsAsync : DataInformation, IDataInformationAsync<YouTubeVideoInfoResponse, SpecificVideoInfoRequest, InfoStreams>
     {
 
         /// <summary>
@@ -25,15 +26,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// </summary>
         public override string ResourcesPath
         {
-            get
-            {
-                if (TypeName is not nameof(DataInformationsAsync))
-                {
-                    return base.ResourcesPath;
-                }
-
-                return $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Services.Async.DataInformationsAsync";
-            }
+            get => $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Services.Async.DataInformationsAsync";
         }
 
         /// <summary>
@@ -64,12 +57,13 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// Получить объект <see cref="YouTubeVideo"/>
         /// </summary>
         /// <param name="specificVideoInfoRequest">Запрашиваемые свойства видео</param>
+        /// <param name="serverSettings">Настройки приложения</param>
         /// <returns>Объект <see cref="YouTubeVideo"/></returns>
-        public async Task<YouTubeVideo> GetSpecisicVideoInfoAsync(SpecificVideoInfoRequest specificVideoInfoRequest) 
+        public async Task<InfoStreams> GetSpecisicVideoInfoAsync(SpecificVideoInfoRequest specificVideoInfoRequest, IServerSettings serverSettings) 
         {
             IEnumerable<YouTubeVideo> videos = await GetEnumerableYouTubeVideo(specificVideoInfoRequest.Url);
-            YouTubeVideo youTubeVideo = GetYouTubeVideo(videos, specificVideoInfoRequest);
-            return youTubeVideo;
+            InfoStreams infoStreams = GetYouTubeVideo(videos, specificVideoInfoRequest, serverSettings);
+            return infoStreams;
 
         }
 
@@ -89,10 +83,9 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// <returns>Поток <see cref="Stream"/> с картинкой</returns>
         private async Task<byte[]> GetVideoImageAsync(string url)
         {
-            string? id = GetUrlValueByKey(url, "v");
+            string? id = DataInformationHelpers.GetUrlValueByKey(url, "v");
             id.CheckObjectForNull(nameof(id));
 
-            TypeName = nameof(DataInformationsAsync);
             string resource = ManagerResources.GetString(new Resource(ResourcesPath, "VideoImageUrl", StaticHelpers.GetAssemblyInfo().Assembly));
             string resultString = ManagerResources.GetResultString(resource, id, "maxresdefault.jpg");
 

@@ -1,4 +1,11 @@
-﻿string path = "F:\\BPMRepositories\\core\\TSBpm\\Src\\Lib\\BPMSoft.WebHost\\BPMSoft.Configuration\\Pkg\\CloudEmailService\\Schemas\\StatisticEventType\\descriptor.json";
-string f = File.ReadAllText(path);
+﻿Class1? class1 = null;
 
-Console.WriteLine();
+Console.WriteLine(class1.ToString());
+Console.ReadKey();
+
+
+
+struct Class1 
+{
+
+}

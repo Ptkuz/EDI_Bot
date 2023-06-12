@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gurrex.Web.SignalR", "Gurrex.Web.SignalR\Gurrex.Web.SignalR.csproj", "{43223233-28F6-49A3-9352-4DDFFC4592FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gurrex.Web.Interfaces", "Gurrex.Web.Interfaces\Gurrex.Web.Interfaces.csproj", "{677660BC-A7D4-489E-B8ED-2BEC5A4419BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43223233-28F6-49A3-9352-4DDFFC4592FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43223233-28F6-49A3-9352-4DDFFC4592FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43223233-28F6-49A3-9352-4DDFFC4592FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43223233-28F6-49A3-9352-4DDFFC4592FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{677660BC-A7D4-489E-B8ED-2BEC5A4419BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{677660BC-A7D4-489E-B8ED-2BEC5A4419BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{677660BC-A7D4-489E-B8ED-2BEC5A4419BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{677660BC-A7D4-489E-B8ED-2BEC5A4419BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {62BC5DD5-BABC-4156-AADE-F6D1D72125B5}
+	EndGlobalSection
+EndGlobal

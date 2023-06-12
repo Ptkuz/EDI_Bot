@@ -8,17 +8,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.SignalR.Core" Version="2.4.3" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.0.1" />
+    <PackageReference Include="System.Management" Version="7.0.1" />
     <PackageReference Include="VideoLibrary" Version="3.2.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\YouTubeVideoDownloader.DAL\YouTubeVideoDownloader.DAL.csproj" />
     <ProjectReference Include="..\YouTubeVideoDownloader.Interfaces\YouTubeVideoDownloader.Interfaces.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="Gurrex.Common.Conversion">
       <HintPath>..\..\..\Common\Gurrex.Common\Gurrex.Common.Conversion\bin\Debug\net7.0\Gurrex.Common.Conversion.dll</HintPath>
+    </Reference>
+    <Reference Include="Gurrex.Common.DAL">
+      <HintPath>..\..\..\Common\Gurrex.Common\Gurrex.Common.DAL\bin\Debug\net7.0\Gurrex.Common.DAL.dll</HintPath>
     </Reference>
     <Reference Include="Gurrex.Common.Helpers">
       <HintPath>..\..\..\Common\Gurrex.Common\Gurrex.Common.Helpers\bin\Debug\net7.0\Gurrex.Common.Helpers.dll</HintPath>
@@ -29,9 +37,33 @@
     <Reference Include="Gurrex.Common.Localization">
       <HintPath>..\..\..\Common\Gurrex.Common\Gurrex.Common.Localization\bin\Debug\net7.0\Gurrex.Common.Localization.dll</HintPath>
     </Reference>
+    <Reference Include="Gurrex.Common.Services">
+      <HintPath>..\..\..\Common\Gurrex.Common\Gurrex.Common.Services\bin\Debug\net7.0\Gurrex.Common.Services.dll</HintPath>
+    </Reference>
     <Reference Include="Gurrex.Common.Validations">
       <HintPath>..\..\..\Common\Gurrex.Common\Gurrex.Common.Validations\bin\Debug\net7.0\Gurrex.Common.Validations.dll</HintPath>
     </Reference>
+    <Reference Include="Gurrex.Web.Interfaces">
+      <HintPath>..\..\..\Common\Gurrex.Web\Gurrex.Web.Interfaces\bin\Debug\net7.0\Gurrex.Web.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Gurrex.Web.SignalR">
+      <HintPath>..\..\..\Common\Gurrex.Web\Gurrex.Web.SignalR\bin\Debug\net7.0\Gurrex.Web.SignalR.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\Services.Async.ConvertationServiceAsync.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Services.Async.ConvertationServiceAsync.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Services.Async.ConvertationServiceAsync.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Services.Async.ConvertationServiceAsync.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

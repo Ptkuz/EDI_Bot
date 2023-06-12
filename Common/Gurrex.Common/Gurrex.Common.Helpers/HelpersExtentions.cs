@@ -2,6 +2,8 @@
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Validations;
+using System.Diagnostics;
+using System.Management;
 using System.Reflection;
 
 namespace Gurrex.Common.Helpers
@@ -108,6 +110,40 @@ namespace Gurrex.Common.Helpers
             {
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Получить подпроцессы процесса Windows
+        /// </summary>
+        /// <param name="process">Процесс</param>
+        /// <returns>Список подпроцессов процесса Windows</returns>
+        public static IList<Process> GetChildProcessesFromWindows(this Process process) 
+        {
+            List<Process> childrenProcesses = new List<Process>();
+            ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher($"SELECT * FROM Win32_Process WHERE ParentProcessID={process.Id}");
+
+            foreach (var item in managementObjectSearcher.Get()) 
+            {
+                childrenProcesses.Add(Process.GetProcessById(Convert.ToInt32(item["ProcessID"])));
+            }
+            return childrenProcesses;
+        }
+
+        /// <summary>
+        /// Конвертировать строковое представление времени в числовое
+        /// </summary>
+        /// <param name="time">Строковое время</param>
+        /// <returns>Количество секунд</returns>
+        public static int ConvertTimeStringToIntSeconds(this string time)
+        {
+            int fullSeconds = 0;
+            bool parseHours = Int32.TryParse(time.Substring(0, 2), out int hours);
+            bool parseMinutes = Int32.TryParse(time.Substring(3, 2), out int minutes);
+            bool parseSeconds = Int32.TryParse(time.Substring(6, 2), out int seconds);
+            if (parseHours && parseMinutes && parseSeconds)
+                fullSeconds = (hours * 3600) + (minutes * 60) + seconds;
+
+            return fullSeconds;
         }
     }
 }
