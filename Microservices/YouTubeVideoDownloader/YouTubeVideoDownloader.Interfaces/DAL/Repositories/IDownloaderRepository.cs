@@ -6,9 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace YouTubeVideoDownloader.Interfaces.DAL
+namespace YouTubeVideoDownloader.Interfaces.DAL.Repositories
 {
-    public interface IDownloaderRepository<T> : IEntityRepository<T> where T: class, IEntity, new()
+    public interface IDownloaderRepository<T> : IEntityRepository<T> 
+        where T : class, IEntity, new()
     {
 
     }

@@ -41,17 +41,13 @@ namespace Gurrex.Common.DAL.Repositories
         /// <summary>
         /// DbSet сущности, унаследованной от <see cref="Entity"/>
         /// </summary>
-        protected DbSet<T> _entities;
+        public DbSet<T> _entities { get; set; }
 
         /// <summary>
         /// Автоматическое сохранение изменений
         /// </summary>
-        private bool autoSaveChanges = true;
+        protected bool autoSaveChanges = true;
 
-        private EntityRepository() 
-        {
-            
-        }
 
         /// <summary>
         /// Конструктор инициализатор

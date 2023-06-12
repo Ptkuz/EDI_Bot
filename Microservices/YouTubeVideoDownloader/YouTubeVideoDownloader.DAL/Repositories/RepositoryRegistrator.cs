@@ -1,14 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using YouTubeVideoDownloader.DAL.Entities;
-using Gurrex.Common.Interfaces.Repositories;
-using Gurrex.Common.DAL.Repositories;
-using YouTubeVideoDownloader.Interfaces.DAL;
+using YouTubeVideoDownloader.Interfaces.DAL.Repositories;
 
 namespace YouTubeVideoDownloader.DAL.Repositories
 {
-    /// <summary>
-    /// Регистратор репозиториев
-    /// </summary>
     public static class RepositoryRegistrator
     {
         /// <summary>

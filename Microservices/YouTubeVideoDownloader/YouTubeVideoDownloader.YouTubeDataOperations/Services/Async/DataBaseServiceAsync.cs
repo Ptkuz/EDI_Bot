@@ -52,6 +52,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
 
         public async Task<bool> BeforeGetYouTubeInfoAsync(VideoInfoRequest videoInfoRequest) 
         {
+            var itemsss = UnitOfWork.YouTubeInfoRepository.Items.ToList();
             var items = UnitOfWork.YouTubeInfoRepository.MultiInclude(x => x.Channel).Select(x => x.Title);
             YouTubeInfo? youTubeInfo = await UnitOfWork.YouTubeInfoRepository
                 .SingleOrDefaultEntityAsync(x => x.Url == DataInformationHelpers.GetSimpleYouTubeUrl(videoInfoRequest.Url));

@@ -1,6 +1,7 @@
 ﻿using Gurrex.Common.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore.Storage;
 using YouTubeVideoDownloader.Interfaces.DAL.Entities;
+using YouTubeVideoDownloader.Interfaces.DAL.Repositories;
 
 namespace YouTubeVideoDownloader.Interfaces.DAL
 {

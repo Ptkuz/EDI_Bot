@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using YouTubeVideoDownloader.DAL.Context;
 using YouTubeVideoDownloader.DAL.Entities;
 using YouTubeVideoDownloader.Interfaces.DAL;
+using YouTubeVideoDownloader.Interfaces.DAL.Repositories;
 
 namespace YouTubeVideoDownloader.DAL
 {
