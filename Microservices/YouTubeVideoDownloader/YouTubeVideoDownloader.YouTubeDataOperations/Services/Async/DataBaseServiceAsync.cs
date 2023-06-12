@@ -32,8 +32,8 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
             Audio audio = new Audio(InfoStream.Id, InfoStream.AudioStream.AudioFormat.ToString(), $"{InfoStream.AudioStream.AudioBitrate} kbps");
             ServerInfo serverInfo = new ServerInfo(audioFileFullName, length);
 
-            //await AudioRepositoryAsync.AddEntityAsync(audio, cancel);
-            //await ServerInfoRepositoryAsync.AddEntityAsync(serverInfo, cancel);
+            await UnitOfWork.AudioRepository.AddEntityAsync(audio, cancel);
+            await UnitOfWork.ServerInfoRepository.AddEntityAsync(serverInfo, cancel);
             return true;
         }
 
@@ -45,15 +45,13 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
             Video video = new Video(InfoStream.Id, $"{InfoStream.VideoStream.Format}", $"{InfoStream.VideoStream.Resolution}", $"{InfoStream.VideoStream.Fps}", $"{InfoStream.AudioStream.AudioFormat}", $"{InfoStream.AudioStream.AudioBitrate}");
             ServerInfo serverInfo = new ServerInfo(videoFileFullName, length);
 
-            //await VideoRepositoryAsync.AddEntityAsync(video, cancel);
-            //await ServerInfoRepositoryAsync.AddEntityAsync(serverInfo, cancel);
+            await UnitOfWork.VideoRepository.AddEntityAsync(video, cancel);
+            await UnitOfWork.ServerInfoRepository.AddEntityAsync(serverInfo, cancel);
             return true;
         }
 
-        public async Task<bool> BeforeGetYouTubeInfoAsync(VideoInfoRequest videoInfoRequest) 
+        public async Task<bool> CheckYouTubeInfoAsync(VideoInfoRequest videoInfoRequest) 
         {
-            var itemsss = UnitOfWork.YouTubeInfoRepository.Items.ToList();
-            var items = UnitOfWork.YouTubeInfoRepository.MultiInclude(x => x.Channel).Select(x => x.Title);
             YouTubeInfo? youTubeInfo = await UnitOfWork.YouTubeInfoRepository
                 .SingleOrDefaultEntityAsync(x => x.Url == DataInformationHelpers.GetSimpleYouTubeUrl(videoInfoRequest.Url));
              return youTubeInfo is null ? false : true;

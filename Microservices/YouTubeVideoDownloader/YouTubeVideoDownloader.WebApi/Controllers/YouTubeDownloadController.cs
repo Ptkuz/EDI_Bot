@@ -15,6 +15,7 @@ using YouTubeVideoDownloader.Interfaces.Services.Async;
 using YouTubeVideoDownloader.WebApi.ConfigurationSettings;
 using YouTubeVideoDownloader.WebApi.Controllers.Base;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
+using YouTubeVideoDownloader.YouTubeDataOperations.Models.Services;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Request;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Response;
 using YouTubeVideoDownloader.YouTubeDataOperations.Services.Async;
@@ -106,7 +107,7 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
                 CancellationTokenSource = new CancellationTokenSource();
                 YouTubeVideoInfoResponse youtubeVideoInfo = await _dataInformationsAsync.GetYouTubeVideoInfoAsync(videoInfoRequest.Url);
 
-                if (!await _dataBaseServiceAsync.BeforeGetYouTubeInfoAsync(videoInfoRequest))
+                if (!await _dataBaseServiceAsync.CheckYouTubeInfoAsync(videoInfoRequest))
                 {
                     await _dataBaseServiceAsync.AfterGetYouTubeInfoAsync(youtubeVideoInfo, videoInfoRequest, CancellationTokenSource.Token);
                 }
@@ -140,25 +141,25 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
             {
                 CancellationTokenSource = new CancellationTokenSource();
                 InfoStreams infoStreams = await _dataInformationsAsync.GetSpecisicVideoInfoAsync(specificVideoInfoRequest, _serverSettings);
-                //bool result = await _downloadStreamAsync.DownloadAsync(infoStreams, infoStreams => !String.IsNullOrWhiteSpace(infoStreams.VideoFileName), CancellationTokenSource.Token);
+                bool result = await _downloadStreamAsync.DownloadAsync(infoStreams, infoStreams => !String.IsNullOrWhiteSpace(infoStreams.VideoFileName), CancellationTokenSource.Token);
 
-                //if (true && !String.IsNullOrWhiteSpace(specificVideoInfoRequest.Resolution) && infoStreams.VideoStream is not null)
-                //{
-                //    IConvertationModel convertationModel =
-                //        new ConvertationModel(
-                //            _serverSettings.PathToVideoStorage,
-                //            infoStreams.AudioFileName,
-                //            infoStreams.AudioFileExtention,
-                //            infoStreams.VideoFileName,
-                //            infoStreams.VideoFileExtention,
-                //            infoStreams.VideoStream.Fps,
-                //            infoStreams.FinalFileFullName);
+                if (true && !String.IsNullOrWhiteSpace(specificVideoInfoRequest.Resolution) && infoStreams.VideoStream is not null)
+                {
+                    IConvertationModel convertationModel =
+                        new ConvertationModel(
+                            _serverSettings.PathToVideoStorage,
+                            infoStreams.AudioFileName,
+                            infoStreams.AudioFileExtention,
+                            infoStreams.VideoFileName,
+                            infoStreams.VideoFileExtention,
+                            infoStreams.VideoStream.Fps,
+                            infoStreams.FinalFileFullName);
 
-                //    await _convertationServiceAsync.MergeAudioVideoDataAsync(convertationModel, AssemblyInfo.AssemblyName.Name, CancellationTokenSource.Token);
+                    await _convertationServiceAsync.MergeAudioVideoDataAsync(convertationModel, AssemblyInfo.AssemblyName.Name, CancellationTokenSource.Token);
 
-                //}
+                }
 
-                if (true)
+                if (result)
                 {
                     _dataBaseServiceAsync.InfoStream = infoStreams;
                     if (infoStreams.VideoStream is not null)

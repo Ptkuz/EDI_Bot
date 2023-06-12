@@ -93,8 +93,19 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
 
             using (HttpClient httpClient = new HttpClient())
             {
-                byte[] image = await httpClient.GetByteArrayAsync(uri);
-                return image;
+                byte[] image;
+                try
+                {
+                    image = await httpClient.GetByteArrayAsync(uri);
+                    return image;
+                }
+                catch (HttpRequestException) 
+                {
+                    resultString = ManagerResources.GetResultString(resource, id, "default.jpg");
+                    uri = new Uri(resultString);
+                    image = await httpClient.GetByteArrayAsync(uri);
+                    return image;
+                }
             }
         }
     }

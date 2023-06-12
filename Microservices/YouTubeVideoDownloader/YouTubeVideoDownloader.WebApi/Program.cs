@@ -6,6 +6,7 @@ using NLog.Web;
 using System.Globalization;
 using YouTubeVideoDownloader.DAL.Context;
 using YouTubeVideoDownloader.DAL.Repositories;
+using YouTubeVideoDownloader.DAL.UnitOfWork;
 using YouTubeVideoDownloader.WebApi.ConfigurationSettings;
 using YouTubeVideoDownloader.YouTubeDataOperations.Services;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
@@ -33,7 +34,8 @@ if (String.IsNullOrEmpty(connectionString))
 
 builder.Services.AddDbContext<DownloaderContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Scoped);
 builder.Services.AddRepositoryInDB();
-builder.Services.AddDownloadServices();
+builder.Services.AddUnitOfWork();
+builder.Services.AddDownloaderServices();
 builder.Services.Configure<ServerSettings>(
     builder.Configuration.GetSection("ServerSettings")
 );

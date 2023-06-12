@@ -5,7 +5,7 @@ using YouTubeVideoDownloader.DAL.Entities;
 using YouTubeVideoDownloader.Interfaces.DAL;
 using YouTubeVideoDownloader.Interfaces.DAL.Repositories;
 
-namespace YouTubeVideoDownloader.DAL
+namespace YouTubeVideoDownloader.DAL.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork<Audio, Channel, Image, ServerInfo, Video, YouTubeInfo>, IDisposable
     {
@@ -50,14 +50,14 @@ namespace YouTubeVideoDownloader.DAL
 
         public void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {
                     _downloaderContext.Dispose();
                 }
             }
-            this.disposed = true;
+            disposed = true;
         }
 
         public void Dispose()
