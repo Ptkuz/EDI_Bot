@@ -1,15 +1,13 @@
 ﻿using Gurrex.Common.DAL.Entities;
-using Gurrex.Common.DAL.Repositories.Base;
-using Gurrex.Common.Interfaces.Entities;
+using Gurrex.Common.Helpers;
+using Gurrex.Common.Helpers.Models;
 using Gurrex.Common.Interfaces.Repositories;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Validations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
 
 namespace Gurrex.Common.DAL.Repositories
 {
@@ -17,25 +15,57 @@ namespace Gurrex.Common.DAL.Repositories
     /// Базовый асинхронный репозиторий работы с сущностью, унаследованной от <see cref="Entity"/>
     /// </summary>
     /// <typeparam name="T">Сущность, унаследованная от <see cref="Entity"/></typeparam>
-    public class DbRepositoryAsync<T> : BaseDbRepository<T>, IRepositoryEntitiesAsync<T> where T : Entity, new()
+    public class EntityRepository<T> : IEntityRepository<T> where T : Entity, new()
     {
 
-        private readonly ILogger _logger;
+        /// <summary>
+        /// Сборка
+        /// </summary>
+        public AssemblyInfo AssemblyInfo => StaticHelpers.GetAssemblyInfo();
 
         /// <summary>
         /// Путь до ресурсов
         /// </summary>
-        public override string ResourcesPath => $"{AssemblyInfo.AssemblyName.Name}.Resources.Repositories.DbRepositoryAsync";
+        public virtual string ResourcesPath => $"{AssemblyInfo.AssemblyName.Name}.Resources.Repositories.DbRepository";
+
+        /// <summary>
+        /// Логирование
+        /// </summary>
+        private readonly ILogger<EntityRepository<T>> _logger;
+
+        /// <summary>
+        /// Контекст базы данных
+        /// </summary>
+        protected readonly DbContext _dbContext;
+
+        /// <summary>
+        /// DbSet сущности, унаследованной от <see cref="Entity"/>
+        /// </summary>
+        public DbSet<T> _entities { get; set; }
+
+        /// <summary>
+        /// Автоматическое сохранение изменений
+        /// </summary>
+        protected bool autoSaveChanges = true;
+
 
         /// <summary>
         /// Конструктор инициализатор
         /// </summary>
         /// <param name="dbContext">Контекст базы данных</param>
-        /// <param name="logger">Контекст базы данных</param>
-        protected DbRepositoryAsync(DbContext dbContext, ILogger<DbRepositoryAsync<T>> logger) : base(dbContext, logger)
+        /// <param name="logger">Логирование</param>
+        protected EntityRepository(DbContext dbContext, ILogger<EntityRepository<T>> logger)
         {
+            _dbContext = dbContext;
+            _entities = dbContext.Set<T>();
             _logger = logger;
         }
+
+        /// <summary>
+        /// Количество экземпляров сущности, унаследованной от <see cref="Entity"/>
+        /// </summary>
+        public IQueryable<T> Items => _entities;
+
 
         /// <summary>
         /// Асинхронно получить экземпляр по Id
@@ -90,7 +120,7 @@ namespace Gurrex.Common.DAL.Repositories
         /// <returns><see cref="IEnumerable{T}"/> связанных сущностей</returns>
         public IQueryable<T> MultiInclude(params Expression<Func<T, object>>[] includes)
         {
-            if (includes is not null) 
+            if (includes is not null)
             {
                 return includes.Aggregate(Items, (current, include) => current.Include(include));
             }
@@ -151,7 +181,7 @@ namespace Gurrex.Common.DAL.Repositories
                 _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T), ex));
                 throw;
             }
-            finally 
+            finally
             {
                 _dbContext.Entry(entity).State = EntityState.Detached;
             }
@@ -243,6 +273,165 @@ namespace Gurrex.Common.DAL.Repositories
             catch (Exception ex)
             {
                 string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugExceptionSaveChangesAsync", AssemblyInfo.Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T), ex));
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Получить экземпляра сущности по Id
+        /// </summary>
+        /// <param name="id">Id сущности</param>
+        /// <returns>Полученная сущность</returns>
+        public T GetEntityById(Guid id)
+        {
+            try
+            {
+                T? entity = Items.SingleOrDefault(item => item.Id == id);
+                entity.CheckObjectForNull(nameof(entity));
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugGetEntityById", AssemblyInfo.Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T)));
+                return entity!;
+            }
+            catch (Exception ex)
+            {
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugExceptionGetEntityById", AssemblyInfo.Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T), ex));
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Получить последнюю добавленную сущность
+        /// </summary>
+        /// <returns>Полученная сущность</returns>
+        public T GetLastEntity()
+        {
+            try
+            {
+                IEnumerable<T> entityList = Items.ToList();
+                T entity = entityList.Last();
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugGetLastEntity", AssemblyInfo.Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T)));
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugExceptionGetLastEntity", AssemblyInfo.Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T), ex));
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Добавить сущность
+        /// </summary>
+        /// <param name="entity">Добавляемая сущность</param>
+        /// <returns>True - сущность добавлена, False - сущность не добавлена</returns>
+        public bool AddEntity(T entity)
+        {
+            try
+            {
+                entity.CheckObjectForNull(nameof(entity));
+                _dbContext.Entry(entity).State = EntityState.Added;
+
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugAddEntity", AssemblyInfo.Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T)));
+
+                if (autoSaveChanges)
+                {
+                    SaveChanges();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugExceptionAddEntity", AssemblyInfo.Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T), ex));
+                throw;
+            }
+
+        }
+
+        /// <summary>
+        /// Обновить сущность
+        /// </summary>
+        /// <param name="entity">Обновляемая сущность</param>
+        /// <returns>True - сущность обновлена, False - сущность не не обновлена</returns>
+        public bool UpdateEntity(T entity)
+        {
+            try
+            {
+                entity.CheckObjectForNull(nameof(entity));
+                _dbContext.Entry(entity).State = EntityState.Modified;
+
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugUpdateEntity", AssemblyInfo.Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T)));
+
+                if (autoSaveChanges)
+                {
+                    SaveChanges();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugExceptionUpdateEntity", AssemblyInfo.Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T), ex));
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Удалить сущность
+        /// </summary>
+        /// <param name="id">Id сущности</param>
+        /// <returns>True - сущность удалена, False - сущность не удалена</returns>
+        public bool RemoveEntityById(Guid id)
+        {
+            try
+            {
+                T entity = new T { Id = id };
+                _dbContext.Remove(entity);
+
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugRemoveEntityById", AssemblyInfo.Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T)));
+
+                if (autoSaveChanges)
+                {
+                    SaveChanges();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugExceptionRemoveEntityById", AssemblyInfo.Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T), ex));
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Сохранить изменения в базу данных
+        /// </summary>
+        /// <returns>True - изменения сохранены, False - изменения не сохранены</returns>
+        public bool SaveChanges()
+        {
+            try
+            {
+                _dbContext.SaveChanges();
+
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugSaveChanges", AssemblyInfo.Assembly));
+                _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T)));
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "DebugExceptionSaveChanges", AssemblyInfo.Assembly));
                 _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T), ex));
                 throw;
             }

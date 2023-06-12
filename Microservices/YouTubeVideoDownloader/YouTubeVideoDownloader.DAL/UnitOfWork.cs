@@ -1,14 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Gurrex.Common.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore.Storage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using YouTubeVideoDownloader.DAL.Context;
 using YouTubeVideoDownloader.DAL.Entities;
 using YouTubeVideoDownloader.Interfaces.DAL;
-using YouTubeVideoDownloader.Interfaces.DAL.Repositories.Async;
+using YouTubeVideoDownloader.Interfaces.DAL.Repositories;
 
 namespace YouTubeVideoDownloader.DAL
 {
@@ -18,34 +13,34 @@ namespace YouTubeVideoDownloader.DAL
         private bool disposed;
         private readonly DownloaderContext _downloaderContext;
 
-        public IAudioRepositoryAsync<Audio> AudioRepositoryAsync { get; }
+        public IDownloaderRepository<Audio> AudioRepository { get; }
 
-        public IChannelRerositoryAsync<Channel> ChannelRerositoryAsync { get; }
+        public IDownloaderRepository<Channel> ChannelRerository { get; }
 
-        public IImageRepositoryAsync<Image> ImageRepositoryAsync { get; }
+        public IDownloaderRepository<Image> ImageRepository { get; }
 
-        public IServerInfoRepositoryAsync<ServerInfo> ServerInfoRepositoryAsync { get; }
+        public IDownloaderRepository<ServerInfo> ServerInfoRepository { get; }
 
-        public IVideoRepositoryAsync<Video> VideoRepositoryAsync { get; }
+        public IDownloaderRepository<Video> VideoRepository { get; }
 
-        public IYouTubeInfoRepositoryAsync<YouTubeInfo> YouTubeInfoRepositoryAsync { get; }
+        public IDownloaderRepository<YouTubeInfo> YouTubeInfoRepository { get; }
 
         public UnitOfWork(DownloaderContext downloaderContext,
-            IAudioRepositoryAsync<Audio> audioRepositoryAsync,
-            IChannelRerositoryAsync<Channel> channelRerositoryAsync,
-            IImageRepositoryAsync<Image> imageRepositoryAsync,
-            IServerInfoRepositoryAsync<ServerInfo> serverInfoRepositoryAsync,
-            IVideoRepositoryAsync<Video> videoRepositoryAsync,
-            IYouTubeInfoRepositoryAsync<YouTubeInfo> youTubeInfoRepositoryAsync
-            ) 
+            IDownloaderRepository<Audio> audioRepository,
+            IDownloaderRepository<Channel> channelRerository,
+            IDownloaderRepository<Image> imageRepository,
+            IDownloaderRepository<ServerInfo> serverInfoRepository,
+            IDownloaderRepository<Video> videoRepository,
+            IDownloaderRepository<YouTubeInfo> youTubeInfoRepository
+            )
         {
             _downloaderContext = downloaderContext;
-            AudioRepositoryAsync = audioRepositoryAsync;
-            ChannelRerositoryAsync = channelRerositoryAsync;
-            ImageRepositoryAsync = imageRepositoryAsync;
-            ServerInfoRepositoryAsync = serverInfoRepositoryAsync;
-            VideoRepositoryAsync = videoRepositoryAsync;    
-            YouTubeInfoRepositoryAsync = youTubeInfoRepositoryAsync;
+            AudioRepository = audioRepository;
+            ChannelRerository = channelRerository;
+            ImageRepository = imageRepository;
+            ServerInfoRepository = serverInfoRepository;
+            VideoRepository = videoRepository;
+            YouTubeInfoRepository = youTubeInfoRepository;
         }
 
         public async Task<IDbContextTransaction> BeginTransactionAsync()
