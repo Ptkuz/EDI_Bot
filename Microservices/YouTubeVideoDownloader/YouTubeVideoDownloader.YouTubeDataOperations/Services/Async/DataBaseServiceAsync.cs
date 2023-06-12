@@ -52,7 +52,8 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
 
         public async Task<bool> BeforeGetYouTubeInfoAsync(VideoInfoRequest videoInfoRequest) 
         {
-            YouTubeInfo? youTubeInfo = await UnitOfWork.YouTubeInfoRepositoryAsync
+            var items = UnitOfWork.YouTubeInfoRepository.MultiInclude(x => x.Channel).Select(x => x.Title);
+            YouTubeInfo? youTubeInfo = await UnitOfWork.YouTubeInfoRepository
                 .SingleOrDefaultEntityAsync(x => x.Url == DataInformationHelpers.GetSimpleYouTubeUrl(videoInfoRequest.Url));
              return youTubeInfo is null ? false : true;
         }
@@ -73,9 +74,9 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
             {
                 try
                 {
-                    await UnitOfWork.ChannelRerositoryAsync.AddEntityAsync(channel, cancel);
-                    await UnitOfWork.YouTubeInfoRepositoryAsync.AddEntityAsync(youTubeInfo, cancel);
-                    await UnitOfWork.ImageRepositoryAsync.AddEntityAsync(image, cancel);
+                    await UnitOfWork.ChannelRerository.AddEntityAsync(channel, cancel);
+                    await UnitOfWork.YouTubeInfoRepository.AddEntityAsync(youTubeInfo, cancel);
+                    await UnitOfWork.ImageRepository.AddEntityAsync(image, cancel);
                     transaction.Commit();
                 }
                 catch (Exception) 

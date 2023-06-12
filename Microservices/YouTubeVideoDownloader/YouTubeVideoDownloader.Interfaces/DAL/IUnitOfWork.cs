@@ -1,11 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Gurrex.Common.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore.Storage;
 using YouTubeVideoDownloader.Interfaces.DAL.Entities;
-using YouTubeVideoDownloader.Interfaces.DAL.Repositories.Async;
 
 namespace YouTubeVideoDownloader.Interfaces.DAL
 {
@@ -19,12 +14,12 @@ namespace YouTubeVideoDownloader.Interfaces.DAL
     {
         Task<IDbContextTransaction> BeginTransactionAsync();
 
-        IAudioRepositoryAsync<A> AudioRepositoryAsync { get; }
-        IChannelRerositoryAsync<C> ChannelRerositoryAsync { get; }
-        IImageRepositoryAsync<I> ImageRepositoryAsync { get; }  
-        IServerInfoRepositoryAsync<S> ServerInfoRepositoryAsync { get; }
-        IVideoRepositoryAsync<V> VideoRepositoryAsync { get; }  
-        IYouTubeInfoRepositoryAsync<Y> YouTubeInfoRepositoryAsync { get; }
+        IDownloaderRepository<A> AudioRepository { get; }
+        IDownloaderRepository<C> ChannelRerository { get; }
+        IDownloaderRepository<I> ImageRepository { get; }
+        IDownloaderRepository<S> ServerInfoRepository { get; }
+        IDownloaderRepository<V> VideoRepository { get; }
+        IDownloaderRepository<Y> YouTubeInfoRepository { get; }
 
     }
 }

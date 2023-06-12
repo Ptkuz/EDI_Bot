@@ -1,13 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
-using System.Threading.Channels;
-using VideoLibrary;
 using YouTubeVideoDownloader.Interfaces.DAL;
 using YouTubeVideoDownloader.Interfaces.DAL.Entities;
-using YouTubeVideoDownloader.Interfaces.DAL.Repositories.Async;
 using YouTubeVideoDownloader.Interfaces.Models.Base;
 using YouTubeVideoDownloader.Interfaces.Models.Requests;
 using YouTubeVideoDownloader.Interfaces.Models.Response;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace YouTubeVideoDownloader.Interfaces.Services.Async
 {
