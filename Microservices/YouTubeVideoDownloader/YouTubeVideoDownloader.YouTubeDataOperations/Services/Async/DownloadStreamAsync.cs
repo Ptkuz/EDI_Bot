@@ -1,13 +1,15 @@
-﻿using Gurrex.Common.Interfaces.Services;
+﻿using Gurrex.Common.Helpers;
+using Gurrex.Common.Interfaces.Events;
 using Gurrex.Common.Services.Models.Events;
-using Gurrex.Common.Validations;
 using Gurrex.Web.Interfaces.SignalR;
 using Gurrex.Web.SignalR.Hubs.Async;
 using Microsoft.AspNetCore.SignalR;
 using VideoLibrary;
+using YouTubeVideoDownloader.DAL.Entities;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
 using YouTubeVideoDownloader.YouTubeDataOperations.Enums;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
+using YouTubeVideoDownloader.YouTubeDataOperations.Models.Services;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
 {
@@ -30,13 +32,13 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// <summary>
         /// Событие изменения прогресса
         /// </summary>
-        public event IProcessOperations<ProcessEventArgs>.ProcessHandler? OutputDataChanged;
+        public event IEvents<ProcessEventArgs>.ProcessHandler? OutputDataChanged;
 
         /// <summary>
         /// Асинхронно скачать поток
         /// </summary>
         /// <returns>True - скачивание завершено успешно, False - Скачивание завершено неудачно</returns>
-        public async Task<bool> DownloadAsync(InfoStreams infoStreams, CancellationToken cancel)
+        public async Task<bool> DownloadAsync(InfoStreams infoStreams, Predicate<InfoStreams> predicate, CancellationToken cancel)
         {
             try
             {
@@ -48,22 +50,21 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
                 Stream? videoStream = default;
                 Task<bool>? video = default;
 
-
-                if (infoStreams.VideoStream is not null && infoStreams.VideoFileName is not null)
+                if (predicate(infoStreams))
                 {
                     youTubeVideo = infoStreams.VideoStream;
                     videoStream = await youTubeVideo.StreamAsync();
-                    infoStreams.VideoFileFullName.CheckStringForNullOrWhiteSpace();
                     video = DownloadDataAsync(videoStream, infoStreams.VideoFileFullName, SenderInfoHubAsync, TypeData.Video, HubContext, cancel);
                     await Task.WhenAll(audio, video);
                 }
                 else
                 {
-                    await DownloadDataAsync(audioStream, infoStreams.AudioFileName, SenderInfoHubAsync, TypeData.Audio, HubContext, cancel);
+                    await Task.WhenAll(audio);
                 }
+                
                 return true;
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException) 
             {
                 throw;
             }
@@ -84,13 +85,13 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
                         file.Write(buffer, 0, len);
                         length += len;
 
-                        switch (typeData)
+                        switch (typeData) 
                         {
                             case TypeData.Audio:
                                 await senderInfoHubAsync.ContextSendInfoAllClientsAsync(hubContext, "ReceiveAudioStatusAsync", cancel, $"Скачивание аудио дорожки {fileName} - ({length})");
                                 break;
                             case TypeData.Video:
-                                await senderInfoHubAsync.ContextSendInfoAllClientsAsync(hubContext, "ReceiceVideoStatusAsync", cancel, $"Скачивание видео дорожки {fileName} - ({length})");
+                                 await senderInfoHubAsync.ContextSendInfoAllClientsAsync(hubContext, "ReceiceVideoStatusAsync", cancel, $"Скачивание видео дорожки {fileName} - ({length})");
                                 break;
                             default:
                                 break;

@@ -1,15 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using YouTubeVideoDownloader.DAL.Entities;
-using YouTubeVideoDownloader.DAL.Repositories.Async;
-using YouTubeVideoDownloader.DAL.Repositories.Sync;
-using YouTubeVideoDownloader.Interfaces.Repositories.Async;
-using YouTubeVideoDownloader.Interfaces.Repositories.Sync;
+using YouTubeVideoDownloader.Interfaces.DAL.Repositories;
 
 namespace YouTubeVideoDownloader.DAL.Repositories
 {
-    /// <summary>
-    /// Регистратор репозиториев
-    /// </summary>
     public static class RepositoryRegistrator
     {
         /// <summary>
@@ -20,28 +19,22 @@ namespace YouTubeVideoDownloader.DAL.Repositories
         public static IServiceCollection AddRepositoryInDB(this IServiceCollection services) => services
 
             // Репозитории работы с Audio
-            .AddScoped<IAudioRepository<Audio>, AudioRepository>()
-            .AddScoped<IAudioRepositoryAsync<Audio>, AudioRepositoryAsync>()
+            .AddScoped<IDownloaderRepository<Audio>, DownloaderRepository<Audio>>()
 
             // Репозитории работы с Channel
-            .AddScoped<IChannelRerository<Channel>, ChannelRepository>()
-            .AddScoped<IChannelRerositoryAsync<Channel>, ChannelRepositoryAsync>()
+            .AddScoped<IDownloaderRepository<Channel>, DownloaderRepository<Channel>>()
 
             // Репозитории работы с Image
-            .AddScoped<IImageRepository<Image>, ImageRepository>()
-            .AddScoped<IImageRepositoryAsync<Image>, ImageRepositoryAsync>()
+            .AddScoped<IDownloaderRepository<Image>, DownloaderRepository<Image>>()
 
             // Репозитории работы с ServerInfo
-            .AddScoped<IServerInfoRepository<ServerInfo>, ServerInfoRepository>()
-            .AddScoped<IServerInfoRepositoryAsync<ServerInfo>, ServerInfoRepositoryAsync>()
+            .AddScoped<IDownloaderRepository<ServerInfo>, DownloaderRepository<ServerInfo>>()
 
             // Репозитории работы с Video
-            .AddScoped<IVideoRepository<Video>, VideoRepository>()
-            .AddScoped<IVideoRepositoryAsync<Video>, VideoRepositoryAsync>()
+            .AddScoped<IDownloaderRepository<Video>, DownloaderRepository<Video>>()
 
             // Репозитории работы с YouTubeInfo
-            .AddScoped<IYouTubeInfoRepository<YouTubeInfo>, YouTubeInfoRepository>()
-            .AddScoped<IYouTubeInfoRepositoryAsync<YouTubeInfo>, YouTubeInfoRepositoryAsync>()
+            .AddScoped<IDownloaderRepository<YouTubeInfo>, DownloaderRepository<YouTubeInfo>>()
             ;
     }
 }

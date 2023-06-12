@@ -1,7 +1,8 @@
 ﻿using Gurrex.Common.DAL.Entities;
 using Gurrex.Common.Helpers;
+using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations.Schema;
-using YouTubeVideoDownloader.Interfaces.Entities;
+using YouTubeVideoDownloader.Interfaces.DAL.Entities;
 
 namespace YouTubeVideoDownloader.DAL.Entities
 {
@@ -11,14 +12,13 @@ namespace YouTubeVideoDownloader.DAL.Entities
     public class Audio : Entity, IAudio
     {
 
-
         /// <summary>
         /// Путь до ресурсов
         /// </summary>
         [NotMapped]
         public override string ResourcesPath
         {
-            get =>  $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.Audio";   
+            get => $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.Audio";   
         }
 
 
@@ -47,7 +47,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         public ServerInfo ServerInfo { get; set; } = null!;
 
         /// <summary>
-        /// Конструктор по умолчанию
+        /// Конструктор инициализатор
         /// </summary>
         public Audio()
         {
@@ -57,14 +57,26 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <summary>
         /// Инициализатор конструктор
         /// </summary>
+        /// <param name="logger">Логирование</param>
         /// <param name="id">Id сущности</param>
-        /// <param name="dateAdded">Дата добавления</param>
-        /// <param name="dateModified">Дата изменения</param>
-        /// <param name="dateDeleted">Дата удаления</param>
         /// <param name="formatAudio">Формат аудио</param>
         /// <param name="bitrate">Битрейт</param>
-        public Audio(Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted, string formatAudio, string bitrate)
-            : base(id, dateAdded, dateModified, dateDeleted)
+        public Audio(Guid id, string formatAudio, string bitrate)
+            : base(id)
+        {
+            FormatAudio = formatAudio;
+            Bitrate = bitrate;
+        }
+
+        /// <summary>
+        /// Инициализатор конструктор
+        /// </summary>
+        /// <param name="logger">Логирование</param>
+        /// <param name="id">Id сущности</param>
+        /// <param name="formatAudio">Формат аудио</param>
+        /// <param name="bitrate">Битрейт</param>
+        public Audio(string formatAudio, string bitrate)
+            : base()
         {
             FormatAudio = formatAudio;
             Bitrate = bitrate;

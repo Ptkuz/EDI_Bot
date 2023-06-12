@@ -1,22 +1,23 @@
+using Gurrex.Common.Helpers;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Services.Models.Events;
-using Gurrex.Common.Validations;
 using Gurrex.Web.Interfaces.SignalR;
 using Gurrex.Web.SignalR.Hubs.Async;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Options;
 using System.Net.Mime;
-using System.Reflection;
+using YouTubeVideoDownloader.DAL.Entities;
+using YouTubeVideoDownloader.Interfaces.DAL;
 using YouTubeVideoDownloader.Interfaces.Models.Services;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
 using YouTubeVideoDownloader.WebApi.ConfigurationSettings;
 using YouTubeVideoDownloader.WebApi.Controllers.Base;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
-using YouTubeVideoDownloader.YouTubeDataOperations.Models.Services;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Request;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Response;
+using YouTubeVideoDownloader.YouTubeDataOperations.Services.Async;
 
 namespace YouTubeVideoDownloader.WebApi.Controllers
 {
@@ -24,12 +25,13 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
     [Route("[controller]")]
     public class YouTubeDownloadController : MainController
     {
-        private CancellationTokenSource CancellationTokenSource = null!;
+        private CancellationTokenSource CancellationTokenSource;
 
         /// <summary>
         /// Сврвис логирования
         /// </summary>
         private readonly ILogger<YouTubeDownloadController> _logger = null!;
+        private readonly ILogger<DataBaseServiceAsync> _loggerDataBaseService = null!;
 
         private readonly IServerSettings _serverSettings;
 
@@ -42,13 +44,16 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
 
         private readonly IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs> _convertationServiceAsync = null!;
 
+        private readonly IDataBaseServiceAsync<Audio, Video, Channel, Image, ServerInfo, YouTubeInfo, InfoStreams, VideoInfoRequest, YouTubeVideoInfoResponse, MainInfo> _dataBaseServiceAsync = null!;
+
+        private readonly IUnitOfWork<Audio, Channel, Image, ServerInfo, Video, YouTubeInfo> _unitOfWork = null!;
 
         /// <summary>
         /// Путь до ресурсов
         /// </summary>
         public override string ResourcesPath
         {
-            get => $"{AssemblyName?.Name}.Resources.Controllers.YouTubeDownloadController";
+            get => $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Controllers.YouTubeDownloadController";
         }
 
         /// <summary>
@@ -63,13 +68,20 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
             ISenderInfoHubAsync<SenderInfoHubAsync> senderInfoHubAsync,
             IHubContext<SenderInfoHubAsync> hubContext,
             IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs> convertationServiceAsync,
-            IOptions<ServerSettings> serverSettings
+            IDataBaseServiceAsync<Audio, Video, Channel, Image, ServerInfo, YouTubeInfo, InfoStreams, VideoInfoRequest, YouTubeVideoInfoResponse, MainInfo> dataBaseServiceAsync,
+            IOptions<ServerSettings> serverSettings,
+            IUnitOfWork<Audio, Channel, Image, ServerInfo, Video, YouTubeInfo> unitOfWork
             )
         {
             _logger = logger;
             _dataInformationsAsync = dataInformationsAsync;
             _downloadStreamAsync = downloadStreamAsync;
             _convertationServiceAsync = convertationServiceAsync;
+            _dataBaseServiceAsync = dataBaseServiceAsync;
+            _unitOfWork = unitOfWork;
+            _dataBaseServiceAsync.Logger = _loggerDataBaseService;
+            _dataBaseServiceAsync.UnitOfWork = _unitOfWork;
+
             _serverSettings = serverSettings.Value;
 
             _downloadStreamAsync.HubContext = hubContext;
@@ -77,6 +89,7 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
 
             _convertationServiceAsync.HubContext = hubContext;
             _convertationServiceAsync.SenderInfoHubAsync = senderInfoHubAsync;
+
         }
 
         /// <summary>
@@ -90,15 +103,22 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
         {
             try
             {
+                CancellationTokenSource = new CancellationTokenSource();
                 YouTubeVideoInfoResponse youtubeVideoInfo = await _dataInformationsAsync.GetYouTubeVideoInfoAsync(videoInfoRequest.Url);
-                string resource = ManagerResources.GetString(new Resource(ResourcesPath, "GetVideoInfoAsyncSuccess", Assembly));
+
+                if (!await _dataBaseServiceAsync.BeforeGetYouTubeInfoAsync(videoInfoRequest))
+                {
+                    await _dataBaseServiceAsync.AfterGetYouTubeInfoAsync(youtubeVideoInfo, videoInfoRequest, CancellationTokenSource.Token);
+                }
+
+                string resource = ManagerResources.GetString(new Resource(ResourcesPath, "GetVideoInfoAsyncSuccess", AssemblyInfo.Assembly));
                 string resultString = ManagerResources.GetResultString(resource, videoInfoRequest.Id, videoInfoRequest.Url);
                 _logger.LogInformation(resultString);
                 return Ok(youtubeVideoInfo);
             }
             catch (Exception ex)
             {
-                string resource = ManagerResources.GetString(new Resource(ResourcesPath, "GetVideoInfoAsyncException", Assembly));
+                string resource = ManagerResources.GetString(new Resource(ResourcesPath, "GetVideoInfoAsyncException", AssemblyInfo.Assembly));
                 string resultStringLog = ManagerResources.GetResultString(resource, ex);
                 string resultString = ManagerResources.GetResultString(resource, ex.Message);
                 _logger.LogError(resultStringLog);
@@ -114,30 +134,49 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
         /// <exception cref="Exception"></exception>
         [HttpPost("DownloadVideoAsync")]
         [Consumes(MediaTypeNames.Application.Json)]
-        public async Task<ActionResult<bool>> DownloadVideoAsync([FromBody] SpecificVideoInfoRequest specificVideoInfoRequest)
+        public async Task<ActionResult<InfoStreams>> DownloadVideoAsync([FromBody] SpecificVideoInfoRequest specificVideoInfoRequest)
         {
             try
             {
                 CancellationTokenSource = new CancellationTokenSource();
                 InfoStreams infoStreams = await _dataInformationsAsync.GetSpecisicVideoInfoAsync(specificVideoInfoRequest, _serverSettings);
-                bool result = await _downloadStreamAsync.DownloadAsync(infoStreams, CancellationTokenSource.Token);
+                //bool result = await _downloadStreamAsync.DownloadAsync(infoStreams, infoStreams => !String.IsNullOrWhiteSpace(infoStreams.VideoFileName), CancellationTokenSource.Token);
 
-                if (!String.IsNullOrWhiteSpace(specificVideoInfoRequest.Resolution) && infoStreams.VideoStream is not null)
+                //if (true && !String.IsNullOrWhiteSpace(specificVideoInfoRequest.Resolution) && infoStreams.VideoStream is not null)
+                //{
+                //    IConvertationModel convertationModel =
+                //        new ConvertationModel(
+                //            _serverSettings.PathToVideoStorage,
+                //            infoStreams.AudioFileName,
+                //            infoStreams.AudioFileExtention,
+                //            infoStreams.VideoFileName,
+                //            infoStreams.VideoFileExtention,
+                //            infoStreams.VideoStream.Fps,
+                //            infoStreams.FinalFileFullName);
+
+                //    await _convertationServiceAsync.MergeAudioVideoDataAsync(convertationModel, AssemblyInfo.AssemblyName.Name, CancellationTokenSource.Token);
+
+                //}
+
+                if (true)
                 {
-                    AssemblyName.CheckObjectForNull(nameof(AssemblyName));
-                    AssemblyName.Name.CheckStringForNullOrWhiteSpace();
-                    infoStreams.VideoFileName.CheckStringForNullOrWhiteSpace();
-                    infoStreams.VideoFileExtention.CheckStringForNullOrWhiteSpace();
+                    _dataBaseServiceAsync.InfoStream = infoStreams;
+                    if (infoStreams.VideoStream is not null)
+                    {
+                        await _dataBaseServiceAsync.AfterDownloadVideoAsync(CancellationTokenSource.Token);
+                    }
+                    else
+                    {
+                        await _dataBaseServiceAsync.AfterDownloadAudioAsync(CancellationTokenSource.Token);
+                    }
 
-                    IConvertationModel convertationModel =
-                        new ConvertationModel(_serverSettings.PathToVideoStorage, infoStreams.AudioFileName, infoStreams.AudioFileExtention, infoStreams.VideoFileName, infoStreams.VideoFileExtention, infoStreams.VideoStream.Fps, infoStreams.FinalFileFullName);
-                    await _convertationServiceAsync.MergeAudioVideoDataAsync(convertationModel, AssemblyName.Name, CancellationTokenSource.Token);
                 }
-                return Ok();
+
+                return Ok(infoStreams);
             }
             catch (Exception ex)
             {
-                string resource = ManagerResources.GetString(new Resource(ResourcesPath, "DownloadVideoInfoAsyncException", Assembly));
+                string resource = ManagerResources.GetString(new Resource(ResourcesPath, "DownloadVideoInfoAsyncException", AssemblyInfo.Assembly));
                 string resultStringLog = ManagerResources.GetResultString(resource, specificVideoInfoRequest.Url, ex);
                 return StatusCode(500, resultStringLog);
             }

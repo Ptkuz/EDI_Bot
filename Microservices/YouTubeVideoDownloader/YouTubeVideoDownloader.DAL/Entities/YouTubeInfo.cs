@@ -2,10 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
-using YouTubeVideoDownloader.Interfaces.Entities;
 using System.Reflection;
 using Gurrex.Common.Helpers;
 using Gurrex.Common.Validations;
+using Microsoft.Extensions.Logging;
+using static System.Net.Mime.MediaTypeNames;
+using System.Threading.Channels;
+using YouTubeVideoDownloader.Interfaces.DAL.Entities;
 
 namespace YouTubeVideoDownloader.DAL.Entities
 {
@@ -40,7 +43,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// Продолжительность
         /// </summary>
         [Column("Duration", Order = 6)]
-        public int Duration { get; set; }
+        public int? Duration { get; set; }
 
         /// <summary>
         /// Канал
@@ -57,12 +60,12 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <summary>
         /// Видео
         /// </summary>
-        public IQueryable<Video> Videos { get; set; } = null!;
+        public List<Video> Videos { get; set; } = new();
 
         /// <summary>
         /// Аудио
         /// </summary>
-        public IQueryable<Audio> Audios { get; set; } = null!;
+        public List<Audio> Audios { get; set; } = new();
 
         /// <summary>
         /// Конструктор по умолчанию
@@ -75,6 +78,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <summary>
         /// Конструктор инициализатор
         /// </summary>
+        /// <param name="logger">Логирование</param>
         /// <param name="id">Id сущности</param>
         /// <param name="dateAdded">Дата добавления</param>
         /// <param name="dateModified">Дата изменения</param>
@@ -82,12 +86,36 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <param name="title">Заголовок видео</param>
         /// <param name="url">Ссылка на видео</param>
         /// <param name="duration">Длина видео</param>
-        public YouTubeInfo(Guid id, DateTime dateAdded, DateTime dateModified, DateTime dateDeleted, string title, string url, int duration)
-            : base(id, dateAdded, dateModified, dateDeleted)
+        public YouTubeInfo(string title, string url, int? duration, Channel channel, Image image)
+            : base()
         {
             Title = title;
             Url = url;
             Duration = duration;
+            Channel = channel;
+            Image = image;
+
+        }
+
+        /// <summary>
+        /// Конструктор инициализатор
+        /// </summary>
+        /// <param name="logger">Логирование</param>
+        /// <param name="id">Id сущности</param>
+        /// <param name="dateAdded">Дата добавления</param>
+        /// <param name="dateModified">Дата изменения</param>
+        /// <param name="dateDeleted">Дата удаления</param>
+        /// <param name="title">Заголовок видео</param>
+        /// <param name="url">Ссылка на видео</param>
+        /// <param name="duration">Длина видео</param>
+        public YouTubeInfo(Guid id, string title, string url, int duration, Channel channel, Image image)
+            : base(id)
+        {
+            Title = title;
+            Url = url;
+            Duration = duration;
+            Channel = channel;
+            Image = image;
         }
     }
 }

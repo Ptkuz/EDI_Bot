@@ -26,7 +26,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// </summary>
         public override string ResourcesPath
         {
-            get => $"{AssemblyName?.Name}.Resources.Services.Async.DataInformationsAsync";
+            get => $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Services.Async.DataInformationsAsync";
         }
 
         /// <summary>
@@ -83,10 +83,10 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// <returns>Поток <see cref="Stream"/> с картинкой</returns>
         private async Task<byte[]> GetVideoImageAsync(string url)
         {
-            string? id = GetUrlValueByKey(url, "v");
+            string? id = DataInformationHelpers.GetUrlValueByKey(url, "v");
             id.CheckObjectForNull(nameof(id));
 
-            string resource = ManagerResources.GetString(new Resource (ResourcesPath, "VideoImageUrl", Assembly));
+            string resource = ManagerResources.GetString(new Resource(ResourcesPath, "VideoImageUrl", StaticHelpers.GetAssemblyInfo().Assembly));
             string resultString = ManagerResources.GetResultString(resource, id, "maxresdefault.jpg");
 
             Uri uri = new Uri(resultString);

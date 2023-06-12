@@ -1,8 +1,13 @@
 ﻿using Gurrex.Common.Helpers;
+using Gurrex.Common.Helpers.Models;
 using Gurrex.Common.Interfaces;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using VideoLibrary;
+using YouTubeVideoDownloader.Interfaces.Models.Requests;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.Base;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Request
@@ -10,37 +15,44 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse
     /// <summary>
     /// Информация о конкретном видео
     /// </summary>
-    public class SpecificVideoInfoRequest : BaseModel
+    [DataContract]
+    public class SpecificVideoInfoRequest : BaseModel, ISpecificVideoInfoRequest
     {
 
         /// <summary>
         /// Ссылка на видео
         /// </summary>
+        [DataMember]
         public string Url { get; set; } = null!;
 
         /// <summary>
         /// Аудио битрейт
         /// </summary>
+        [DataMember]
         public string AudioBitrate { get; set; } = null!;
 
         /// <summary>
         /// Разрешение
         /// </summary>
+        [DataMember]
         public string? Resolution { get; set; }
 
         /// <summary>
         /// Аудио формат
         /// </summary>
+        [DataMember]
         public string AudioFormat { get; set; } = null!;
 
         /// <summary>
         /// Видео формат
         /// </summary>
+        [DataMember]
         public string? VideoFormat { get; set; }
 
         /// <summary>
         /// Fps
         /// </summary>
+        [DataMember]
         public string? Fps { get; set; }
 
         /// <summary>
@@ -69,9 +81,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse
 
                 if (!check)
                 {
-                    string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "ExceptionParseEnum", StaticHelpers.GetAssemblyInfo().Assembly));
-                    string errorMessage = string.Format(localizationString, nameof(text));
-                    throw new FormatException(errorMessage);
+                    throw new FormatException($"Failed to parse value {text}");
                 }
 
                 return audioFormat;
@@ -99,9 +109,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse
 
                 if (!check)
                 {
-                    string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "ExceptionParseEnum", StaticHelpers.GetAssemblyInfo().Assembly));
-                    string errorMessage = string.Format(localizationString, nameof(text));
-                    throw new FormatException(errorMessage);
+                    throw new FormatException($"Failed to parse value {text}");
                 }
 
                 return audioFormat;

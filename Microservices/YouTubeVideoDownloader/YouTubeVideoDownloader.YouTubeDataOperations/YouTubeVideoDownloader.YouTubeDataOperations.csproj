@@ -11,17 +11,22 @@
     <PackageReference Include="Microsoft.AspNet.SignalR.Core" Version="2.4.3" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.0.1" />
     <PackageReference Include="System.Management" Version="7.0.1" />
     <PackageReference Include="VideoLibrary" Version="3.2.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\YouTubeVideoDownloader.DAL\YouTubeVideoDownloader.DAL.csproj" />
     <ProjectReference Include="..\YouTubeVideoDownloader.Interfaces\YouTubeVideoDownloader.Interfaces.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="Gurrex.Common.Conversion">
       <HintPath>..\..\..\Common\Gurrex.Common\Gurrex.Common.Conversion\bin\Debug\net7.0\Gurrex.Common.Conversion.dll</HintPath>
+    </Reference>
+    <Reference Include="Gurrex.Common.DAL">
+      <HintPath>..\..\..\Common\Gurrex.Common\Gurrex.Common.DAL\bin\Debug\net7.0\Gurrex.Common.DAL.dll</HintPath>
     </Reference>
     <Reference Include="Gurrex.Common.Helpers">
       <HintPath>..\..\..\Common\Gurrex.Common\Gurrex.Common.Helpers\bin\Debug\net7.0\Gurrex.Common.Helpers.dll</HintPath>

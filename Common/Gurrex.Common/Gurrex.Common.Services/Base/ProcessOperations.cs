@@ -1,4 +1,5 @@
 ﻿using Gurrex.Common.Helpers;
+using Gurrex.Common.Interfaces.Events;
 using Gurrex.Common.Services.Models;
 using Gurrex.Common.Validations;
 using System;
@@ -18,7 +19,7 @@ namespace Gurrex.Common.Services.Base
         /// <summary>
         /// Текущие данные
         /// </summary>
-        protected string? currentData;
+        public string? CurrentData { get; private set; }
 
         /// <summary>
         /// Асинхронно запустить внешний процесс
@@ -85,11 +86,11 @@ namespace Gurrex.Common.Services.Base
         {
             string? data = e.Data;
 
-            if (data == currentData) 
+            if (data == CurrentData) 
             {
                 return;
             }
-            currentData = data; 
+            CurrentData = data; 
         }
 
         /// <summary>
@@ -101,11 +102,11 @@ namespace Gurrex.Common.Services.Base
         {
             string? data = e.Data;
 
-            if (data == currentData) 
+            if (data == CurrentData) 
             {
                 return;
             }
-            currentData = data;
+            CurrentData = data;
         }
     }
 }

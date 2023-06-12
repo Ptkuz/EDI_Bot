@@ -18,6 +18,11 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models
         private string? videoFileExtention;
 
         /// <summary>
+        /// Ссылка на поток
+        /// </summary>
+        public string Url { get; set; } = null!;
+
+        /// <summary>
         /// Аудио поток
         /// </summary>
         public YouTubeVideo AudioStream { get; set; } = null!;
@@ -91,6 +96,13 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models
         /// </summary>
         public string FinalFileFullName { get; private set; } = null!;
 
+        /// <summary>
+        /// Конструктор инициализатор
+        /// </summary>
+        public InfoStreams() 
+        {
+            
+        }
 
         /// <summary>
         /// Конструктор инициализатор
@@ -98,21 +110,33 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models
         /// <param name="audioStream">Аудио поток</param>
         /// <param name="videoStream">Видео поток</param>
         /// <param name="serverSettings">Настройки приложения</param>
-        public InfoStreams(YouTubeVideo audioStream, YouTubeVideo? videoStream, IServerSettings serverSettings)
+        public InfoStreams(string url, YouTubeVideo? videoStream,  YouTubeVideo audioStream, IServerSettings serverSettings)
         {
-            AudioStream = audioStream;
+            Url = url;
             VideoStream = videoStream;
-
-            AudioFileName = $"audio_{Id}";
             VideoFileName = $"video_{Id}";
-
-            AudioFileExtention = $".{audioStream.AudioFormat}";
-            VideoFileExtention = videoStream!.FileExtension;
-
-            AudioFileFullName = SetPathAudioFileName(serverSettings);
+            VideoFileExtention = videoStream?.FileExtension;
             VideoFileFullName = SetPathVideoFileName(serverSettings);
+            AudioStream = audioStream;
+            AudioFileName = $"audio_{Id}";
+            AudioFileExtention = $".{audioStream.AudioFormat}";
+            AudioFileFullName = SetPathAudioFileName(serverSettings);
+            FinalFileFullName = SetPathFinalFileFullName(serverSettings);
+        }
 
-            FinalFileFullName = SetPathFinalAudioFileFullName(serverSettings);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="audioStream"></param>
+        /// <param name="serverSettings"></param>
+        public InfoStreams(string url, YouTubeVideo audioStream, IServerSettings serverSettings)
+        {
+            Url = url;
+            AudioStream = audioStream;
+            AudioFileName = $"audio_{Id}";
+            AudioFileExtention = $".{audioStream.AudioFormat}";
+            AudioFileFullName = SetPathAudioFileName(serverSettings);
+            FinalFileFullName = SetPathFinalFileFullName(serverSettings);
         }
 
         /// <summary>
@@ -121,7 +145,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models
         /// <returns>Название видео файла</returns>
         private string? SetPathVideoFileName(IServerSettings serverSettings)
         {
-            if (VideoFileName is not null)
+            if (!String.IsNullOrWhiteSpace(VideoFileName))
             {
                 string path = Path.Combine(serverSettings.PathToVideoStorage, VideoFileName);
                 return $"{path}{VideoFileExtention}";
@@ -135,7 +159,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models
         /// <returns>Название аудио файла</returns>
         private string SetPathAudioFileName(IServerSettings serverSettings)
         {
-            if (VideoFileName is null)
+            if (String.IsNullOrWhiteSpace(VideoFileName))
             {
                 string path = Path.Combine(serverSettings.PathToAudioStorage, AudioFileName);
                 return $"{path}{AudioFileExtention}";
@@ -147,7 +171,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models
             }
         }
 
-        private string SetPathFinalAudioFileFullName(IServerSettings serverSettings) 
+        private string SetPathFinalFileFullName(IServerSettings serverSettings) 
         {
             if (VideoStream is null)
             {

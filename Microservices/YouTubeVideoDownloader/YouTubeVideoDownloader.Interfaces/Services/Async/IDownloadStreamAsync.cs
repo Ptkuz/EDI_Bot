@@ -1,4 +1,4 @@
-﻿using Gurrex.Common.Interfaces.Services;
+﻿using Gurrex.Common.Interfaces.Events;
 using Gurrex.Web.Interfaces.SignalR;
 using Microsoft.AspNetCore.SignalR;
 using System;
@@ -17,13 +17,16 @@ namespace YouTubeVideoDownloader.Interfaces.Services.Async
     /// <typeparam name="T">Информация о видео, полученная по ссылке</typeparam>
     /// <typeparam name="K">Модель хаба</typeparam>
     /// <typeparam name="U">Событие изменения прогресса</typeparam>
-    public interface IDownloadStreamAsync<T, K, U> : IHub<K>, IProcessOperations<U> where K : Hub where U : EventArgs
+    public interface IDownloadStreamAsync<T, K, U> : IHub<K>, IEvents<U> 
+        where T : IBaseModel
+        where K : Hub 
+        where U : EventArgs
     {
 
         /// <summary>
         /// Асинхронно скачать поток
         /// </summary>
         /// <returns>True - скачивание завершено успешно, False - Скачивание завершено неудачно</returns>
-        Task<bool> DownloadAsync(T infoStreams, CancellationToken cancel);
+        Task<bool> DownloadAsync(T infoStreams, Predicate<T> predicate, CancellationToken cancel);
     }
 }

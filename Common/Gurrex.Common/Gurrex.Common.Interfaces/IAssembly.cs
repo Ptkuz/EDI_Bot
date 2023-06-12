@@ -10,16 +10,11 @@ namespace Gurrex.Common.Interfaces
     /// <summary>
     /// Информация о сборке
     /// </summary>
-    public interface IAssembly
+    public interface IAssembly<T> where T : class
     {
         /// <summary>
-        /// Сборка
+        /// Информация о сборке
         /// </summary>
-        Assembly Assembly { get; }
-
-        /// <summary>
-        /// Название сборки
-        /// </summary>
-        AssemblyName? AssemblyName { get; }
+        T AssemblyInfo { get; }
     }
 }

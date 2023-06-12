@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VideoLibrary;
 using YouTubeVideoDownloader.Interfaces.Models;
+using YouTubeVideoDownloader.Interfaces.Models.Response;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.Base;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Response
@@ -13,7 +14,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse
     /// <summary>
     /// Информация о YouTube ролике, полученном по ссылке
     /// </summary>
-    public class YouTubeVideoInfoResponse : BaseModel
+    public class YouTubeVideoInfoResponse : BaseModel, IYouTubeVideoInfoResponse<MainInfo>
     {
 
         /// <summary>
@@ -50,6 +51,13 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse
         /// Картинка в формате Base64
         /// </summary>
         public byte[] Image { get; set; } = null!;
+
+
+        public YouTubeVideoInfoResponse()
+             : base()
+        {
+            
+        }
 
         /// <summary>
         /// Конструктор инициализатор

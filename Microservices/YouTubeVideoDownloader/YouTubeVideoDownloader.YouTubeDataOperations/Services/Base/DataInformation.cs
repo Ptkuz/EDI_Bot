@@ -1,4 +1,5 @@
 ﻿using Gurrex.Common.Helpers;
+using Gurrex.Common.Helpers.Models;
 using Gurrex.Common.Interfaces;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
@@ -17,26 +18,19 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
     /// <summary>
     /// Получение данных о видео
     /// </summary>
-    public class DataInformation : IResources
+    public class DataInformation : IResources<AssemblyInfo>
     {
-
         /// <summary>
         /// Сборка
         /// </summary>
-        public Assembly Assembly => StaticHelpers.GetAssemblyInfo().Assembly;
-
-        /// <summary>
-        /// Имя сборки
-        /// </summary>
-        public AssemblyName? AssemblyName => StaticHelpers.GetAssemblyInfo().AssemblyName;
-
+        public AssemblyInfo AssemblyInfo => StaticHelpers.GetAssemblyInfo();
 
         /// <summary>
         /// Путь до ресурсов
         /// </summary>
         public virtual string ResourcesPath
         {
-            get => $"{AssemblyName?.Name}.Resources.Services.Base.DataInformation";
+            get => $"{AssemblyInfo.AssemblyName.Name}.Resources.Services.Base.DataInformation";
         }
 
 
@@ -175,9 +169,10 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
                         x.Resolution == resolution);
 
                     video.CheckObjectForNull(nameof(video));
+                    return new InfoStreams(specificVideoInfoRequest.Url, video, audio, serverSettings);
                 }
 
-                return new InfoStreams(audio, video, serverSettings);
+                return new InfoStreams(specificVideoInfoRequest.Url, audio, serverSettings);
             }
             catch (ArgumentNullException)
             {
@@ -198,41 +193,6 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
         {
             MainInfo mainInfo = new MainInfo(video.Info.Title, video.Info.Author, video.Info.LengthSeconds);
             return mainInfo;
-        }
-
-        /// <summary>
-        /// Получить значение по ключу в ссылке
-        /// </summary>
-        /// <param name="url">Ссылка</param>
-        /// <param name="key">Ключ</param>
-        /// <exception cref="NoContainsKeyException">Исключение, если такого ключа в ссылке нет</exception>
-        /// <returns>Значение по ключу в ссылке</returns>
-        protected string? GetUrlValueByKey(string url, string key)
-        {
-            try
-            {
-                Uri uri = new Uri(url);
-                NameValueCollection query = HttpUtility.ParseQueryString(uri.Query);
-
-                query.CheckObjectForNull(nameof(query));
-
-                if (query.AllKeys.Contains(key))
-                    return query[key];
-                else
-                {
-                    string resource = ManagerResources.GetString(new Resource(ResourcesPath, "ExceptionNoContainsKeyV", Assembly));
-                    string resultString = ManagerResources.GetResultString(resource, url);
-                    throw new NoContainsKeyException(resultString, key);
-                }
-            }
-            catch (NoContainsKeyException)
-            {
-                throw;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
         }
 
     }
