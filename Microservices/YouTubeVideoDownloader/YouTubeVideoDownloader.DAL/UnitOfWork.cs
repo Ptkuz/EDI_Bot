@@ -70,10 +70,5 @@ namespace YouTubeVideoDownloader.DAL
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
-        public async Task<int> SaveChangesAsync()
-        {
-            return await _downloaderContext.SaveChangesAsync();
-        }
     }
 }

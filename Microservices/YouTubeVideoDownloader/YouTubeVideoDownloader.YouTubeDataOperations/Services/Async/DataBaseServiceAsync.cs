@@ -1,5 +1,7 @@
 ﻿using Gurrex.Common.Helpers;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.ComponentModel.DataAnnotations;
 using YouTubeVideoDownloader.DAL.Entities;
 using YouTubeVideoDownloader.Interfaces.DAL;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
@@ -48,6 +50,13 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
             return true;
         }
 
+        public async Task<bool> BeforeGetYouTubeInfoAsync(VideoInfoRequest videoInfoRequest) 
+        {
+            YouTubeInfo? youTubeInfo = await UnitOfWork.YouTubeInfoRepositoryAsync
+                .SingleOrDefaultEntityAsync(x => x.Url == DataInformationHelpers.GetSimpleYouTubeUrl(videoInfoRequest.Url));
+             return youTubeInfo is null ? false : true;
+        }
+
         public async Task<bool> AfterGetYouTubeInfoAsync(YouTubeVideoInfoResponse youTubeVideoInfoResponse, VideoInfoRequest videoInfoRequest, CancellationToken cancel)
         {
 
@@ -67,7 +76,6 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
                     await UnitOfWork.ChannelRerositoryAsync.AddEntityAsync(channel, cancel);
                     await UnitOfWork.YouTubeInfoRepositoryAsync.AddEntityAsync(youTubeInfo, cancel);
                     await UnitOfWork.ImageRepositoryAsync.AddEntityAsync(image, cancel);
-
                     transaction.Commit();
                 }
                 catch (Exception) 

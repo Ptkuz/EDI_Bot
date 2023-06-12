@@ -2,23 +2,19 @@ using Gurrex.Common.Helpers;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Services.Models.Events;
-using Gurrex.Common.Validations;
 using Gurrex.Web.Interfaces.SignalR;
 using Gurrex.Web.SignalR.Hubs.Async;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Options;
-using System.Diagnostics;
 using System.Net.Mime;
 using YouTubeVideoDownloader.DAL.Entities;
 using YouTubeVideoDownloader.Interfaces.DAL;
-using YouTubeVideoDownloader.Interfaces.DAL.Repositories.Async;
 using YouTubeVideoDownloader.Interfaces.Models.Services;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
 using YouTubeVideoDownloader.WebApi.ConfigurationSettings;
 using YouTubeVideoDownloader.WebApi.Controllers.Base;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
-using YouTubeVideoDownloader.YouTubeDataOperations.Models.Services;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Request;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Response;
 using YouTubeVideoDownloader.YouTubeDataOperations.Services.Async;
@@ -109,7 +105,12 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
             {
                 CancellationTokenSource = new CancellationTokenSource();
                 YouTubeVideoInfoResponse youtubeVideoInfo = await _dataInformationsAsync.GetYouTubeVideoInfoAsync(videoInfoRequest.Url);
-                await _dataBaseServiceAsync.AfterGetYouTubeInfoAsync(youtubeVideoInfo, videoInfoRequest, CancellationTokenSource.Token);
+
+                if (!await _dataBaseServiceAsync.BeforeGetYouTubeInfoAsync(videoInfoRequest))
+                {
+                    await _dataBaseServiceAsync.AfterGetYouTubeInfoAsync(youtubeVideoInfo, videoInfoRequest, CancellationTokenSource.Token);
+                }
+
                 string resource = ManagerResources.GetString(new Resource(ResourcesPath, "GetVideoInfoAsyncSuccess", AssemblyInfo.Assembly));
                 string resultString = ManagerResources.GetResultString(resource, videoInfoRequest.Id, videoInfoRequest.Url);
                 _logger.LogInformation(resultString);
@@ -168,7 +169,7 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
                     {
                         await _dataBaseServiceAsync.AfterDownloadAudioAsync(CancellationTokenSource.Token);
                     }
-                    
+
                 }
 
                 return Ok(infoStreams);

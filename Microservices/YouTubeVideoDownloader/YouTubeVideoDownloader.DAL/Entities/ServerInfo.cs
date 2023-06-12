@@ -59,7 +59,6 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// Конструктор по умолчанию
         /// </summary>
         public ServerInfo()
-            : base()
         {
 
         }

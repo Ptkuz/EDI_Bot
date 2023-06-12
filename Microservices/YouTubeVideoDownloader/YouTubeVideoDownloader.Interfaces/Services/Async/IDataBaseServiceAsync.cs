@@ -36,6 +36,8 @@ namespace YouTubeVideoDownloader.Interfaces.Services.Async
 
         IUnitOfWork<A, C, I, S, V, Y> UnitOfWork { get; set; }
 
+        Task<bool> BeforeGetYouTubeInfoAsync(Q videoInfoRequest);
+
         /// <summary>
         /// Асинхронные операции с базой данных после получения информации о видео
         /// </summary>

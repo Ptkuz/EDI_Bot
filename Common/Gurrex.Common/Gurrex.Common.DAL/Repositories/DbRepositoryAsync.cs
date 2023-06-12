@@ -1,11 +1,15 @@
 ﻿using Gurrex.Common.DAL.Entities;
 using Gurrex.Common.DAL.Repositories.Base;
+using Gurrex.Common.Interfaces.Entities;
 using Gurrex.Common.Interfaces.Repositories;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Validations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 
 namespace Gurrex.Common.DAL.Repositories
 {
@@ -57,6 +61,40 @@ namespace Gurrex.Common.DAL.Repositories
                 _logger.LogDebug(ManagerResources.GetResultString(localizationString, nameof(T), ex));
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Найти коллекцию сущностей по делегату
+        /// </summary>
+        /// <param name="predicate">Делегат</param>
+        /// <returns><see cref="IEnumerable{T}"/> сущностей</returns>
+        public IEnumerable<T> FindEntity(Expression<Func<T, bool>> predicate)
+        {
+            return _entities.Where(predicate);
+        }
+
+        /// <summary>
+        /// Найти сущность по делегату
+        /// </summary>
+        /// <param name="predicate">Делегат</param>
+        /// <returns><see cref="T"/></returns>
+        public async Task<T?> SingleOrDefaultEntityAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _entities.SingleOrDefaultAsync(predicate);
+        }
+
+        /// <summary>
+        /// Подключить связанную сущность
+        /// </summary>
+        /// <param name="predicate">Делегат</param>
+        /// <returns><see cref="IEnumerable{T}"/> связанных сущностей</returns>
+        public IQueryable<T> MultiInclude(params Expression<Func<T, object>>[] includes)
+        {
+            if (includes is not null) 
+            {
+                return includes.Aggregate(Items, (current, include) => current.Include(include));
+            }
+            return Items;
         }
 
         /// <summary>

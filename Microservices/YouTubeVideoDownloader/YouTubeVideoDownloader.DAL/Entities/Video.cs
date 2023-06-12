@@ -68,7 +68,6 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// Конструктор инициализатор
         /// </summary>
         public Video()
-            : base()
         {
 
         }

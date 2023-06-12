@@ -35,13 +35,12 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <summary>
         /// Коллекция YouTube потоков
         /// </summary>
-        public IQueryable<YouTubeInfo> YouTubeInfos { get; set; } = null!;
+        public List<YouTubeInfo> YouTubeInfos { get; set; } = new();
 
         /// <summary>
         /// Конструктор инициализатор
         /// </summary>
         public Channel()
-            : base()
         {
 
         }

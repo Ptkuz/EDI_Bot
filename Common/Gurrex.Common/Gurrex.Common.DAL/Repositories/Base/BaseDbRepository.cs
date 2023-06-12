@@ -41,7 +41,7 @@ namespace Gurrex.Common.DAL.Repositories.Base
         /// <summary>
         /// DbSet сущности, унаследованной от <see cref="Entity"/>
         /// </summary>
-        protected readonly DbSet<T> _entities;
+        protected DbSet<T> _entities;
 
         /// <summary>
         /// Автоматическое сохранение изменений
@@ -69,5 +69,6 @@ namespace Gurrex.Common.DAL.Repositories.Base
         /// Количество экземпляров сущности, унаследованной от <see cref="Entity"/>
         /// </summary>
         public IQueryable<T> Items => _entities;
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Gurrex.Common.Interfaces.Entities;
 using Gurrex.Common.Interfaces.Repositories.Base;
+using System.Linq.Expressions;
 
 namespace Gurrex.Common.Interfaces.Repositories
 {
@@ -23,6 +24,22 @@ namespace Gurrex.Common.Interfaces.Repositories
         /// <param name="cancel">Токен отмены</param>
         /// <returns>Последний добавленный экземпляр</returns>
         Task<T> GetLastEntityAsync(CancellationToken cancel = default);
+
+        IEnumerable<T> FindEntity(Expression<Func<T, bool>> predicate);
+
+        /// <summary>
+        /// Найти сущность по делегату
+        /// </summary>
+        /// <param name="predicate">Делегат</param>
+        /// <returns><see cref="T"/></returns>
+        Task<T?> SingleOrDefaultEntityAsync(Expression<Func<T, bool>> predicate);
+
+        /// <summary>
+        /// Подключить связанную сущность
+        /// </summary>
+        /// <param name="predicate">Делегат</param>
+        /// <returns><see cref="IQueryable{T}"/> связанных сущностей</returns>
+        IQueryable<T> MultiInclude(params Expression<Func<T, object>>[] includes);
 
         /// <summary>
         /// Асинхронно добавить экземпляр сущности

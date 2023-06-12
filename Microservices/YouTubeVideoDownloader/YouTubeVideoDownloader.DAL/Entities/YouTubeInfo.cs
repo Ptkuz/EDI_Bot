@@ -60,18 +60,17 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <summary>
         /// Видео
         /// </summary>
-        public IQueryable<Video> Videos { get; set; } = null!;
+        public List<Video> Videos { get; set; } = new();
 
         /// <summary>
         /// Аудио
         /// </summary>
-        public IQueryable<Audio> Audios { get; set; } = null!;
+        public List<Audio> Audios { get; set; } = new();
 
         /// <summary>
         /// Конструктор по умолчанию
         /// </summary>
         public YouTubeInfo()
-            : base()
         {
 
         }

@@ -17,7 +17,6 @@ namespace YouTubeVideoDownloader.Interfaces.DAL
         where V : class, IVideo, new()
         where Y : class, IYouTubeInfo, new()
     {
-        Task<int> SaveChangesAsync();
         Task<IDbContextTransaction> BeginTransactionAsync();
 
         IAudioRepositoryAsync<A> AudioRepositoryAsync { get; }

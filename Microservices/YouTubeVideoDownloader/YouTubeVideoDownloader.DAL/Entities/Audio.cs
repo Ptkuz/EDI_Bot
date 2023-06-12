@@ -50,7 +50,6 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// Конструктор инициализатор
         /// </summary>
         public Audio()
-            : base()
         {
 
         }
