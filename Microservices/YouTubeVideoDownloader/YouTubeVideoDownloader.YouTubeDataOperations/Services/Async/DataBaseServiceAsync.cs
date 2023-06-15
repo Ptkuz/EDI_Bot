@@ -22,7 +22,13 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         public ILogger Logger { get; set; }
 
         public IUnitOfWork<Audio, Channel, Image, ServerInfo, Video, YouTubeInfo> UnitOfWork { get; set; }
+
         public InfoStreams InfoStream { get; set; }
+
+        public DataBaseServiceAsync(IUnitOfWork<Audio, Channel, Image, ServerInfo, Video, YouTubeInfo> unitOfWork) 
+        {
+            UnitOfWork = unitOfWork;
+        }
 
         public async Task<bool> AfterDownloadAudioAsync(CancellationToken cancel)
         {

@@ -33,16 +33,17 @@ if (String.IsNullOrEmpty(connectionString))
 }
 
 builder.Services.AddDbContext<DownloaderContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Scoped);
-builder.Services.AddRepositoryInDB();
-builder.Services.AddUnitOfWork();
-builder.Services.AddDownloaderServices();
-builder.Services.Configure<ServerSettings>(
-    builder.Configuration.GetSection("ServerSettings")
-);
 
 builder.Logging.ClearProviders();
 builder.Logging.SetMinimumLevel(LogLevel.Trace);
 builder.Host.UseNLog();
+
+builder.Services.Configure<ServerSettings>(
+    builder.Configuration.GetSection("ServerSettings")
+);
+builder.Services.AddRepositoryInDB();
+builder.Services.AddUnitOfWork();
+builder.Services.AddDownloaderServices();
 
 var app = builder.Build();
 

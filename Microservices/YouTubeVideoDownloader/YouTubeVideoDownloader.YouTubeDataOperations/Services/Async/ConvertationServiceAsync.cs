@@ -35,6 +35,12 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// </summary>
         public IHubContext<SenderInfoHubAsync> HubContext { get; set; } = null!;
 
+        public ConvertationServiceAsync(ISenderInfoHubAsync<SenderInfoHubAsync> senderInfoHubAsync, IHubContext<SenderInfoHubAsync> hubContext) 
+        {
+            SenderInfoHubAsync = senderInfoHubAsync;
+            HubContext = hubContext;
+        }
+
         /// <summary>
         /// Сборка
         /// </summary>

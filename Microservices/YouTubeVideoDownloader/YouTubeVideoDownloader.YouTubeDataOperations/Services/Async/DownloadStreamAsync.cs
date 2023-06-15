@@ -34,6 +34,12 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// </summary>
         public event IEvents<ProcessEventArgs>.ProcessHandler? OutputDataChanged;
 
+        public DownloadStreamAsync(ISenderInfoHubAsync<SenderInfoHubAsync> senderInfoHubAsync, IHubContext<SenderInfoHubAsync> hubContext) 
+        {
+            SenderInfoHubAsync = senderInfoHubAsync;
+            HubContext = hubContext;
+        }
+
         /// <summary>
         /// Асинхронно скачать поток
         /// </summary>

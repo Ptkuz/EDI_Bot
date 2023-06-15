@@ -75,21 +75,15 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
             )
         {
             _logger = logger;
+            _unitOfWork = unitOfWork;
             _dataInformationsAsync = dataInformationsAsync;
             _downloadStreamAsync = downloadStreamAsync;
             _convertationServiceAsync = convertationServiceAsync;
             _dataBaseServiceAsync = dataBaseServiceAsync;
-            _unitOfWork = unitOfWork;
             _dataBaseServiceAsync.Logger = _loggerDataBaseService;
             _dataBaseServiceAsync.UnitOfWork = _unitOfWork;
 
             _serverSettings = serverSettings.Value;
-
-            _downloadStreamAsync.HubContext = hubContext;
-            _downloadStreamAsync.SenderInfoHubAsync = senderInfoHubAsync;
-
-            _convertationServiceAsync.HubContext = hubContext;
-            _convertationServiceAsync.SenderInfoHubAsync = senderInfoHubAsync;
 
         }
 
