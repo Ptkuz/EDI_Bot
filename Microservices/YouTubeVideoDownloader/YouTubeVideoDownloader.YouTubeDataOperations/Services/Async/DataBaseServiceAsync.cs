@@ -20,14 +20,14 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// </summary>
         private readonly ILogger<DataBaseServiceAsync> _logger;
 
-        public IDownloaderUnitOfWork UnitOfWork { get; set; }
+        private readonly IDownloaderUnitOfWork _unitOfWork;
 
         public InfoStreams InfoStream { get; set; }
 
         public DataBaseServiceAsync(IDownloaderUnitOfWork unitOfWork, ILogger<DataBaseServiceAsync> logger)
         {
             _logger = logger;
-            UnitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<bool> AfterDownloadAudioAsync(CancellationToken cancel)
@@ -36,9 +36,9 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
             long length = IOHelpers.GetLengthFile(audioFileFullName);
 
             Audio audio = new Audio(InfoStream.Id, InfoStream.AudioStream.AudioFormat.ToString(), $"{InfoStream.AudioStream.AudioBitrate} kbps");
-            ServerInfo serverInfo = new ServerInfo(audioFileFullName, length);
-            await UnitOfWork.GetEntityRepository<DownloaderRepository<Audio>, Audio>(typeof(DownloaderRepository<>)).AddEntityAsync(audio, cancel);
-            await UnitOfWork.GetEntityRepository<DownloaderRepository<ServerInfo>, ServerInfo>(typeof(DownloaderRepository<>)).AddEntityAsync(serverInfo, cancel);
+            ServerInfo serverInfo = new ServerInfo(audioFileFullName, length, audio);
+            await _unitOfWork.GetEntityRepository<DownloaderRepository<Audio>, Audio>(typeof(DownloaderRepository<>)).AddEntityAsync(audio, cancel);
+            await _unitOfWork.GetEntityRepository<DownloaderRepository<ServerInfo>, ServerInfo>(typeof(DownloaderRepository<>)).AddEntityAsync(serverInfo, cancel);
             return true;
         }
 
@@ -47,17 +47,23 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
             string videoFileFullName = InfoStream.FinalFileFullName;
             long length = IOHelpers.GetLengthFile(videoFileFullName);
 
-            Video video = new Video(InfoStream.Id, $"{InfoStream.VideoStream.Format}", $"{InfoStream.VideoStream.Resolution}", $"{InfoStream.VideoStream.Fps}", $"{InfoStream.AudioStream.AudioFormat}", $"{InfoStream.AudioStream.AudioBitrate}");
-            ServerInfo serverInfo = new ServerInfo(videoFileFullName, length);
+            YouTubeInfo youTubeInfo = await _unitOfWork.GetEntityRepository<DownloaderRepository<YouTubeInfo>, YouTubeInfo>(typeof(DownloaderRepository<>)).SingleOrDefaultEntityAsync(x => x.Url == DataInformationHelpers.GetSimpleYouTubeUrl(InfoStream.Url));
 
-            await UnitOfWork.GetEntityRepository<DownloaderRepository<Video>, Video>(typeof(DownloaderRepository<>)).AddEntityAsync(video, cancel);
-            await UnitOfWork.GetEntityRepository<DownloaderRepository<ServerInfo>, ServerInfo>(typeof(DownloaderRepository<>)).AddEntityAsync(serverInfo, cancel);
-            return true;
+            if (youTubeInfo is not null) 
+            {
+                Video video = new Video(InfoStream.Id, $"{InfoStream.VideoStream.Format}", $"{InfoStream.VideoStream.Resolution}", $"{InfoStream.VideoStream.Fps}", $"{InfoStream.AudioStream.AudioFormat}", $"{InfoStream.AudioStream.AudioBitrate}", youTubeInfo);
+                ServerInfo serverInfo = new ServerInfo(videoFileFullName, length, video);
+                await _unitOfWork.GetEntityRepository<DownloaderRepository<Video>, Video>(typeof(DownloaderRepository<>)).AddEntityAsync(video, cancel);
+                await _unitOfWork.GetEntityRepository<DownloaderRepository<ServerInfo>, ServerInfo>(typeof(DownloaderRepository<>)).AddEntityAsync(serverInfo, cancel);
+                return true;
+            }
+            return false;
+
         }
 
         public async Task<bool> CheckYouTubeInfoAsync(VideoInfoRequest videoInfoRequest)
         {
-            YouTubeInfo? youTubeInfo = await UnitOfWork.GetEntityRepository<DownloaderRepository<YouTubeInfo>, YouTubeInfo>(typeof(DownloaderRepository<>))
+            YouTubeInfo? youTubeInfo = await _unitOfWork.GetEntityRepository<DownloaderRepository<YouTubeInfo>, YouTubeInfo>(typeof(DownloaderRepository<>))
                .SingleOrDefaultEntityAsync(x => x.Url == DataInformationHelpers.GetSimpleYouTubeUrl(videoInfoRequest.Url));
             return youTubeInfo is null ? false : true;
         }
@@ -74,13 +80,13 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
                 image = new Image(youTubeVideoInfoResponse.Image, ".jpg", $"{imageLibrary.Width} X {imageLibrary.Height}", youTubeInfo);
             }
 
-            using (var transaction = await UnitOfWork.BeginTransactionAsync())
+            using (var transaction = await _unitOfWork.BeginTransactionAsync())
             {
                 try
                 {
-                    await UnitOfWork.GetEntityRepository<DownloaderRepository<Channel>, Channel>(typeof(DownloaderRepository<>)).AddEntityAsync(channel, cancel);
-                    await UnitOfWork.GetEntityRepository<DownloaderRepository<YouTubeInfo>, YouTubeInfo>(typeof(DownloaderRepository<>)).AddEntityAsync(youTubeInfo, cancel);
-                    await UnitOfWork.GetEntityRepository<DownloaderRepository<Image>, Image>(typeof(DownloaderRepository<>)).AddEntityAsync(image, cancel);
+                    await _unitOfWork.GetEntityRepository<DownloaderRepository<Channel>, Channel>(typeof(DownloaderRepository<>)).AddEntityAsync(channel, cancel);
+                    await _unitOfWork.GetEntityRepository<DownloaderRepository<YouTubeInfo>, YouTubeInfo>(typeof(DownloaderRepository<>)).AddEntityAsync(youTubeInfo, cancel);
+                    await _unitOfWork.GetEntityRepository<DownloaderRepository<Image>, Image>(typeof(DownloaderRepository<>)).AddEntityAsync(image, cancel);
                     transaction.Commit();
                 }
                 catch (Exception)

@@ -22,8 +22,6 @@ namespace YouTubeVideoDownloader.Interfaces.Services.Async
         /// </summary>
         M InfoStream { get; set; }
 
-        IDownloaderUnitOfWork UnitOfWork { get; set; }
-
         Task<bool> CheckYouTubeInfoAsync(Q videoInfoRequest);
 
         /// <summary>

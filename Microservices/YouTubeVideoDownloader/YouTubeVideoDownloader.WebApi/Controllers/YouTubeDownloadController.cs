@@ -1,17 +1,11 @@
 using Gurrex.Common.Helpers;
-using Gurrex.Common.Interfaces.DAL;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Services.Models.Events;
-using Gurrex.Web.Interfaces.SignalR;
 using Gurrex.Web.SignalR.Hubs.Async;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Options;
 using System.Net.Mime;
-using YouTubeVideoDownloader.DAL.Entities;
-using YouTubeVideoDownloader.Interfaces.DAL;
-using YouTubeVideoDownloader.Interfaces.DAL.UnitOfWork;
 using YouTubeVideoDownloader.Interfaces.Models.Services;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
 using YouTubeVideoDownloader.WebApi.ConfigurationSettings;
@@ -20,7 +14,6 @@ using YouTubeVideoDownloader.YouTubeDataOperations.Models;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.Services;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Request;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Response;
-using YouTubeVideoDownloader.YouTubeDataOperations.Services.Async;
 
 namespace YouTubeVideoDownloader.WebApi.Controllers
 {
@@ -34,7 +27,6 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
         /// Сврвис логирования
         /// </summary>
         private readonly ILogger<YouTubeDownloadController> _logger = null!;
-        private readonly ILogger<DataBaseServiceAsync> _loggerDataBaseService = null!;
 
         private readonly IServerSettings _serverSettings;
 
@@ -48,8 +40,6 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
         private readonly IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs> _convertationServiceAsync = null!;
 
         private readonly IDataBaseServiceAsync<InfoStreams, VideoInfoRequest, YouTubeVideoInfoResponse, MainInfo> _dataBaseServiceAsync = null!;
-
-        private readonly IDownloaderUnitOfWork _unitOfWork = null!;
 
         /// <summary>
         /// Путь до ресурсов
@@ -68,21 +58,16 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
             ILogger<YouTubeDownloadController> logger,
             IDataInformationAsync<YouTubeVideoInfoResponse, SpecificVideoInfoRequest, InfoStreams> dataInformationsAsync,
             IDownloadStreamAsync<InfoStreams, SenderInfoHubAsync, ProcessEventArgs> downloadStreamAsync,
-            ISenderInfoHubAsync<SenderInfoHubAsync> senderInfoHubAsync,
-            IHubContext<SenderInfoHubAsync> hubContext,
             IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs> convertationServiceAsync,
             IDataBaseServiceAsync<InfoStreams, VideoInfoRequest, YouTubeVideoInfoResponse, MainInfo> dataBaseServiceAsync,
-            IOptions<ServerSettings> serverSettings,
-            IDownloaderUnitOfWork unitOfWork
+            IOptions<ServerSettings> serverSettings
             )
         {
             _logger = logger;
-            _unitOfWork = unitOfWork;
             _dataInformationsAsync = dataInformationsAsync;
             _downloadStreamAsync = downloadStreamAsync;
             _convertationServiceAsync = convertationServiceAsync;
             _dataBaseServiceAsync = dataBaseServiceAsync;
-            _dataBaseServiceAsync.UnitOfWork = _unitOfWork;
 
             _serverSettings = serverSettings.Value;
 

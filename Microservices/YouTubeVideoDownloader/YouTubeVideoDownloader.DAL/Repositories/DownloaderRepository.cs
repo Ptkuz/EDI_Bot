@@ -14,7 +14,8 @@ using YouTubeVideoDownloader.Interfaces.DAL.Repositories;
 
 namespace YouTubeVideoDownloader.DAL.Repositories
 {
-    public class DownloaderRepository<T> : EntityRepository<T> where T : Entity, new()
+    public class DownloaderRepository<T> : EntityRepository<T> 
+        where T : Entity, new()
     {
         public DownloaderRepository(DownloaderContext dbContext, ILogger<EntityRepository<Entity>> logger) 
             : base(dbContext, logger)

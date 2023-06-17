@@ -17,8 +17,8 @@ namespace YouTubeVideoDownloader.DAL.DownloaderUnitOfWork
 {
     public class DownloaderUnitOfWork : UnitOfWork, IDownloaderUnitOfWork
     {
-        public DownloaderUnitOfWork(DownloaderContext dbContext, ILogger<DownloaderUnitOfWork> logger, ILogger<EntityRepository<Entity>> logger1) 
-            : base(dbContext, logger, logger1)
+        public DownloaderUnitOfWork(DownloaderContext dbContext, ILogger<DownloaderUnitOfWork> logger, ILogger<EntityRepository<Entity>> loggerRepository) 
+            : base(dbContext, logger, loggerRepository)
         {
 
         }

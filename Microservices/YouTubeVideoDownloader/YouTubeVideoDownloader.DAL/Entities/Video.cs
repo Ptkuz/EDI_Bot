@@ -108,7 +108,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <param name="frameRate">Количество кадров в секунду</param>
         /// <param name="formatAudio">Формат аудио</param>
         /// <param name="bitrate">Битрейт</param>
-        public Video(Guid id, string formatVideo, string resolution, string frameRate, string formatAudio, string bitrate)
+        public Video(Guid id, string formatVideo, string resolution, string frameRate, string formatAudio, string bitrate, YouTubeInfo youTubeInfo)
             : base(id)
         {
             FormatVideo = formatVideo;
@@ -116,6 +116,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
             FrameRate = frameRate;
             FormatAudio = formatAudio;
             Bitrate = bitrate;
+            YouTubeInfo = youTubeInfo;
         }
 
     }

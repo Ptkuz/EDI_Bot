@@ -9,8 +9,6 @@ namespace YouTubeVideoDownloader.Registrators
     public static class UnitOfWorkRegistrator
     {
         public static IServiceCollection AddUnitOfWork(this IServiceCollection services) => services
-
-            .AddScoped<IDownloaderUnitOfWork, DownloaderUnitOfWork>()
-            ;
+            .AddScoped<IDownloaderUnitOfWork, DownloaderUnitOfWork>();
     }
 }

@@ -5,6 +5,7 @@ using Gurrex.Common.Helpers;
 using Gurrex.Common.Validations;
 using Microsoft.Extensions.Logging;
 using YouTubeVideoDownloader.Interfaces.DAL.Entities;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 namespace YouTubeVideoDownloader.DAL.Entities
 {
@@ -38,22 +39,22 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <summary>
         /// Внешний ключ Video
         /// </summary>
-        public Guid VideoId { get; set; }
+        public Guid? VideoId { get; set; }
 
         /// <summary>
         /// Видео
         /// </summary>
-        public Video Video { get; set; } = null!;
+        public Video? Video { get; set; }
 
         /// <summary>
         /// Внешний ключ Audio
         /// </summary>
-        public Guid AudioId { get; set; }
+        public Guid? AudioId { get; set; }
 
         /// <summary>
         /// Аудио
         /// </summary>
-        public Audio Audio { get; set; } = null!;
+        public Audio? Audio { get; set; }
 
         /// <summary>
         /// Конструктор по умолчанию
@@ -72,7 +73,7 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <param name="dateDeleted">Дата удаления</param>
         /// <param name="reference">Ссылка на видео</param>
         /// <param name="size">Размер видео</param>
-        public ServerInfo(string reference, long size)
+        private ServerInfo(string reference, long size)
             : base()
         {
             Ref = reference;
@@ -88,11 +89,36 @@ namespace YouTubeVideoDownloader.DAL.Entities
         /// <param name="dateDeleted">Дата удаления</param>
         /// <param name="reference">Ссылка на видео</param>
         /// <param name="size">Размер видео</param>
-        public ServerInfo(Guid id, string reference, long size)
+        private ServerInfo(Guid id, string reference, long size)
             : base(id)
         {
             Ref = reference;
             Size = size;
         }
+
+        public ServerInfo(Guid id, string reference, long size, Audio audio) 
+            : this(id, reference, size)
+        {
+            Audio = audio;
+        }
+
+        public ServerInfo(Guid id, string reference, long size, Video video)
+            : this(id, reference, size)
+        {
+            Video = video;
+        }
+
+        public ServerInfo(string reference, long size, Audio audio) :
+            this(reference, size)
+        {
+            Audio = audio;
+        }
+
+        public ServerInfo(string reference, long size, Video video) :
+            this(reference, size)
+        {
+            Video = video;
+        }
+
     }
 }
