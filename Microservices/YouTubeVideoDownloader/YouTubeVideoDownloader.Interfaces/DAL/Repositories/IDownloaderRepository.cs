@@ -1,5 +1,5 @@
 ﻿using Gurrex.Common.Interfaces.Entities;
-using Gurrex.Common.Interfaces.Repositories;
+using Gurrex.Common.Interfaces.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;

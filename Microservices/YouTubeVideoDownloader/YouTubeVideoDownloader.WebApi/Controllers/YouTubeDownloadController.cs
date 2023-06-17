@@ -1,4 +1,5 @@
 using Gurrex.Common.Helpers;
+using Gurrex.Common.Interfaces.DAL;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Services.Models.Events;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Options;
 using System.Net.Mime;
 using YouTubeVideoDownloader.DAL.Entities;
 using YouTubeVideoDownloader.Interfaces.DAL;
+using YouTubeVideoDownloader.Interfaces.DAL.UnitOfWork;
 using YouTubeVideoDownloader.Interfaces.Models.Services;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
 using YouTubeVideoDownloader.WebApi.ConfigurationSettings;
@@ -45,9 +47,9 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
 
         private readonly IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs> _convertationServiceAsync = null!;
 
-        private readonly IDataBaseServiceAsync<Audio, Video, Channel, Image, ServerInfo, YouTubeInfo, InfoStreams, VideoInfoRequest, YouTubeVideoInfoResponse, MainInfo> _dataBaseServiceAsync = null!;
+        private readonly IDataBaseServiceAsync<InfoStreams, VideoInfoRequest, YouTubeVideoInfoResponse, MainInfo> _dataBaseServiceAsync = null!;
 
-        private readonly IUnitOfWork<Audio, Channel, Image, ServerInfo, Video, YouTubeInfo> _unitOfWork = null!;
+        private readonly IDownloaderUnitOfWork _unitOfWork = null!;
 
         /// <summary>
         /// Путь до ресурсов
@@ -69,9 +71,9 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
             ISenderInfoHubAsync<SenderInfoHubAsync> senderInfoHubAsync,
             IHubContext<SenderInfoHubAsync> hubContext,
             IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs> convertationServiceAsync,
-            IDataBaseServiceAsync<Audio, Video, Channel, Image, ServerInfo, YouTubeInfo, InfoStreams, VideoInfoRequest, YouTubeVideoInfoResponse, MainInfo> dataBaseServiceAsync,
+            IDataBaseServiceAsync<InfoStreams, VideoInfoRequest, YouTubeVideoInfoResponse, MainInfo> dataBaseServiceAsync,
             IOptions<ServerSettings> serverSettings,
-            IUnitOfWork<Audio, Channel, Image, ServerInfo, Video, YouTubeInfo> unitOfWork
+            IDownloaderUnitOfWork unitOfWork
             )
         {
             _logger = logger;
@@ -80,7 +82,6 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
             _downloadStreamAsync = downloadStreamAsync;
             _convertationServiceAsync = convertationServiceAsync;
             _dataBaseServiceAsync = dataBaseServiceAsync;
-            _dataBaseServiceAsync.Logger = _loggerDataBaseService;
             _dataBaseServiceAsync.UnitOfWork = _unitOfWork;
 
             _serverSettings = serverSettings.Value;

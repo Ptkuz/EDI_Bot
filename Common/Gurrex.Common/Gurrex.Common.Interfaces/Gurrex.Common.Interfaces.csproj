@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Gurrex.Common.Localization\Gurrex.Common.Localization.csproj" />
     <ProjectReference Include="..\Gurrex.Common.Validations\Gurrex.Common.Validations.csproj" />
   </ItemGroup>

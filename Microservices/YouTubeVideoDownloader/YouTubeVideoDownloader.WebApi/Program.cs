@@ -5,8 +5,7 @@ using NLog;
 using NLog.Web;
 using System.Globalization;
 using YouTubeVideoDownloader.DAL.Context;
-using YouTubeVideoDownloader.DAL.Repositories;
-using YouTubeVideoDownloader.DAL.UnitOfWork;
+using YouTubeVideoDownloader.Registrators;
 using YouTubeVideoDownloader.WebApi.ConfigurationSettings;
 using YouTubeVideoDownloader.YouTubeDataOperations.Services;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
@@ -41,7 +40,6 @@ builder.Host.UseNLog();
 builder.Services.Configure<ServerSettings>(
     builder.Configuration.GetSection("ServerSettings")
 );
-builder.Services.AddRepositoryInDB();
 builder.Services.AddUnitOfWork();
 builder.Services.AddDownloaderServices();
 

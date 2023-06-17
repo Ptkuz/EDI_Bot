@@ -1,7 +1,8 @@
 ﻿using Gurrex.Common.DAL.Entities;
 using Gurrex.Common.Helpers;
 using Gurrex.Common.Helpers.Models;
-using Gurrex.Common.Interfaces.Repositories;
+using Gurrex.Common.Interfaces;
+using Gurrex.Common.Interfaces.DAL;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Validations;
@@ -9,13 +10,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
-namespace Gurrex.Common.DAL.Repositories
+namespace Gurrex.Common.DAL
 {
     /// <summary>
     /// Базовый асинхронный репозиторий работы с сущностью, унаследованной от <see cref="Entity"/>
     /// </summary>
     /// <typeparam name="T">Сущность, унаследованная от <see cref="Entity"/></typeparam>
-    public class EntityRepository<T> : IEntityRepository<T> where T : Entity, new()
+    public class EntityRepository<T> : IEntityRepository<T>, IResources<AssemblyInfo> where T : Entity, new()
     {
 
         /// <summary>
@@ -26,12 +27,12 @@ namespace Gurrex.Common.DAL.Repositories
         /// <summary>
         /// Путь до ресурсов
         /// </summary>
-        public virtual string ResourcesPath => $"{AssemblyInfo.AssemblyName.Name}.Resources.Repositories.EntityRepository";
+        public virtual string ResourcesPath => $"{AssemblyInfo.AssemblyName.Name}.Resources.EntityRepository";
 
         /// <summary>
         /// Логирование
         /// </summary>
-        private readonly ILogger<EntityRepository<T>> _logger;
+        private readonly ILogger<EntityRepository<Entity>> _logger;
 
         /// <summary>
         /// Контекст базы данных
@@ -54,7 +55,7 @@ namespace Gurrex.Common.DAL.Repositories
         /// </summary>
         /// <param name="dbContext">Контекст базы данных</param>
         /// <param name="logger">Логирование</param>
-        protected EntityRepository(DbContext dbContext, ILogger<EntityRepository<T>> logger)
+        protected EntityRepository(DbContext dbContext, ILogger<EntityRepository<Entity>> logger)
         {
             _dbContext = dbContext;
             _entities = dbContext.Set<T>();

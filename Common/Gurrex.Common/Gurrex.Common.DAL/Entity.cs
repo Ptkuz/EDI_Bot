@@ -29,7 +29,7 @@ namespace Gurrex.Common.DAL.Entities
         [NotMapped]
         public virtual string ResourcesPath
         {
-            get => $"{AssemblyInfo.AssemblyName.Name}.Resources.Entities.Entity";
+            get => $"{AssemblyInfo.AssemblyName.Name}.Resources.EntityRepository";
         }
 
         /// <summary>

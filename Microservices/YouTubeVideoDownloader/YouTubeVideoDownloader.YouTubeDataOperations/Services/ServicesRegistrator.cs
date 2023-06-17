@@ -3,7 +3,7 @@ using Gurrex.Web.Interfaces.SignalR;
 using Gurrex.Web.SignalR.Hubs.Async;
 using Microsoft.Extensions.DependencyInjection;
 using YouTubeVideoDownloader.DAL.Entities;
-using YouTubeVideoDownloader.DAL.UnitOfWork;
+using YouTubeVideoDownloader.DAL;
 using YouTubeVideoDownloader.Interfaces.DAL;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
 using YouTubeVideoDownloader.Interfaces.Services.Sync;
@@ -33,7 +33,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
             .AddTransient<IDownloadStreamAsync<InfoStreams, SenderInfoHubAsync, ProcessEventArgs>, DownloadStreamAsync>()
             .AddTransient<ISenderInfoHubAsync<SenderInfoHubAsync>, SenderInfoHubAsync>()
             .AddTransient<IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs>, ConvertationServiceAsync>()
-            .AddTransient<IDataBaseServiceAsync<Audio, Video, Channel, Image, ServerInfo, YouTubeInfo, InfoStreams, VideoInfoRequest, YouTubeVideoInfoResponse, MainInfo>, DataBaseServiceAsync>()
+            .AddTransient<IDataBaseServiceAsync<InfoStreams, VideoInfoRequest, YouTubeVideoInfoResponse, MainInfo>, DataBaseServiceAsync>()
             ;
     }
 }

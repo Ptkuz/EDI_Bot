@@ -1,7 +1,7 @@
 ﻿using Gurrex.Common.Interfaces.Entities;
 using System.Linq.Expressions;
 
-namespace Gurrex.Common.Interfaces.Repositories
+namespace Gurrex.Common.Interfaces.DAL
 {
     /// <summary>
     /// Асинхронный репозиторий работы с сущностью, реализующей интерфейс <see cref="IEntity"/>
