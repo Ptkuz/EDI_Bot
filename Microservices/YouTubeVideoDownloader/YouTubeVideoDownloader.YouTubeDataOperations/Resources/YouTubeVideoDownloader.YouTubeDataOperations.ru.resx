@@ -117,12 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ExceptionCheckStringForNullOrEmpty" xml:space="preserve">
-    <value>Значение строки "{0}" не может быть пустым или null</value>
-    <comment>Искючение, возникающее при передаче пустого значения строки</comment>
+  <data name="ConvertationServiceAsync.ConvertCommand" xml:space="preserve">
+    <value>-i "{0}"  -i "{1}" -shortest -vf fps={2} {3}"</value>
   </data>
-  <data name="ExceptionCheckValueForNull" xml:space="preserve">
-    <value>Значение "{0}" не может быть равно null</value>
-    <comment>Исключение, возникающее при передаче пустой ссылки, в методе проверки</comment>
+  <data name="DataInformationAsync.VideoImageUrl" xml:space="preserve">
+    <value>https://img.youtube.com/vi/{0}/{1}</value>
+  </data>
+  <data name="DataInformationHelpers.ExceptionNoContainsKeyV" xml:space="preserve">
+    <value>Ссылка "{0}" не содержит ключа "v"</value>
+  </data>
+  <data name="DataInformationHelpers.TemplateYouTubeUrl" xml:space="preserve">
+    <value>https://www.youtube.com/watch?v={0}</value>
+  </data>
+  <data name="DataInformationsAsync.ExceptionNoContainsKeyV" xml:space="preserve">
+    <value>Ссылка "{0}" не содержит ключа "v"</value>
+  </data>
+  <data name="SpecificVideoInfoRequest.ExceptionParseEnum" xml:space="preserve">
+    <value>Не удалось спарсить значение "{0}"</value>
   </data>
 </root>

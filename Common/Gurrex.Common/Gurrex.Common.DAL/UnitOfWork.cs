@@ -12,17 +12,13 @@ using Microsoft.Extensions.Logging;
 
 namespace Gurrex.Common.DAL
 {
-    public class UnitOfWork : IUnitOfWork, IResources<AssemblyInfo>
+    public class UnitOfWork : IUnitOfWork
     {
         protected readonly DbContext _dbContext;
         protected readonly ILogger<UnitOfWork> _logger;
         protected readonly ILogger<EntityRepository<Entity>> _loggerRepository;
         protected bool disposed;
         protected Dictionary<string, object> repositories;
-
-        public AssemblyInfo AssemblyInfo => StaticHelpers.GetAssemblyInfo();
-
-        public string ResourcesPath => $"{AssemblyInfo.AssemblyName.Name}.Resources.UnitOfWork";
 
 
         protected UnitOfWork(DbContext dbContext, ILogger<UnitOfWork> logger, ILogger<EntityRepository<Entity>> loggerRepository)
@@ -47,7 +43,7 @@ namespace Gurrex.Common.DAL
             {
                 if (typeof(T).Name != repositoryType.Name) 
                 {
-                    string errorMessage = ManagerResources.GetString(new Resource(ResourcesPath, "ExceptionNotEqualsTypesRepositories", AssemblyInfo.Assembly));
+                    string errorMessage = ManagerResources.GetString(new Resource("UnitOfWork.ExceptionNotEqualsTypesRepositories", StaticHelpers.GetAssemblyInfo().Assembly));
                     _logger.LogDebug(errorMessage, nameof(T), nameof(repositoryType));
                     throw new TypeUnloadedException(errorMessage);
                 }

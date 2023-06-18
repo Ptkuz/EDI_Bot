@@ -9,7 +9,6 @@ using System.Net.Mime;
 using YouTubeVideoDownloader.Interfaces.Models.Services;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
 using YouTubeVideoDownloader.WebApi.ConfigurationSettings;
-using YouTubeVideoDownloader.WebApi.Controllers.Base;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.Services;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Request;
@@ -19,7 +18,7 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class YouTubeDownloadController : MainController
+    public class YouTubeDownloadController : ControllerBase
     {
         private CancellationTokenSource CancellationTokenSource;
 
@@ -41,13 +40,6 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
 
         private readonly IDataBaseServiceAsync<InfoStreams, VideoInfoRequest, YouTubeVideoInfoResponse, MainInfo> _dataBaseServiceAsync = null!;
 
-        /// <summary>
-        /// Путь до ресурсов
-        /// </summary>
-        public override string ResourcesPath
-        {
-            get => $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Controllers.YouTubeDownloadController";
-        }
 
         /// <summary>
         /// Конструктор инициализатор
@@ -92,14 +84,14 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
                     await _dataBaseServiceAsync.AfterGetYouTubeInfoAsync(youtubeVideoInfo, videoInfoRequest, CancellationTokenSource.Token);
                 }
 
-                string resource = ManagerResources.GetString(new Resource(ResourcesPath, "GetVideoInfoAsyncSuccess", AssemblyInfo.Assembly));
+                string resource = ManagerResources.GetString(new Resource("YouTubeDownloadController.GetVideoInfoAsyncSuccess", StaticHelpers.GetAssemblyInfo().Assembly));
                 string resultString = ManagerResources.GetResultString(resource, videoInfoRequest.Id, videoInfoRequest.Url);
                 _logger.LogInformation(resultString);
                 return Ok(youtubeVideoInfo);
             }
             catch (Exception ex)
             {
-                string resource = ManagerResources.GetString(new Resource(ResourcesPath, "GetVideoInfoAsyncException", AssemblyInfo.Assembly));
+                string resource = ManagerResources.GetString(new Resource("YouTubeDownloadController.GetVideoInfoAsyncException", StaticHelpers.GetAssemblyInfo().Assembly));
                 string resultStringLog = ManagerResources.GetResultString(resource, ex);
                 string resultString = ManagerResources.GetResultString(resource, ex.Message);
                 _logger.LogError(resultStringLog);
@@ -135,7 +127,7 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
                             infoStreams.VideoStream.Fps,
                             infoStreams.FinalFileFullName);
 
-                    await _convertationServiceAsync.MergeAudioVideoDataAsync(convertationModel, AssemblyInfo.AssemblyName.Name, CancellationTokenSource.Token);
+                    await _convertationServiceAsync.MergeAudioVideoDataAsync(convertationModel, StaticHelpers.GetAssemblyInfo().AssemblyName.Name, CancellationTokenSource.Token);
 
                 }
 
@@ -157,7 +149,7 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                string resource = ManagerResources.GetString(new Resource(ResourcesPath, "DownloadVideoInfoAsyncException", AssemblyInfo.Assembly));
+                string resource = ManagerResources.GetString(new Resource("YouTubeDownloadController.DownloadVideoInfoAsyncException", StaticHelpers.GetAssemblyInfo().Assembly));
                 string resultStringLog = ManagerResources.GetResultString(resource, specificVideoInfoRequest.Url, ex);
                 return StatusCode(500, resultStringLog);
             }

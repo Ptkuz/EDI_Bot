@@ -15,14 +15,6 @@ namespace YouTubeVideoDownloader.DAL.Entities
     public class ServerInfo : Entity, IServerInfo
     {
 
-        /// <summary>
-        /// Путь до ресурсов
-        /// </summary>
-        [NotMapped]
-        public override string ResourcesPath
-        {
-            get => $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.ServerInfo";
-        }
 
         /// <summary>
         /// Ссылка на файл

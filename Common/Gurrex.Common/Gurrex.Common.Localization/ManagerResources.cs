@@ -18,9 +18,8 @@ namespace Gurrex.Common.Localization
         {
             try
             {
-                string[] resources = resource.Assembly.GetManifestResourceNames();
-                var culture = CultureInfo.CurrentUICulture.Name;
-                ResourceManager resourceManager = new ResourceManager(resource.FileResourceName, resource.Assembly);
+                var resourcePath = $"{resource.Assembly.GetName().Name}.Resources.{resource.Assembly.GetName().Name}";
+                ResourceManager resourceManager = new ResourceManager(resourcePath, resource.Assembly);
                 string? value = resourceManager.GetString(resource.ResourceName, CultureInfo.CurrentCulture);
 
                 if (value == null)

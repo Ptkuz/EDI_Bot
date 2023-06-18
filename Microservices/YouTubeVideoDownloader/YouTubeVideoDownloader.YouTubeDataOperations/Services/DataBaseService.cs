@@ -11,7 +11,7 @@ using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Res
 using Image = YouTubeVideoDownloader.DAL.Entities.Image;
 using LibraryImage = SixLabors.ImageSharp.Image;
 
-namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
+namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
 {
     public class DataBaseServiceAsync : IDataBaseServiceAsync<InfoStreams, VideoInfoRequest, YouTubeVideoInfoResponse, MainInfo>
     {
@@ -49,7 +49,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
 
             YouTubeInfo youTubeInfo = await _unitOfWork.GetEntityRepository<DownloaderRepository<YouTubeInfo>, YouTubeInfo>(typeof(DownloaderRepository<>)).SingleOrDefaultEntityAsync(x => x.Url == DataInformationHelpers.GetSimpleYouTubeUrl(InfoStream.Url));
 
-            if (youTubeInfo is not null) 
+            if (youTubeInfo is not null)
             {
                 Video video = new Video(InfoStream.Id, $"{InfoStream.VideoStream.Format}", $"{InfoStream.VideoStream.Resolution}", $"{InfoStream.VideoStream.Fps}", $"{InfoStream.AudioStream.AudioFormat}", $"{InfoStream.AudioStream.AudioBitrate}", youTubeInfo);
                 ServerInfo serverInfo = new ServerInfo(videoFileFullName, length, video);

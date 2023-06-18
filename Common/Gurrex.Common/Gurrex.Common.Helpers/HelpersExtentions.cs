@@ -13,24 +13,7 @@ namespace Gurrex.Common.Helpers
     /// </summary>
     public static class HelpersExtentions
     {
-        /// <summary>
-        /// Сборка
-        /// </summary>
-        private static Assembly currentAssembly = null!;
 
-        /// <summary>
-        /// Путь до ресурсов
-        /// </summary>
-        private static string fileResourceName = null!;
-
-        /// <summary>
-        /// Конструктор инициализатор
-        /// </summary>
-        static HelpersExtentions()
-        {
-            currentAssembly = Assembly.GetExecutingAssembly();
-            fileResourceName = "Gurrex.Common.Helpers.Resources.HelpersExtentions";
-        }
 
         /// <summary>
         /// Удаление подстроки из конца подстроки
@@ -45,14 +28,14 @@ namespace Gurrex.Common.Helpers
             {
                 if (info.Length < infoType.Length)
                 {
-                    string localizationString = ManagerResources.GetString(new Resource(fileResourceName, "ExceptionRemoveEndToString", currentAssembly));
+                    string localizationString = ManagerResources.GetString(new Resource("HelpersExtentions.ExceptionRemoveEndToString", Assembly.GetExecutingAssembly()));
                     string errorMessage = String.Format(localizationString, info, infoType);
                     throw new RemoveEndToStringException(errorMessage);
                 }
 
                 if (!info.Contains(infoType))
                 {
-                    string localizationString = ManagerResources.GetString(new Resource(fileResourceName, "ExceptionNoContainsToString", currentAssembly));
+                    string localizationString = ManagerResources.GetString(new Resource("HelpersExtentions.ExceptionNoContainsToString", Assembly.GetExecutingAssembly()));
                     string errorMessage = String.Format(localizationString, info, infoType);
                     throw new ExceptionNoContainsToString(errorMessage);
                 }
@@ -95,7 +78,7 @@ namespace Gurrex.Common.Helpers
 
                 if (!check)
                 {
-                    string localizationString = ManagerResources.GetString(new Resource(fileResourceName, "ExceptionParseIntFromString", currentAssembly));
+                    string localizationString = ManagerResources.GetString(new Resource("HelpersExtentions.ExceptionParseIntFromString", Assembly.GetExecutingAssembly()));
                     string errorMessage = String.Format(localizationString, nameof(text));
                     throw new FormatException(errorMessage);
                 }

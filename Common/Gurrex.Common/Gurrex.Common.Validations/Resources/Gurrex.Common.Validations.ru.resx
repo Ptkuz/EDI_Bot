@@ -117,8 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ConvertCommand" xml:space="preserve">
-    <value>-i "{0}"  -i "{1}" -shortest -vf fps={2} {3}"</value>
-    <comment>Команда для склеивания видео</comment>
+  <data name="ExtentionsCommonValidations.ExceptionCheckStringForNullOrEmpty" xml:space="preserve">
+    <value>Значение строки "{0}" не может быть пустым или null</value>
+    <comment>Искючение, возникающее при передаче пустого значения строки</comment>
+  </data>
+  <data name="ExtentionsCommonValidations.ExceptionCheckValueForNull" xml:space="preserve">
+    <value>Значение "{0}" не может быть равно null</value>
+    <comment>Исключение, возникающее при передаче пустой ссылки, в методе проверки</comment>
   </data>
 </root>

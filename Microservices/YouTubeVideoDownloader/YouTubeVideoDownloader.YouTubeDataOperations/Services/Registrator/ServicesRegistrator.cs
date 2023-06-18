@@ -14,7 +14,7 @@ using YouTubeVideoDownloader.YouTubeDataOperations.Services.Async;
 using YouTubeVideoDownloader.YouTubeDataOperations.Services.Sync;
 using Image = YouTubeVideoDownloader.DAL.Entities.Image;
 
-namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
+namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Registrator
 {
     /// <summary>
     /// Регистратор сервисов

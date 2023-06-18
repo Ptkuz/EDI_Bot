@@ -117,8 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EntityInfo" xml:space="preserve">
-    <value>Базовая сущность с Id: {0}</value>
-    <comment>Вывод: Для переопределение метода ToString()</comment>
+  <data name="Program.ExceptionConnectionStringNullOrEmpty" xml:space="preserve">
+    <value>Строка подключения к базе данных не может быть пустой</value>
+  </data>
+  <data name="YouTubeDownloadController.DownloadVideoInfoAsyncException" xml:space="preserve">
+    <value>При скачивании видео "{0}" произошла ошибка "{1}". Попробуйте еще раз или повторите попытку позже</value>
+  </data>
+  <data name="YouTubeDownloadController.GetVideoInfoAsyncException" xml:space="preserve">
+    <value>В процессе получения информации о видео произошла ошибка: {0}</value>
+  </data>
+  <data name="YouTubeDownloadController.GetVideoInfoAsyncSuccess" xml:space="preserve">
+    <value>Пользователь "{0}" получил информацию о видео по ссылке "{1}" </value>
   </data>
 </root>

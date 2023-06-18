@@ -11,7 +11,7 @@ using YouTubeVideoDownloader.YouTubeDataOperations.Enums;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.Services;
 
-namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
+namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
 {
     /// <summary>
     /// Асинхронная работа с потоком
@@ -34,7 +34,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// </summary>
         public event IEvents<ProcessEventArgs>.ProcessHandler? OutputDataChanged;
 
-        public DownloadStreamAsync(ISenderInfoHubAsync<SenderInfoHubAsync> senderInfoHubAsync, IHubContext<SenderInfoHubAsync> hubContext) 
+        public DownloadStreamAsync(ISenderInfoHubAsync<SenderInfoHubAsync> senderInfoHubAsync, IHubContext<SenderInfoHubAsync> hubContext)
         {
             SenderInfoHubAsync = senderInfoHubAsync;
             HubContext = hubContext;
@@ -67,10 +67,10 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
                 {
                     await Task.WhenAll(audio);
                 }
-                
+
                 return true;
             }
-            catch (HttpRequestException) 
+            catch (HttpRequestException)
             {
                 throw;
             }
@@ -91,13 +91,13 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
                         file.Write(buffer, 0, len);
                         length += len;
 
-                        switch (typeData) 
+                        switch (typeData)
                         {
                             case TypeData.Audio:
                                 await senderInfoHubAsync.ContextSendInfoAllClientsAsync(hubContext, "ReceiveAudioStatusAsync", cancel, $"Скачивание аудио дорожки {fileName} - ({length})");
                                 break;
                             case TypeData.Video:
-                                 await senderInfoHubAsync.ContextSendInfoAllClientsAsync(hubContext, "ReceiceVideoStatusAsync", cancel, $"Скачивание видео дорожки {fileName} - ({length})");
+                                await senderInfoHubAsync.ContextSendInfoAllClientsAsync(hubContext, "ReceiceVideoStatusAsync", cancel, $"Скачивание видео дорожки {fileName} - ({length})");
                                 break;
                             default:
                                 break;

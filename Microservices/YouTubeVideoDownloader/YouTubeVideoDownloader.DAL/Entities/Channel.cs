@@ -18,15 +18,6 @@ namespace YouTubeVideoDownloader.DAL.Entities
         private readonly ILogger<Channel> _logger = null!;
 
         /// <summary>
-        /// Путь до ресурсов
-        /// </summary>
-        [NotMapped]
-        public override string ResourcesPath
-        {
-            get => $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.Channel";
-        }
-
-        /// <summary>
         /// Название канала
         /// </summary>
         [Column("Name", Order = 4)]

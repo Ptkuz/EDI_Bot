@@ -17,24 +17,6 @@ namespace Gurrex.Common.Helpers
     public static class IOHelpers
     {
 
-        /// <summary>
-        /// Сборка
-        /// </summary>
-        private static Assembly currentAssembly = null!;
-
-        /// <summary>
-        /// Путь до ресурсов
-        /// </summary>
-        private static string fileResourceName = null!;
-
-        /// <summary>
-        /// Конструктор инициализатор
-        /// </summary>
-        static IOHelpers()
-        {
-            currentAssembly = Assembly.GetExecutingAssembly();
-            fileResourceName = "Gurrex.Common.Helpers.Resources.IOHelpers";
-        }
 
         /// <summary>
         /// Собрать путь из аргументов
@@ -100,7 +82,7 @@ namespace Gurrex.Common.Helpers
             {
                 if (!File.Exists(path))
                 {
-                    string localizationString = ManagerResources.GetString(new Resource(fileResourceName, "FileNotFoundException", currentAssembly));
+                    string localizationString = ManagerResources.GetString(new Resource("IOHelpers.FileNotFoundException", Assembly.GetExecutingAssembly()));
                     string errorMessage = String.Format(localizationString, path);
                     throw new FileNotFoundException(errorMessage, path);
                 }
@@ -121,7 +103,7 @@ namespace Gurrex.Common.Helpers
             {
                 if (!Directory.Exists(path))
                 {
-                    string localizationString = ManagerResources.GetString(new Resource(fileResourceName, "DirectoryNotFoundException", currentAssembly));
+                    string localizationString = ManagerResources.GetString(new Resource("IOHelpers.DirectoryNotFoundException", Assembly.GetExecutingAssembly()));
                     string errorMessage = String.Format(localizationString, path);
                     throw new DirectoryNotFoundException(errorMessage);
                 }

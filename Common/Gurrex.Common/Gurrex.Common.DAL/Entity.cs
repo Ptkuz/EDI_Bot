@@ -13,24 +13,9 @@ namespace Gurrex.Common.DAL.Entities
     /// <summary>
     /// Базовая сущность
     /// </summary>
-    public class Entity : IEntity, IResources<AssemblyInfo>
+    public class Entity : IEntity
     {
 
-        /// <summary>
-        /// Сборка
-        /// </summary>
-        [NotMapped]
-        public AssemblyInfo AssemblyInfo => StaticHelpers.GetAssemblyInfo();
-
-
-        /// <summary>
-        /// Путь до ресурсов
-        /// </summary>
-        [NotMapped]
-        public virtual string ResourcesPath
-        {
-            get => $"{AssemblyInfo.AssemblyName.Name}.Resources.EntityRepository";
-        }
 
         /// <summary>
         /// Id сущности
@@ -88,7 +73,7 @@ namespace Gurrex.Common.DAL.Entities
         /// <returns>Информация о сущности</returns>
         public override string ToString()
         {
-            string localizationString = ManagerResources.GetString(new Resource(ResourcesPath, "EntityInfo", AssemblyInfo.Assembly));
+            string localizationString = ManagerResources.GetString(new Resource("Entity.EntityInfo", StaticHelpers.GetAssemblyInfo().Assembly));
             string resultString = ManagerResources.GetResultString(localizationString, Id);
             return resultString;
         }

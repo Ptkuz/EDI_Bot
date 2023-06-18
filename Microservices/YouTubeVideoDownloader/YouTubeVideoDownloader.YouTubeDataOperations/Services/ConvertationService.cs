@@ -16,9 +16,9 @@ using System.Diagnostics;
 using YouTubeVideoDownloader.Interfaces.Models.Services;
 using YouTubeVideoDownloader.Interfaces.Services.Async;
 
-namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
+namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
 {
-    public class ConvertationServiceAsync : ProcessOperations, IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs>, IResources<AssemblyInfo>
+    public class ConvertationService : ProcessOperations, IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs>
     {
         /// <summary>
         /// Токен отмены
@@ -35,23 +35,10 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
         /// </summary>
         public IHubContext<SenderInfoHubAsync> HubContext { get; set; } = null!;
 
-        public ConvertationServiceAsync(ISenderInfoHubAsync<SenderInfoHubAsync> senderInfoHubAsync, IHubContext<SenderInfoHubAsync> hubContext) 
+        public ConvertationService(ISenderInfoHubAsync<SenderInfoHubAsync> senderInfoHubAsync, IHubContext<SenderInfoHubAsync> hubContext)
         {
             SenderInfoHubAsync = senderInfoHubAsync;
             HubContext = hubContext;
-        }
-
-        /// <summary>
-        /// Сборка
-        /// </summary>
-        public AssemblyInfo AssemblyInfo => StaticHelpers.GetAssemblyInfo();
-
-        /// <summary>
-        /// Путь до файла ресурсов
-        /// </summary>
-        public string ResourcesPath
-        {
-            get => $"{AssemblyInfo.AssemblyName?.Name}.Resources.Services.Async.ConvertationServiceAsync";
         }
 
         public event IEvents<ProcessEventArgs>.ProcessHandler? OutputDataChanged;
@@ -82,16 +69,15 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
 
                 videoFilePath = $"{IOHelpers.PathCombine(true, false, convertationModel.FilesPath, $"{convertationModel.VideoFileName}{convertationModel.VideoFileExnetion}")}";
                 audioFilePath = $"{IOHelpers.PathCombine(true, false, convertationModel.FilesPath, $"{convertationModel.AudioFileName}{convertationModel.AudioFileExtention}")}";
-                tempraryName = $"{IOHelpers.PathCombine(false, false, convertationModel.FilesPath, $"convert_{convertationModel.VideoFileName}{convertationModel.VideoFileExnetion}")}";
+                tempraryName = $"{IOHelpers.PathCombine(false, false, convertationModel.FilesPath, $"File_{convertationModel.VideoFileName}{convertationModel.VideoFileExnetion}")}";
 
-                string resource = ManagerResources.GetString(new Resource(ResourcesPath, "ConvertCommand", AssemblyInfo.Assembly));
+                string resource = ManagerResources.GetString(new Resource("ConvertationService.ConvertCommand", StaticHelpers.GetAssemblyInfo().Assembly));
                 string cmdCommand = ManagerResources.GetResultString(resource, videoFilePath, audioFilePath, convertationModel.Fps, tempraryName);
 
-                ProcessModel processModel = new ProcessModel(appName, AssemblyInfo.AssemblyName?.Name!, directory, cmdCommand, false, true, cancel);
+                ProcessModel processModel = new ProcessModel(appName, StaticHelpers.GetAssemblyInfo().AssemblyName?.Name!, directory, cmdCommand, false, true, cancel);
 
                 OutputDataChanged += SendDataSignalR;
                 await StartProcessAsync(processModel);
-                IOHelpers.ReplaceFile(tempraryName, convertationModel.FinalFileName);
             }
             catch (OperationCanceledException)
             {
@@ -156,7 +142,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Async
             }
         }
 
-        private async Task SendDataSignalR(object sender, ProcessEventArgs data, CancellationToken cancel) 
+        private async Task SendDataSignalR(object sender, ProcessEventArgs data, CancellationToken cancel)
         {
             await SenderInfoHubAsync.ContextSendInfoAllClientsAsync(HubContext, "ReceiceMergeAsync", cancel, data.Output);
         }

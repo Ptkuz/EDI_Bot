@@ -14,14 +14,6 @@ namespace YouTubeVideoDownloader.DAL.Entities
     public class Image : Entity, IImage
     {
 
-        /// <summary>
-        /// Путь до ресурсов
-        /// </summary>
-        [NotMapped]
-        public override string ResourcesPath
-        {
-            get => $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.Image";
-        }
 
         /// <summary>
         /// Массив байтов картинки

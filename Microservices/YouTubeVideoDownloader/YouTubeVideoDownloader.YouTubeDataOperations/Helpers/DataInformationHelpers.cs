@@ -18,23 +18,8 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Helpers
     /// <summary>
     /// Хелперы DataInformation
     /// </summary>
-    internal class DataInformationHelpers
+    internal static class DataInformationHelpers
     {
-        /// <summary>
-        /// Сборка
-        /// </summary>
-        internal static AssemblyInfo AssemblyInfo { get; set; }
-
-        /// <summary>
-        /// Путь до ресурсов
-        /// </summary>
-        internal static string ResourcesPath { get; set; }
-
-        static DataInformationHelpers() 
-        {
-            AssemblyInfo = StaticHelpers.GetAssemblyInfo();
-            ResourcesPath = $"{AssemblyInfo.AssemblyName.Name}.Resources.Helpers.DataInformationHelpers";
-        }
 
         /// <summary>
         /// Получить значение по ключу в ссылке
@@ -56,7 +41,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Helpers
                     return query[key];
                 else
                 {
-                    string resource = ManagerResources.GetString(new Resource(ResourcesPath, "ExceptionNoContainsKeyV", AssemblyInfo.Assembly));
+                    string resource = ManagerResources.GetString(new Resource("DataInformationHelpers.ExceptionNoContainsKeyV", StaticHelpers.GetAssemblyInfo().Assembly));
                     string resultString = ManagerResources.GetResultString(resource, url);
                     throw new NoContainsKeyException(resultString, key);
                 }
@@ -74,7 +59,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Helpers
         internal static string GetSimpleYouTubeUrl(string url) 
         {
             string value = GetUrlValueByKey(url, "v");
-            string resource = ManagerResources.GetString(new Resource(ResourcesPath, "TemplateYouTubeUrl", AssemblyInfo.Assembly));
+            string resource = ManagerResources.GetString(new Resource("DataInformationHelpers.TemplateYouTubeUrl", StaticHelpers.GetAssemblyInfo().Assembly));
             string resultString = ManagerResources.GetResultString(resource, value);
             return resultString;
         }

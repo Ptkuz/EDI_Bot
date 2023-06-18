@@ -7,7 +7,7 @@ using System.Globalization;
 using YouTubeVideoDownloader.DAL.Context;
 using YouTubeVideoDownloader.Registrators;
 using YouTubeVideoDownloader.WebApi.ConfigurationSettings;
-using YouTubeVideoDownloader.YouTubeDataOperations.Services;
+using YouTubeVideoDownloader.YouTubeDataOperations.Services.Registrator;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();

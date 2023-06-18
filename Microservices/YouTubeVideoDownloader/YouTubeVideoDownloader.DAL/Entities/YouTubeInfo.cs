@@ -19,15 +19,6 @@ namespace YouTubeVideoDownloader.DAL.Entities
     {
 
         /// <summary>
-        /// Путь до ресурсов
-        /// </summary>
-        [NotMapped]
-        public override string ResourcesPath
-        {
-            get => $"{StaticHelpers.GetAssemblyInfo().AssemblyName.Name}.Resources.Entities.YouTubeInfo";
-        }
-
-        /// <summary>
         /// Заголовок
         /// </summary>
         [Column("Title", Order = 4)]

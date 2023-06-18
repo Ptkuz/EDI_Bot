@@ -18,8 +18,4 @@
     <ProjectReference Include="..\Gurrex.Common.Helpers\Gurrex.Common.Helpers.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
-  </ItemGroup>
-
 </Project>

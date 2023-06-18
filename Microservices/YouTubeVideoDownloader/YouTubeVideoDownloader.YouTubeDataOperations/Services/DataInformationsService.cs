@@ -1,45 +1,104 @@
-﻿using Gurrex.Common.Helpers;
-using Gurrex.Common.Helpers.Models;
-using Gurrex.Common.Interfaces;
-using Gurrex.Common.Localization;
+﻿using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Validations;
-using System.Collections.Specialized;
-using System.Reflection;
-using System.Web;
 using VideoLibrary;
-using YouTubeVideoDownloader.Interfaces.Models.Services;
-using YouTubeVideoDownloader.YouTubeDataOperations.Exceptions;
+using YouTubeVideoDownloader.Interfaces.Services.Async;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
+using YouTubeVideoDownloader.YouTubeDataOperations.Services.Base;
+using Gurrex.Common.Conversion;
+using Gurrex.Common.Helpers;
+using YouTubeVideoDownloader.YouTubeDataOperations.Helpers;
+using System;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Request;
+using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Response;
+using YouTubeVideoDownloader.Interfaces.Models.Services;
 
-namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
+namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
 {
     /// <summary>
-    /// Получение данных о видео
+    /// Информация о видео и аудио асинхронно
     /// </summary>
-    public class DataInformation : IResources<AssemblyInfo>
+    public class DataInformationsService : DataInformation, IDataInformationAsync<YouTubeVideoInfoResponse, SpecificVideoInfoRequest, InfoStreams>
     {
-        /// <summary>
-        /// Сборка
-        /// </summary>
-        public AssemblyInfo AssemblyInfo => StaticHelpers.GetAssemblyInfo();
 
         /// <summary>
-        /// Путь до ресурсов
+        /// Асинхронно получить информациб о видео по ссылке
         /// </summary>
-        public virtual string ResourcesPath
+        /// <param name="url">URL видео</param>
+        /// <returns></returns>
+        public async Task<YouTubeVideoInfoResponse> GetYouTubeVideoInfoAsync(string url)
         {
-            get => $"{AssemblyInfo.AssemblyName.Name}.Resources.Services.Base.DataInformation";
+            IEnumerable<YouTubeVideo> videos = await GetEnumerableYouTubeVideo(url);
+
+            YouTubeVideo youTubeVideo = GetYouTubeVideo(videos);
+            MainInfo mainInfo = GetMainInfo(youTubeVideo);
+
+            IEnumerable<string> audioBitrates = GetEnumerableAudioBitrates(videos).ConvertToString(" kbps");
+            IEnumerable<string> resolutions = GetEnumerableResolutions(videos).ConvertToString("p");
+            IEnumerable<string> audioFormats = GetEnumerableAudioFormat(videos).ConvertToString();
+            IEnumerable<string> videoFormats = GetEnumerableVideoFormat(videos).ConvertToString();
+            IEnumerable<string> fps = GetEnumerableFps(videos).ConvertToString(" FPS");
+            byte[] image = await GetVideoImageAsync(url).ConfigureAwait(false);
+
+            YouTubeVideoInfoResponse youTubeVideoInfo = new YouTubeVideoInfoResponse(mainInfo, audioBitrates, resolutions, audioFormats, videoFormats, fps, image);
+
+            return youTubeVideoInfo;
         }
 
+        /// <summary>
+        /// Получить объект <see cref="YouTubeVideo"/>
+        /// </summary>
+        /// <param name="specificVideoInfoRequest">Запрашиваемые свойства видео</param>
+        /// <param name="serverSettings">Настройки приложения</param>
+        /// <returns>Объект <see cref="YouTubeVideo"/></returns>
+        public async Task<InfoStreams> GetSpecisicVideoInfoAsync(SpecificVideoInfoRequest specificVideoInfoRequest, IServerSettings serverSettings)
+        {
+            IEnumerable<YouTubeVideo> videos = await GetEnumerableYouTubeVideo(specificVideoInfoRequest.Url);
+            InfoStreams infoStreams = GetYouTubeVideo(videos, specificVideoInfoRequest, serverSettings);
+            return infoStreams;
+
+        }
+
+        private async Task<IEnumerable<YouTubeVideo>> GetEnumerableYouTubeVideo(string url)
+        {
+            YouTube youTube = YouTube.Default;
+            IEnumerable<YouTubeVideo> videos = await youTube
+                .GetAllVideosAsync(url)
+                .ConfigureAwait(false);
+            return videos;
+        }
 
         /// <summary>
-        /// Конструктор инициализатор
+        /// Асинхронно получить картинку видео по Url
         /// </summary>
-        public DataInformation()
+        /// <param name="url">Ссылка на видео</param>
+        /// <returns>Поток <see cref="Stream"/> с картинкой</returns>
+        private async Task<byte[]> GetVideoImageAsync(string url)
         {
+            string? id = DataInformationHelpers.GetUrlValueByKey(url, "v");
+            id.CheckObjectForNull(nameof(id));
 
+            string resource = ManagerResources.GetString(new Resource("DataInformationService.VideoImageUrl", StaticHelpers.GetAssemblyInfo().Assembly));
+            string resultString = ManagerResources.GetResultString(resource, id, "maxresdefault.jpg");
+
+            Uri uri = new Uri(resultString);
+
+            using (HttpClient httpClient = new HttpClient())
+            {
+                byte[] image;
+                try
+                {
+                    image = await httpClient.GetByteArrayAsync(uri);
+                    return image;
+                }
+                catch (HttpRequestException)
+                {
+                    resultString = ManagerResources.GetResultString(resource, id, "default.jpg");
+                    uri = new Uri(resultString);
+                    image = await httpClient.GetByteArrayAsync(uri);
+                    return image;
+                }
+            }
         }
 
         /// <summary>
@@ -47,7 +106,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
         /// </summary>
         /// <param name="videos">Enumerable <see cref="YouTubeVideo"/></param>
         /// <returns>Enumerable доступных битрейтов видео</returns>
-        protected IEnumerable<int> GetEnumerableAudioBitrates(IEnumerable<YouTubeVideo> videos)
+        private IEnumerable<int> GetEnumerableAudioBitrates(IEnumerable<YouTubeVideo> videos)
         {
             IEnumerable<int> bitrates = videos
                 .Where(x => x.AudioBitrate != -1)
@@ -62,7 +121,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
         /// </summary>
         /// <param name="videos">Enumerable видео, полученных по ссылке</param>
         /// <returns>Enumerable разрешений видео</returns>
-        protected IEnumerable<int> GetEnumerableResolutions(IEnumerable<YouTubeVideo> videos)
+        private IEnumerable<int> GetEnumerableResolutions(IEnumerable<YouTubeVideo> videos)
         {
             IEnumerable<int> resolutions = videos
                 .Where(x => x.Resolution != -1)
@@ -77,7 +136,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
         /// </summary>
         /// <param name="videos">Enumerable видео, полученных по ссылке</param>
         /// <returns>Enumerable аудио форматов <see cref="AudioFormat"/> видео</returns>
-        protected IEnumerable<AudioFormat> GetEnumerableAudioFormat(IEnumerable<YouTubeVideo> videos)
+        private IEnumerable<AudioFormat> GetEnumerableAudioFormat(IEnumerable<YouTubeVideo> videos)
         {
             IEnumerable<AudioFormat> audioFormats = videos
                 .Where(x => x.AudioFormat != AudioFormat.Unknown)
@@ -92,7 +151,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
         /// </summary>
         /// <param name="videos">Enumerable видео, полученных по ссылке</param>
         /// <returns>Enumerable видео форматов <see cref="VideoFormat"/> видео</returns>
-        protected IEnumerable<VideoFormat> GetEnumerableVideoFormat(IEnumerable<YouTubeVideo> videos)
+        private IEnumerable<VideoFormat> GetEnumerableVideoFormat(IEnumerable<YouTubeVideo> videos)
         {
             IEnumerable<VideoFormat> videoFormats = videos
                 .Where(x => x.Format != VideoFormat.Unknown)
@@ -107,7 +166,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
         /// </summary>
         /// <param name="videos">Enumerable видео, полученных по ссылке</param>
         /// <returns></returns>
-        protected IEnumerable<int> GetEnumerableFps(IEnumerable<YouTubeVideo> videos)
+        private IEnumerable<int> GetEnumerableFps(IEnumerable<YouTubeVideo> videos)
         {
             IEnumerable<int> enumerableFps = videos
                 .Where(x => x.Fps != -1)
@@ -122,7 +181,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
         /// </summary>
         /// <param name="videos">Перечисление объектов <see cref="YouTubeVideo"/></param>
         /// <returns>Объект <see cref="YouTubeVideo"/> с информацией о видео</returns>
-        protected YouTubeVideo GetYouTubeVideo(IEnumerable<YouTubeVideo> videos)
+        private YouTubeVideo GetYouTubeVideo(IEnumerable<YouTubeVideo> videos)
         {
             YouTubeVideo? video = videos.FirstOrDefault();
             video.CheckObjectForNull(nameof(video));
@@ -136,7 +195,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
         /// <param name="specificVideoInfoRequest">Объект <see cref="SpecificVideoInfoRequest"/> со свойствами запрашиваемого видео</param>
         /// <param name="serverSettings">Настройки приложения</param>
         /// <returns>Объект <see cref="YouTubeVideo"/> с информацией о видео</returns>
-        protected InfoStreams GetYouTubeVideo(IEnumerable<YouTubeVideo> videos, SpecificVideoInfoRequest specificVideoInfoRequest, IServerSettings serverSettings)
+        private InfoStreams GetYouTubeVideo(IEnumerable<YouTubeVideo> videos, SpecificVideoInfoRequest specificVideoInfoRequest, IServerSettings serverSettings)
         {
             try
             {
@@ -189,11 +248,10 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Base
         /// </summary>
         /// <param name="video">Видео <see cref="YouTubeVideo"/></param>
         /// <returns>Объект <see cref="MainInfo"/></returns>
-        protected MainInfo GetMainInfo(YouTubeVideo video)
+        private MainInfo GetMainInfo(YouTubeVideo video)
         {
             MainInfo mainInfo = new MainInfo(video.Info.Title, video.Info.Author, video.Info.LengthSeconds);
             return mainInfo;
         }
-
     }
 }

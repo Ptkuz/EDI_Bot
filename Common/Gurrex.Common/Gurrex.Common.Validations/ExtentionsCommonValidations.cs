@@ -11,17 +11,6 @@ namespace Gurrex.Common.Validations
     public static class ExtentionsCommonValidations
     {
 
-        private static Assembly currentAssembly = null!;
-        private static string fileResourceName = null!;
-
-        /// <summary>
-        /// Конструктор инициализатор
-        /// </summary>
-        static ExtentionsCommonValidations()
-        {
-            currentAssembly = Assembly.GetExecutingAssembly();
-            fileResourceName = "Gurrex.Common.Validations.Resources.ExtentionsCommonValidations";
-        }
 
         /// <summary>
         /// Проверить <see cref="object"/> на null
@@ -36,7 +25,7 @@ namespace Gurrex.Common.Validations
                 argument.CheckStringForNullOrWhiteSpace();
                 if (value is null)
                 {
-                    string localizationString = ManagerResources.GetString(new Resource(fileResourceName, "ExceptionCheckValueForNull", currentAssembly));
+                    string localizationString = ManagerResources.GetString(new Resource("ExtentionsCommonValidations.ExceptionCheckValueForNull", Assembly.GetExecutingAssembly()));
                     string errorMessage = String.Format(localizationString, argument);
                     throw new ArgumentNullException(argument, errorMessage);
                 }
@@ -63,7 +52,7 @@ namespace Gurrex.Common.Validations
                 argument.CheckStringForNullOrWhiteSpace();
                 if (value is null)
                 {
-                    string localizationString = ManagerResources.GetString(new Resource(fileResourceName, "ExceptionCheckValueForNull", currentAssembly));
+                    string localizationString = ManagerResources.GetString(new Resource("ExtentionsCommonValidations.ExceptionCheckValueForNull", Assembly.GetExecutingAssembly()));
                     string errorMessage = String.Format(localizationString, argument);
                     throw new ArgumentNullException(argument, errorMessage);
                 }
@@ -88,7 +77,7 @@ namespace Gurrex.Common.Validations
             {
                 if (String.IsNullOrWhiteSpace(text))
                 {
-                    string localizationString = ManagerResources.GetString(new Resource(fileResourceName, "ExceptionCheckStringForNullOrEmpty", currentAssembly));
+                    string localizationString = ManagerResources.GetString(new Resource("ExtentionsCommonValidations.ExceptionCheckStringForNullOrEmpty", Assembly.GetExecutingAssembly()));
                     string errorMessage = String.Format(localizationString, nameof(text));
                     throw new ArgumentNullException(nameof(text), errorMessage);
                 }

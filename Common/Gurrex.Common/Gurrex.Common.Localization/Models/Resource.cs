@@ -7,10 +7,6 @@ namespace Gurrex.Common.Localization.Models
     /// </summary>
     public class Resource
     {
-        /// <summary>
-        /// Путь до файла ресурсов
-        /// </summary>
-        public string FileResourceName { get; set; } = null!;
 
         /// <summary>
         /// Имя ресурса
@@ -26,12 +22,10 @@ namespace Gurrex.Common.Localization.Models
         /// <summary>
         /// Конструктор инициализатор
         /// </summary>
-        /// <param name="fileResourceName">Путь до файла ресурсов</param>
         /// <param name="resourceName">Имя ресурса</param>
         /// <param name="assembly">Вызывающая сборка</param>
-        public Resource(string fileResourceName, string resourceName, Assembly assembly)
+        public Resource(string resourceName, Assembly assembly)
         {
-            FileResourceName = fileResourceName;
             ResourceName = resourceName;
             Assembly = assembly;
         }
