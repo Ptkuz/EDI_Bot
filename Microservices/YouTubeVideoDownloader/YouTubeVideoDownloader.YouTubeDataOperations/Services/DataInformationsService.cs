@@ -1,24 +1,21 @@
-﻿using Gurrex.Common.Localization;
+﻿using Gurrex.Common.Helpers;
+using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Validations;
 using VideoLibrary;
-using YouTubeVideoDownloader.Interfaces.Services.Async;
-using YouTubeVideoDownloader.YouTubeDataOperations.Models;
-using YouTubeVideoDownloader.YouTubeDataOperations.Services.Base;
-using Gurrex.Common.Conversion;
-using Gurrex.Common.Helpers;
+using YouTubeVideoDownloader.Interfaces.Models.Services;
+using YouTubeVideoDownloader.Interfaces.Services;
 using YouTubeVideoDownloader.YouTubeDataOperations.Helpers;
-using System;
+using YouTubeVideoDownloader.YouTubeDataOperations.Models;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Request;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Response;
-using YouTubeVideoDownloader.Interfaces.Models.Services;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
 {
     /// <summary>
     /// Информация о видео и аудио асинхронно
     /// </summary>
-    public class DataInformationsService : DataInformation, IDataInformationAsync<YouTubeVideoInfoResponse, SpecificVideoInfoRequest, InfoStreams>
+    public class DataInformationsService : IDataInformationService<GetVideoInfoResponse, DownloadVideoRequest, InfoStreams>
     {
 
         /// <summary>
@@ -26,7 +23,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
         /// </summary>
         /// <param name="url">URL видео</param>
         /// <returns></returns>
-        public async Task<YouTubeVideoInfoResponse> GetYouTubeVideoInfoAsync(string url)
+        public async Task<GetVideoInfoResponse> GetYouTubeVideoInfoAsync(string url)
         {
             IEnumerable<YouTubeVideo> videos = await GetEnumerableYouTubeVideo(url);
 
@@ -40,7 +37,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
             IEnumerable<string> fps = GetEnumerableFps(videos).ConvertToString(" FPS");
             byte[] image = await GetVideoImageAsync(url).ConfigureAwait(false);
 
-            YouTubeVideoInfoResponse youTubeVideoInfo = new YouTubeVideoInfoResponse(mainInfo, audioBitrates, resolutions, audioFormats, videoFormats, fps, image);
+            GetVideoInfoResponse youTubeVideoInfo = new GetVideoInfoResponse(mainInfo, audioBitrates, resolutions, audioFormats, videoFormats, fps, image);
 
             return youTubeVideoInfo;
         }
@@ -51,7 +48,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
         /// <param name="specificVideoInfoRequest">Запрашиваемые свойства видео</param>
         /// <param name="serverSettings">Настройки приложения</param>
         /// <returns>Объект <see cref="YouTubeVideo"/></returns>
-        public async Task<InfoStreams> GetSpecisicVideoInfoAsync(SpecificVideoInfoRequest specificVideoInfoRequest, IServerSettings serverSettings)
+        public async Task<InfoStreams> GetSpecisicVideoInfoAsync(DownloadVideoRequest specificVideoInfoRequest, IServerSettings serverSettings)
         {
             IEnumerable<YouTubeVideo> videos = await GetEnumerableYouTubeVideo(specificVideoInfoRequest.Url);
             InfoStreams infoStreams = GetYouTubeVideo(videos, specificVideoInfoRequest, serverSettings);
@@ -189,13 +186,13 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
         }
 
         /// <summary>
-        /// Получить видео на основе свойств объекта <see cref="SpecificVideoInfoRequest"/>
+        /// Получить видео на основе свойств объекта <see cref="DownloadVideoRequest"/>
         /// </summary>
         /// <param name="videos">Перечисление объектов <see cref="YouTubeVideo"/></param>
-        /// <param name="specificVideoInfoRequest">Объект <see cref="SpecificVideoInfoRequest"/> со свойствами запрашиваемого видео</param>
+        /// <param name="specificVideoInfoRequest">Объект <see cref="DownloadVideoRequest"/> со свойствами запрашиваемого видео</param>
         /// <param name="serverSettings">Настройки приложения</param>
         /// <returns>Объект <see cref="YouTubeVideo"/> с информацией о видео</returns>
-        private InfoStreams GetYouTubeVideo(IEnumerable<YouTubeVideo> videos, SpecificVideoInfoRequest specificVideoInfoRequest, IServerSettings serverSettings)
+        private InfoStreams GetYouTubeVideo(IEnumerable<YouTubeVideo> videos, DownloadVideoRequest specificVideoInfoRequest, IServerSettings serverSettings)
         {
             try
             {

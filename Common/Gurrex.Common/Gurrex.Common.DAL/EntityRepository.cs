@@ -9,6 +9,7 @@ using Gurrex.Common.Validations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 
 namespace Gurrex.Common.DAL
 {
@@ -101,7 +102,7 @@ namespace Gurrex.Common.DAL
         /// <returns><see cref="T"/></returns>
         public async Task<T?> SingleOrDefaultEntityAsync(Expression<Func<T, bool>> predicate)
         {
-            return await _entities.SingleOrDefaultAsync(predicate);
+            return await Items.SingleOrDefaultAsync(predicate);
         }
 
         /// <summary>

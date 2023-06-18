@@ -5,14 +5,14 @@ using Microsoft.AspNetCore.SignalR;
 using YouTubeVideoDownloader.Interfaces.Models.Services;
 using YouTubeVideoDownloader.Interfaces.Services.Base;
 
-namespace YouTubeVideoDownloader.Interfaces.Services.Async
+namespace YouTubeVideoDownloader.Interfaces.Services
 {
     /// <summary>
     /// Асинхронный сервис конвертации
     /// </summary>
     /// <typeparam name="T">Хаб</typeparam>
     /// <typeparam name="K">Событие изменения данных</typeparam>
-    public interface IConvertationServiceAsync<T, K> : IHub<T>, IEvents<K> where T : Hub where K : EventArgs
+    public interface IConvertationService<T, K> : IHub<T>, IEvents<K> where T : Hub where K : EventArgs
     {
 
         /// <summary>

@@ -3,7 +3,7 @@ using YouTubeVideoDownloader.Interfaces.Models.Base;
 using YouTubeVideoDownloader.Interfaces.Models.Services;
 using YouTubeVideoDownloader.Interfaces.Services.Base;
 
-namespace YouTubeVideoDownloader.Interfaces.Services.Async
+namespace YouTubeVideoDownloader.Interfaces.Services
 {
     /// <summary>
     /// Асинхронное получение потока
@@ -11,7 +11,7 @@ namespace YouTubeVideoDownloader.Interfaces.Services.Async
     /// <typeparam name="T">Ответ, реализующий интерфейс <see cref="IBaseModel"/></typeparam>
     /// <typeparam name="K">Запрос, реализующий интерфейс <see cref="IBaseModel"/></typeparam>
     /// /// <typeparam name="U">Возвращает информацию о поток</typeparam>
-    public interface IDataInformationAsync<T, K, U> where T : class, IBaseModel where K : class, IBaseModel
+    public interface IDataInformationService<T, K, U> where T : class, IBaseModel where K : class, IBaseModel
     {
         /// <summary>
         /// Асинхронно получить всю информацию о видео по ссылке

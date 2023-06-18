@@ -7,13 +7,14 @@ using YouTubeVideoDownloader.Interfaces.Models.Base;
 using YouTubeVideoDownloader.Interfaces.Models.Requests;
 using YouTubeVideoDownloader.Interfaces.Models.Response;
 
-namespace YouTubeVideoDownloader.Interfaces.Services.Async
+namespace YouTubeVideoDownloader.Interfaces.Services
 {
-    public interface IDataBaseServiceAsync<M, Q, P, MI>
+    public interface IDataBaseService<M, Q, P, MI, SI>
         where M : class, IBaseModel, new()
-        where Q : class, IVideoInfoRequest, new()
+        where Q : class, IGetVideoInfoRequest, new()
         where MI : class
         where P : class, IYouTubeVideoInfoResponse<MI>, new()
+        where SI : class, IDownloadVideoRequest, new()
     {
 
 
@@ -23,6 +24,8 @@ namespace YouTubeVideoDownloader.Interfaces.Services.Async
         M InfoStream { get; set; }
 
         Task<bool> CheckYouTubeInfoAsync(Q videoInfoRequest);
+
+        Task<bool> CheckVideoAsync(SI specificVideoInfoRequest);
 
         /// <summary>
         /// Асинхронные операции с базой данных после получения информации о видео

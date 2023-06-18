@@ -9,7 +9,7 @@ using YouTubeVideoDownloader.Interfaces.Models.Base;
 
 namespace YouTubeVideoDownloader.Interfaces.Models.Requests
 {
-    public interface ISpecificVideoInfoRequest : IBaseModel
+    public interface IDownloadVideoRequest : IBaseModel
     {
         /// <summary>
         /// Ссылка на видео

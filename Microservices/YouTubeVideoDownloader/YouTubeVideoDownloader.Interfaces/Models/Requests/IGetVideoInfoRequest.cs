@@ -7,7 +7,7 @@ using YouTubeVideoDownloader.Interfaces.Models.Base;
 
 namespace YouTubeVideoDownloader.Interfaces.Models.Requests
 {
-    public interface IVideoInfoRequest : IBaseModel
+    public interface IGetVideoInfoRequest : IBaseModel
     {
         string Url { get; set; }
     }

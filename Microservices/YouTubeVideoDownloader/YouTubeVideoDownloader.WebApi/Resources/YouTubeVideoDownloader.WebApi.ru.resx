@@ -120,6 +120,15 @@
   <data name="Program.ExceptionConnectionStringNullOrEmpty" xml:space="preserve">
     <value>Строка подключения к базе данных не может быть пустой</value>
   </data>
+  <data name="YouTubeDownloadController.AudioDownload" xml:space="preserve">
+    <value>Аудио файл по ссылке "{0}" успешно скачан на сервер</value>
+  </data>
+  <data name="YouTubeDownloadController.AudioExist" xml:space="preserve">
+    <value>Аудио по ссылке "{0}" уже существует в базе данных</value>
+  </data>
+  <data name="YouTubeDownloadController.DownloadFailed" xml:space="preserve">
+    <value>При скачивании произошла ошибка!</value>
+  </data>
   <data name="YouTubeDownloadController.DownloadVideoInfoAsyncException" xml:space="preserve">
     <value>При скачивании видео "{0}" произошла ошибка "{1}". Попробуйте еще раз или повторите попытку позже</value>
   </data>
@@ -128,5 +137,11 @@
   </data>
   <data name="YouTubeDownloadController.GetVideoInfoAsyncSuccess" xml:space="preserve">
     <value>Пользователь "{0}" получил информацию о видео по ссылке "{1}" </value>
+  </data>
+  <data name="YouTubeDownloadController.VideoDownload" xml:space="preserve">
+    <value>Видео файл по ссылке "{0}" успешно скачан на сервер</value>
+  </data>
+  <data name="YouTubeDownloadController.VideoExist" xml:space="preserve">
+    <value>Видео по ссылке "{0}" уже существует в базе данных</value>
   </data>
 </root>

@@ -16,7 +16,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse
     /// Информация о конкретном видео
     /// </summary>
     [DataContract]
-    public class SpecificVideoInfoRequest : BaseModel, ISpecificVideoInfoRequest
+    public class DownloadVideoRequest : BaseModel, IDownloadVideoRequest
     {
 
         /// <summary>

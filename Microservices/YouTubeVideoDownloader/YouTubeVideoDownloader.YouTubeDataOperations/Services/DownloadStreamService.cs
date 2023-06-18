@@ -6,7 +6,7 @@ using Gurrex.Web.SignalR.Hubs.Async;
 using Microsoft.AspNetCore.SignalR;
 using VideoLibrary;
 using YouTubeVideoDownloader.DAL.Entities;
-using YouTubeVideoDownloader.Interfaces.Services.Async;
+using YouTubeVideoDownloader.Interfaces.Services;
 using YouTubeVideoDownloader.YouTubeDataOperations.Enums;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.Services;
@@ -16,7 +16,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
     /// <summary>
     /// Асинхронная работа с потоком
     /// </summary>
-    public class DownloadStreamAsync : IDownloadStreamAsync<InfoStreams, SenderInfoHubAsync, ProcessEventArgs>
+    public class DownloadStreamService : IDownloadStreamService<InfoStreams, SenderInfoHubAsync, ProcessEventArgs>
     {
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
         /// </summary>
         public event IEvents<ProcessEventArgs>.ProcessHandler? OutputDataChanged;
 
-        public DownloadStreamAsync(ISenderInfoHubAsync<SenderInfoHubAsync> senderInfoHubAsync, IHubContext<SenderInfoHubAsync> hubContext)
+        public DownloadStreamService(ISenderInfoHubAsync<SenderInfoHubAsync> senderInfoHubAsync, IHubContext<SenderInfoHubAsync> hubContext)
         {
             SenderInfoHubAsync = senderInfoHubAsync;
             HubContext = hubContext;

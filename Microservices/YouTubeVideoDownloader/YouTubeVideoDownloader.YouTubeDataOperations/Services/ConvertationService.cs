@@ -14,11 +14,11 @@ using Gurrex.Web.SignalR.Hubs.Async;
 using Microsoft.AspNetCore.SignalR;
 using System.Diagnostics;
 using YouTubeVideoDownloader.Interfaces.Models.Services;
-using YouTubeVideoDownloader.Interfaces.Services.Async;
+using YouTubeVideoDownloader.Interfaces.Services;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
 {
-    public class ConvertationService : ProcessOperations, IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs>
+    public class ConvertationService : ProcessOperations, IConvertationService<SenderInfoHubAsync, ProcessEventArgs>
     {
         /// <summary>
         /// Токен отмены

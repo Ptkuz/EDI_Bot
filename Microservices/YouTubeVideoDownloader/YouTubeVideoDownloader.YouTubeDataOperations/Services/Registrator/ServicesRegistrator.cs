@@ -2,17 +2,10 @@
 using Gurrex.Web.Interfaces.SignalR;
 using Gurrex.Web.SignalR.Hubs.Async;
 using Microsoft.Extensions.DependencyInjection;
-using YouTubeVideoDownloader.DAL.Entities;
-using YouTubeVideoDownloader.DAL;
-using YouTubeVideoDownloader.Interfaces.DAL;
-using YouTubeVideoDownloader.Interfaces.Services.Async;
-using YouTubeVideoDownloader.Interfaces.Services.Sync;
+using YouTubeVideoDownloader.Interfaces.Services;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Request;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse.Response;
-using YouTubeVideoDownloader.YouTubeDataOperations.Services.Async;
-using YouTubeVideoDownloader.YouTubeDataOperations.Services.Sync;
-using Image = YouTubeVideoDownloader.DAL.Entities.Image;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Registrator
 {
@@ -27,13 +20,11 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Registrator
         /// <param name="services">Коллекция сервисов</param>
         /// <returns></returns>
         public static IServiceCollection AddDownloaderServices(this IServiceCollection services) => services
-
-            .AddTransient<IDataInformation<YouTubeVideoInfoResponse>, DataInformations>()
-            .AddTransient<IDataInformationAsync<YouTubeVideoInfoResponse, SpecificVideoInfoRequest, InfoStreams>, DataInformationsAsync>()
-            .AddTransient<IDownloadStreamAsync<InfoStreams, SenderInfoHubAsync, ProcessEventArgs>, DownloadStreamAsync>()
+            .AddTransient<IDataInformationService<GetVideoInfoResponse, DownloadVideoRequest, InfoStreams>, DataInformationsService>()
+            .AddTransient<IDownloadStreamService<InfoStreams, SenderInfoHubAsync, ProcessEventArgs>, DownloadStreamService>()
             .AddTransient<ISenderInfoHubAsync<SenderInfoHubAsync>, SenderInfoHubAsync>()
-            .AddTransient<IConvertationServiceAsync<SenderInfoHubAsync, ProcessEventArgs>, ConvertationServiceAsync>()
-            .AddTransient<IDataBaseServiceAsync<InfoStreams, VideoInfoRequest, YouTubeVideoInfoResponse, MainInfo>, DataBaseServiceAsync>()
+            .AddTransient<IConvertationService<SenderInfoHubAsync, ProcessEventArgs>, ConvertationService>()
+            .AddTransient<IDataBaseService<InfoStreams, GetVideoInfoRequest, GetVideoInfoResponse, MainInfo, DownloadVideoRequest>, DataBaseServiceAsync>()
             ;
     }
 }

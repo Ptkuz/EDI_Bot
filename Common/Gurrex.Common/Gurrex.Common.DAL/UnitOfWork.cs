@@ -44,7 +44,8 @@ namespace Gurrex.Common.DAL
                 if (typeof(T).Name != repositoryType.Name) 
                 {
                     string errorMessage = ManagerResources.GetString(new Resource("UnitOfWork.ExceptionNotEqualsTypesRepositories", StaticHelpers.GetAssemblyInfo().Assembly));
-                    _logger.LogDebug(errorMessage, nameof(T), nameof(repositoryType));
+                    string resultString = ManagerResources.GetResultString(errorMessage, nameof(T), nameof(repositoryType));
+                    _logger.LogDebug(resultString);
                     throw new TypeUnloadedException(errorMessage);
                 }
 

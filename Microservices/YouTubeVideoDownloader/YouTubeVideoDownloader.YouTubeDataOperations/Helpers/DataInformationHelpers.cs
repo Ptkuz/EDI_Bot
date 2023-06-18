@@ -18,7 +18,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Helpers
     /// <summary>
     /// Хелперы DataInformation
     /// </summary>
-    internal static class DataInformationHelpers
+    public static class DataInformationHelpers
     {
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Helpers
         /// <param name="key">Ключ</param>
         /// <exception cref="NoContainsKeyException">Исключение, если такого ключа в ссылке нет</exception>
         /// <returns>Значение по ключу в ссылке</returns>
-        internal static string GetUrlValueByKey(string url, string key)
+        public static string GetUrlValueByKey(string url, string key)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Helpers
             }
         }
 
-        internal static string GetSimpleYouTubeUrl(string url) 
+        public static string GetSimpleYouTubeUrl(string url) 
         {
             string value = GetUrlValueByKey(url, "v");
             string resource = ManagerResources.GetString(new Resource("DataInformationHelpers.TemplateYouTubeUrl", StaticHelpers.GetAssemblyInfo().Assembly));

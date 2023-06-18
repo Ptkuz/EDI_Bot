@@ -13,10 +13,10 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models.WebRequestResponse
     /// <summary>
     /// Запрос на получение информации о видео
     /// </summary>
-    public class VideoInfoRequest : BaseModel, IVideoInfoRequest
+    public class GetVideoInfoRequest : BaseModel, IGetVideoInfoRequest
     {
 
-        public VideoInfoRequest() { }
+        public GetVideoInfoRequest() { }
 
         /// <summary>
         /// Ссылка на видео
