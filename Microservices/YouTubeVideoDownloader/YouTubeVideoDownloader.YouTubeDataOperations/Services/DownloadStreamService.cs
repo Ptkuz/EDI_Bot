@@ -1,42 +1,40 @@
-﻿using Gurrex.Common.Helpers;
-using Gurrex.Common.Interfaces.Events;
+﻿using Gurrex.Common.Interfaces.Events;
 using Gurrex.Common.Services.Models.Events;
 using Gurrex.Web.Interfaces.SignalR;
-using Gurrex.Web.SignalR.Hubs.Async;
+using Gurrex.Web.SignalR.Hubs;
+using Gurrex.Web.SignalR.Models;
 using Microsoft.AspNetCore.SignalR;
 using VideoLibrary;
-using YouTubeVideoDownloader.DAL.Entities;
 using YouTubeVideoDownloader.Interfaces.Services;
 using YouTubeVideoDownloader.YouTubeDataOperations.Enums;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
-using YouTubeVideoDownloader.YouTubeDataOperations.Models.Services;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
 {
     /// <summary>
     /// Асинхронная работа с потоком
     /// </summary>
-    public class DownloadStreamService : IDownloadStreamService<InfoStreams, SenderInfoHubAsync, ProcessEventArgs>
+    public class DownloadStreamService : IDownloadStreamService<InfoStreams>
     {
 
         /// <summary>
         /// Хаб для передачи статусов клиенту
         /// </summary>
-        public ISenderInfoHubAsync<SenderInfoHubAsync> SenderInfoHubAsync { get; set; } = null!;
+        public ISenderInfoHub<SenderInfoHub> SenderInfoHub { get; set; } = null!;
 
         /// <summary>
         /// Контекст хаба
         /// </summary>
-        public IHubContext<SenderInfoHubAsync> HubContext { get; set; } = null!;
+        public IHubContext<SenderInfoHub> HubContext { get; set; } = null!;
 
         /// <summary>
         /// Событие изменения прогресса
         /// </summary>
         public event IEvents<ProcessEventArgs>.ProcessHandler? OutputDataChanged;
 
-        public DownloadStreamService(ISenderInfoHubAsync<SenderInfoHubAsync> senderInfoHubAsync, IHubContext<SenderInfoHubAsync> hubContext)
+        public DownloadStreamService(ISenderInfoHub<SenderInfoHub> senderInfoHubAsync, IHubContext<SenderInfoHub> hubContext)
         {
-            SenderInfoHubAsync = senderInfoHubAsync;
+            SenderInfoHub = senderInfoHubAsync;
             HubContext = hubContext;
         }
 
@@ -50,7 +48,32 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
             {
                 YouTubeVideo youTubeAudio = infoStreams.AudioStream;
                 Stream audioStream = await youTubeAudio.StreamAsync();
-                var audio = DownloadDataAsync(audioStream, infoStreams.AudioFileFullName, SenderInfoHubAsync, TypeData.Audio, HubContext, cancel);
+                var audio = DownloadDataAsync(audioStream, infoStreams.AudioFileFullName, SenderInfoHub,
+                    (length, status) =>
+                    {
+                        SignalRMessageModel signalRMessageModel = new SignalRMessageModel();
+                        signalRMessageModel.HubConnection = "ReceiveAudioStatusAsync";
+
+                        switch (status)
+                        {
+                            case ProgressStatus.Started:
+                                signalRMessageModel.Message = "Скачивание аудио дорожки началось!";
+                                break;
+                            case ProgressStatus.Progressing:
+                                signalRMessageModel.Message = $"{length}";
+                                break;
+                            case ProgressStatus.Completed:
+                                signalRMessageModel.Message = "Скачивание аудио дорожки закончилось!";
+                                break;
+                            case ProgressStatus.Error:
+                                signalRMessageModel.Message = "Скачивание аудио дорожки завершилось с ошибкой!";
+                                break;
+                            default:
+                                break;
+                        }
+                        return signalRMessageModel;
+                    },
+                    HubContext, cancel);
 
                 YouTubeVideo? youTubeVideo = default;
                 Stream? videoStream = default;
@@ -60,7 +83,32 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
                 {
                     youTubeVideo = infoStreams.VideoStream;
                     videoStream = await youTubeVideo.StreamAsync();
-                    video = DownloadDataAsync(videoStream, infoStreams.VideoFileFullName, SenderInfoHubAsync, TypeData.Video, HubContext, cancel);
+                    video = DownloadDataAsync(videoStream, infoStreams.VideoFileFullName, SenderInfoHub,
+                        (length, status) =>
+                        {
+                            SignalRMessageModel signalRMessageModel = new SignalRMessageModel();
+                            signalRMessageModel.HubConnection = "ReceiceVideoStatusAsync";
+
+                            switch (status)
+                            {
+                                case ProgressStatus.Started:
+                                    signalRMessageModel.Message = "Скачивание видео дорожки началось!";
+                                    break;
+                                case ProgressStatus.Progressing:
+                                    signalRMessageModel.Message = $"{length}";
+                                    break;
+                                case ProgressStatus.Completed:
+                                    signalRMessageModel.Message = "Скачивание видео дорожки закончилось!";
+                                    break;
+                                case ProgressStatus.Error:
+                                    signalRMessageModel.Message = "Скачивание видео дорожки завершилось с ошибкой!";
+                                    break;
+                                default:
+                                    break;
+                            }
+                            return signalRMessageModel;
+                        },
+                        HubContext, cancel);
                     await Task.WhenAll(audio, video);
                 }
                 else
@@ -76,8 +124,9 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
             }
         }
 
-        private async Task<bool> DownloadDataAsync(Stream stream, string fileName, ISenderInfoHubAsync<SenderInfoHubAsync> senderInfoHubAsync, TypeData typeData, IHubContext<SenderInfoHubAsync> hubContext, CancellationToken cancel)
+        private async Task<bool> DownloadDataAsync(Stream stream, string fileName, ISenderInfoHub<SenderInfoHub> senderInfoHubAsync, Func<long, ProgressStatus, SignalRMessageModel> func, IHubContext<SenderInfoHub> hubContext, CancellationToken cancel)
         {
+            var status = ProgressStatus.Started;
             using (stream)
             {
                 long length = default;
@@ -85,27 +134,26 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
 
                 using (Stream file = File.Create(fileName))
                 {
+                    await SendMessageSignalR(senderInfoHubAsync, hubContext, cancel, length, status, func);
                     int len;
                     while ((len = await stream.ReadAsync(buffer, 0, buffer.Length)) > 0)
                     {
                         file.Write(buffer, 0, len);
                         length += len;
-
-                        switch (typeData)
-                        {
-                            case TypeData.Audio:
-                                await senderInfoHubAsync.ContextSendInfoAllClientsAsync(hubContext, "ReceiveAudioStatusAsync", cancel, $"Скачивание аудио дорожки {fileName} - ({length})");
-                                break;
-                            case TypeData.Video:
-                                await senderInfoHubAsync.ContextSendInfoAllClientsAsync(hubContext, "ReceiceVideoStatusAsync", cancel, $"Скачивание видео дорожки {fileName} - ({length})");
-                                break;
-                            default:
-                                break;
-                        }
+                        status = ProgressStatus.Progressing;
+                        await SendMessageSignalR(senderInfoHubAsync, hubContext, cancel, length, status, func);
                     }
                 }
+                status = ProgressStatus.Completed;
+                await SendMessageSignalR(senderInfoHubAsync, hubContext, cancel, length, status, func);
             }
             return true;
+        }
+
+        private async Task SendMessageSignalR(ISenderInfoHub<SenderInfoHub> senderInfoHub, IHubContext<SenderInfoHub> hubContext, CancellationToken cancel, long length, ProgressStatus progressStatus, Func<long, ProgressStatus, SignalRMessageModel> func)
+        {
+            var signalRMessageModel = func.Invoke(length, progressStatus);
+            await senderInfoHub.ContextSendInfoAllClientsAsync(hubContext, signalRMessageModel.HubConnection, cancel, signalRMessageModel.Message);
         }
     }
 }

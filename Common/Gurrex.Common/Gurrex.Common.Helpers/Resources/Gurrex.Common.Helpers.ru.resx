@@ -126,7 +126,7 @@
   <data name="IOHelpers.DirectoryNotFoundEcxeption" xml:space="preserve">
     <value>Директория "{0}" не найден</value>
   </data>
-  <data name="IOHelpers.FileNotFoundEcxeption" xml:space="preserve">
+  <data name="IOHelpers.FileNotFoundException" xml:space="preserve">
     <value>Файл "{0}" не найден</value>
   </data>
 </root>

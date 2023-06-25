@@ -175,12 +175,12 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Models
         {
             if (VideoStream is null)
             {
-                string path = Path.Combine(serverSettings.PathToAudioStorage, AudioStream.Title);
+                string path = Path.Combine(serverSettings.PathToAudioStorage, Id.ToString());
                 return $"{path}{AudioFileExtention}";
             }
             else
             {
-                string path = Path.Combine(serverSettings.PathToVideoStorage, VideoStream.Title);
+                string path = Path.Combine(serverSettings.PathToVideoStorage, Id.ToString());
                 return $"{path}{VideoFileExtention}";
             }
         }

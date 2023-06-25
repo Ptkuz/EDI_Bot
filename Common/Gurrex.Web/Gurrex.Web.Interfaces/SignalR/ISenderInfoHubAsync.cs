@@ -11,7 +11,7 @@ namespace Gurrex.Web.Interfaces.SignalR
     /// Асинхронная работа с SignalR хабом
     /// </summary>
     /// <typeparam name="T">Класс хаба, ответственный за отправку сообщений</typeparam>
-    public interface ISenderInfoHubAsync<T> where T : Hub
+    public interface ISenderInfoHub<T> where T : Hub
     {
         Task ContextSendInfoAllClientsAsync(IHubContext<T> hubContext, string methodName, CancellationToken cancel, params object[] arguments);
 

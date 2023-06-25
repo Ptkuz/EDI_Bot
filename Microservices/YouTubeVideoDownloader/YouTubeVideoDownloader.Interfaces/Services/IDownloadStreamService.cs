@@ -15,12 +15,8 @@ namespace YouTubeVideoDownloader.Interfaces.Services
     /// Асинхронное скачивание потоков
     /// </summary>
     /// <typeparam name="T">Информация о видео, полученная по ссылке</typeparam>
-    /// <typeparam name="K">Модель хаба</typeparam>
-    /// <typeparam name="U">Событие изменения прогресса</typeparam>
-    public interface IDownloadStreamService<T, K, U> : IHub<K>, IEvents<U>
+    public interface IDownloadStreamService<T>
         where T : IBaseModel
-        where K : Hub
-        where U : EventArgs
     {
 
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿using Gurrex.Common.Services.Models.Events;
 using Gurrex.Web.Interfaces.SignalR;
-using Gurrex.Web.SignalR.Hubs.Async;
+using Gurrex.Web.SignalR.Hubs;
 using Microsoft.Extensions.DependencyInjection;
 using YouTubeVideoDownloader.Interfaces.Services;
 using YouTubeVideoDownloader.YouTubeDataOperations.Models;
@@ -21,9 +21,9 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services.Registrator
         /// <returns></returns>
         public static IServiceCollection AddDownloaderServices(this IServiceCollection services) => services
             .AddTransient<IDataInformationService<GetVideoInfoResponse, DownloadVideoRequest, InfoStreams>, DataInformationsService>()
-            .AddTransient<IDownloadStreamService<InfoStreams, SenderInfoHubAsync, ProcessEventArgs>, DownloadStreamService>()
-            .AddTransient<ISenderInfoHubAsync<SenderInfoHubAsync>, SenderInfoHubAsync>()
-            .AddTransient<IConvertationService<SenderInfoHubAsync, ProcessEventArgs>, ConvertationService>()
+            .AddTransient<IDownloadStreamService<InfoStreams>, DownloadStreamService>()
+            .AddTransient<ISenderInfoHub<SenderInfoHub>, SenderInfoHub>()
+            .AddTransient<IConvertationService<SenderInfoHub, ProcessEventArgs>, ConvertationService>()
             .AddTransient<IDataBaseService<InfoStreams, GetVideoInfoRequest, GetVideoInfoResponse, MainInfo, DownloadVideoRequest>, DataBaseServiceAsync>()
             ;
     }

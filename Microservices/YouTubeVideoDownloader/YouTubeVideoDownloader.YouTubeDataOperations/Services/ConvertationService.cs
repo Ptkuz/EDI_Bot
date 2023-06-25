@@ -1,6 +1,4 @@
 ﻿using Gurrex.Common.Helpers;
-using Gurrex.Common.Helpers.Models;
-using Gurrex.Common.Interfaces;
 using Gurrex.Common.Interfaces.Events;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
@@ -10,7 +8,7 @@ using Gurrex.Common.Services.Models;
 using Gurrex.Common.Services.Models.Events;
 using Gurrex.Common.Validations;
 using Gurrex.Web.Interfaces.SignalR;
-using Gurrex.Web.SignalR.Hubs.Async;
+using Gurrex.Web.SignalR.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using System.Diagnostics;
 using YouTubeVideoDownloader.Interfaces.Models.Services;
@@ -18,7 +16,7 @@ using YouTubeVideoDownloader.Interfaces.Services;
 
 namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
 {
-    public class ConvertationService : ProcessOperations, IConvertationService<SenderInfoHubAsync, ProcessEventArgs>
+    public class ConvertationService : ProcessOperations, IConvertationService<SenderInfoHub, ProcessEventArgs>
     {
         /// <summary>
         /// Токен отмены
@@ -28,16 +26,16 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
         /// <summary>
         /// Хаб отправки сообщений
         /// </summary>
-        public ISenderInfoHubAsync<SenderInfoHubAsync> SenderInfoHubAsync { get; set; } = null!;
+        public ISenderInfoHub<SenderInfoHub> SenderInfoHub { get; set; } = null!;
 
         /// <summary>
         /// Контекст хаба
         /// </summary>
-        public IHubContext<SenderInfoHubAsync> HubContext { get; set; } = null!;
+        public IHubContext<SenderInfoHub> HubContext { get; set; } = null!;
 
-        public ConvertationService(ISenderInfoHubAsync<SenderInfoHubAsync> senderInfoHubAsync, IHubContext<SenderInfoHubAsync> hubContext)
+        public ConvertationService(ISenderInfoHub<SenderInfoHub> senderInfoHub, IHubContext<SenderInfoHub> hubContext)
         {
-            SenderInfoHubAsync = senderInfoHubAsync;
+            SenderInfoHub = senderInfoHub;
             HubContext = hubContext;
         }
 
@@ -69,7 +67,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
 
                 videoFilePath = $"{IOHelpers.PathCombine(true, false, convertationModel.FilesPath, $"{convertationModel.VideoFileName}{convertationModel.VideoFileExnetion}")}";
                 audioFilePath = $"{IOHelpers.PathCombine(true, false, convertationModel.FilesPath, $"{convertationModel.AudioFileName}{convertationModel.AudioFileExtention}")}";
-                tempraryName = $"{IOHelpers.PathCombine(false, false, convertationModel.FilesPath, $"File_{convertationModel.VideoFileName}{convertationModel.VideoFileExnetion}")}";
+                tempraryName = $"{IOHelpers.PathCombine(false, false, convertationModel.FilesPath, $"{convertationModel.FinalFileName}")}";
 
                 string resource = ManagerResources.GetString(new Resource("ConvertationService.ConvertCommand", StaticHelpers.GetAssemblyInfo().Assembly));
                 string cmdCommand = ManagerResources.GetResultString(resource, videoFilePath, audioFilePath, convertationModel.Fps, tempraryName);
@@ -144,7 +142,7 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
 
         private async Task SendDataSignalR(object sender, ProcessEventArgs data, CancellationToken cancel)
         {
-            await SenderInfoHubAsync.ContextSendInfoAllClientsAsync(HubContext, "ReceiceMergeAsync", cancel, data.Output);
+            await SenderInfoHub.ContextSendInfoAllClientsAsync(HubContext, "ReceiceMergeAsync", cancel, data.Output);
         }
 
     }

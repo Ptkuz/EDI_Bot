@@ -1,18 +1,14 @@
-﻿using Gurrex.Common.Validations;
+﻿using Gurrex.Web.SignalR.Hubs.Base;
+using Gurrex.Web.SignalR.Hubs;
 using Gurrex.Web.Interfaces.SignalR;
-using Gurrex.Web.SignalR.Hubs.Base;
 using Microsoft.AspNetCore.SignalR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Gurrex.Common.Validations;
 
-namespace Gurrex.Web.SignalR.Hubs.Async
+namespace Gurrex.Web.SignalR.Hubs
 {
-    public class SenderInfoHubAsync : SenderInfo, ISenderInfoHubAsync<SenderInfoHubAsync>
+    public class SenderInfoHub : SenderInfo, ISenderInfoHub<SenderInfoHub>
     {
-        public async Task ContextSendInfoAllClientsAsync(IHubContext<SenderInfoHubAsync> hubContext, string methodName, CancellationToken cancel, params object[] arguments)
+        public async Task ContextSendInfoAllClientsAsync(IHubContext<SenderInfoHub> hubContext, string methodName, CancellationToken cancel, params object[] arguments)
         {
             try
             {
@@ -23,13 +19,13 @@ namespace Gurrex.Web.SignalR.Hubs.Async
                     await hubContext.Clients.All.SendAsync(methodName, argument, cancel);
                 }
             }
-            catch (Exception) 
+            catch (Exception)
             {
                 throw;
             }
         }
 
-        public async Task ContextSendInfoByIdAsync(IHubContext<SenderInfoHubAsync> hubContext, string methodName, string userId, CancellationToken cancel, params object[] arguments)
+        public async Task ContextSendInfoByIdAsync(IHubContext<SenderInfoHub> hubContext, string methodName, string userId, CancellationToken cancel, params object[] arguments)
         {
             try
             {
@@ -41,13 +37,13 @@ namespace Gurrex.Web.SignalR.Hubs.Async
                     await hubContext.Clients.User(userId).SendAsync(methodName, argument, cancel);
                 }
             }
-            catch (Exception) 
+            catch (Exception)
             {
                 throw;
             }
         }
 
-        public IClientProxy ContextGetUserById(IHubContext<SenderInfoHubAsync> hubContext, string userId)
+        public IClientProxy ContextGetUserById(IHubContext<SenderInfoHub> hubContext, string userId)
         {
             try
             {
@@ -55,7 +51,7 @@ namespace Gurrex.Web.SignalR.Hubs.Async
                 IClientProxy clientProxy = hubContext.Clients.User(userId);
                 return clientProxy;
             }
-            catch (Exception) 
+            catch (Exception)
             {
                 throw;
             }

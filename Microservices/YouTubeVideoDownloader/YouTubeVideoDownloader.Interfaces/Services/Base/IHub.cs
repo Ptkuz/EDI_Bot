@@ -16,7 +16,7 @@ namespace YouTubeVideoDownloader.Interfaces.Services.Base
         /// <summary>
         /// Хаб для передачи статусов клиенту
         /// </summary>
-        ISenderInfoHubAsync<T> SenderInfoHubAsync { get; set; }
+        ISenderInfoHub<T> SenderInfoHub { get; set; }
 
         /// <summary>
         /// Контекст хаба

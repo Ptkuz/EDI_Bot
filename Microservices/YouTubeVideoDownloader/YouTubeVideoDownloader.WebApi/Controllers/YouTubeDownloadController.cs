@@ -2,7 +2,7 @@ using Gurrex.Common.Helpers;
 using Gurrex.Common.Localization;
 using Gurrex.Common.Localization.Models;
 using Gurrex.Common.Services.Models.Events;
-using Gurrex.Web.SignalR.Hubs.Async;
+using Gurrex.Web.SignalR.Hubs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Net.Mime;
@@ -35,9 +35,9 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
         /// </summary>
         private readonly IDataInformationService<GetVideoInfoResponse, DownloadVideoRequest, InfoStreams> _dataInformationsAsync = null!;
 
-        private readonly IDownloadStreamService<InfoStreams, SenderInfoHubAsync, ProcessEventArgs> _downloadStreamAsync = null!;
+        private readonly IDownloadStreamService<InfoStreams> _downloadStreamAsync = null!;
 
-        private readonly IConvertationService<SenderInfoHubAsync, ProcessEventArgs> _convertationServiceAsync = null!;
+        private readonly IConvertationService<SenderInfoHub, ProcessEventArgs> _convertationServiceAsync = null!;
 
         private readonly IDataBaseService<InfoStreams, GetVideoInfoRequest, GetVideoInfoResponse, MainInfo, DownloadVideoRequest> _dataBaseServiceAsync = null!;
 
@@ -50,8 +50,8 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
         public YouTubeDownloadController(
             ILogger<YouTubeDownloadController> logger,
             IDataInformationService<GetVideoInfoResponse, DownloadVideoRequest, InfoStreams> dataInformationsAsync,
-            IDownloadStreamService<InfoStreams, SenderInfoHubAsync, ProcessEventArgs> downloadStreamAsync,
-            IConvertationService<SenderInfoHubAsync, ProcessEventArgs> convertationServiceAsync,
+            IDownloadStreamService<InfoStreams> downloadStreamAsync,
+            IConvertationService<SenderInfoHub, ProcessEventArgs> convertationServiceAsync,
             IDataBaseService<InfoStreams, GetVideoInfoRequest, GetVideoInfoResponse, MainInfo, DownloadVideoRequest> dataBaseServiceAsync,
             IOptions<ServerSettings> serverSettings
             )
@@ -114,7 +114,7 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
             try
             {
                 DownloadVideoResponse downloadVideoResponse;
-                if (await _dataBaseServiceAsync.CheckVideoAsync(specificVideoInfoRequest)) 
+                if (await _dataBaseServiceAsync.CheckVideoAsync(specificVideoInfoRequest))
                 {
                     string resource = ManagerResources.GetString(new Resource("YouTubeDownloadController.VideoExist", StaticHelpers.GetAssemblyInfo().Assembly));
                     string resultString = ManagerResources.GetResultString(resource, DataInformationHelpers.GetSimpleYouTubeUrl(specificVideoInfoRequest.Url));
@@ -160,7 +160,7 @@ namespace YouTubeVideoDownloader.WebApi.Controllers
                         return Ok(new DownloadVideoResponse(resultString));
                     }
                 }
-                else 
+                else
                 {
                     string resource = ManagerResources.GetString(new Resource("YouTubeDownloadController.DownloadFailed", StaticHelpers.GetAssemblyInfo().Assembly));
                     string resultString = ManagerResources.GetResultString(resource);

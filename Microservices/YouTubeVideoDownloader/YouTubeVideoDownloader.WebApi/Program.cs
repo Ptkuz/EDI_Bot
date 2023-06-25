@@ -1,4 +1,4 @@
-using Gurrex.Web.SignalR.Hubs.Async;
+using Gurrex.Web.SignalR.Hubs;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using NLog;
@@ -62,7 +62,7 @@ app.UseRequestLocalization(new RequestLocalizationOptions
     SupportedUICultures = supportedCultures
 });
 
-app.MapHub<SenderInfoHubAsync>("/statusInfo");
+app.MapHub<SenderInfoHub>("/statusInfo");
 
 app.UseHttpsRedirection();
 

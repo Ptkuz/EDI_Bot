@@ -65,10 +65,14 @@ namespace YouTubeVideoDownloader.YouTubeDataOperations.Services
 
         public async Task<bool> AfterDownloadVideoAsync(CancellationToken cancel)
         {
-            string videoFileFullName = InfoStream.VideoFileFullName;
+            string videoFileFullName = InfoStream.FinalFileFullName;
             long length = IOHelpers.GetLengthFile(videoFileFullName);
 
-            YouTubeInfo youTubeInfo = await _unitOfWork.GetEntityRepository<DownloaderRepository<YouTubeInfo>, YouTubeInfo>(typeof(DownloaderRepository<>)).SingleOrDefaultEntityAsync(x => x.Url == DataInformationHelpers.GetSimpleYouTubeUrl(InfoStream.Url));
+            YouTubeInfo? youTubeInfo = 
+                await _unitOfWork.
+                GetEntityRepository<DownloaderRepository<YouTubeInfo>, YouTubeInfo>(typeof(DownloaderRepository<>)).
+                SingleOrDefaultEntityAsync(x => x.Url == DataInformationHelpers.
+                GetSimpleYouTubeUrl(InfoStream.Url));
 
             if (youTubeInfo is not null)
             {
