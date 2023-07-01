@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VideoDownloader.MAUI.MainPage">
+
+    <!--Табличный контейнер-->
+    <Grid>
+        <!--Строки-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <!--Столбцы-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+
+        <StackLayout Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <Entry Placeholder="Вставьте ссылку на видео" HorizontalOptions="FillAndExpand"></Entry>
+            <Button Text="Найти видео"></Button>
+        </StackLayout>
+        
+        <StackLayout Grid.Row="1" Orientation="Vertical">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <!--Выбор разрешения-->
+                <StackLayout Grid.Row="0" Orientation="Vertical">
+                    <Label Text="Выберите разрешение:"></Label>
+                    <Entry Text="Выбранное разрешение"></Entry>
+                </StackLayout>
+
+                <!--Выбор битрейта аудио-->
+                <StackLayout Grid.Row="1" Orientation="Vertical">
+                    <Label Text="Выберите битрейт аудио:"></Label>
+                    <Entry Text="Выбранный битрейт аудио"></Entry>
+                </StackLayout>
+
+                <!--Выбор формата аудио-->
+                <StackLayout Grid.Row="2" Orientation="Vertical">
+                    <Label Text="Выберите формат аудио:"></Label>
+                    <Entry Text="Выбранный формат аудио"></Entry>
+                </StackLayout>
+
+                <!--Выбор формата видео-->
+                <StackLayout Grid.Row="3" Orientation="Vertical">
+                    <Label Text="Выберите формат видео:"></Label>
+                    <Entry Text="Выбранный формат видео"></Entry>
+                </StackLayout>
+
+                <!--Выбор количество FPS-->
+                <StackLayout Grid.Row="4" Orientation="Vertical">
+                    <Label Text="Выберите формат FPS:"></Label>
+                    <Entry Text="Выбранный формат FPS"></Entry>
+                </StackLayout>
+            </Grid>
+
+            <StackLayout Grid.Row="5" Orientation="Vertical">
+                <Label Text="Путь сохранения" HorizontalOptions="FillAndExpand"></Label>
+                <Entry Placeholder="Путь до видео"></Entry>
+
+                <StackLayout Grid.Row="5" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                    <Button Text="Выбрать папку"></Button>
+                    <Button Text="Откыть папку"></Button>
+                </StackLayout>
+            
+            </StackLayout>
+
+            <StackLayout Grid.Row="5" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                <CheckBox Grid.Row="6"></CheckBox>
+                <Label Grid.Column="1" Grid.Row="5" Text="Путь сохранения"></Label>
+            </StackLayout>
+            
+        </StackLayout>
+    </Grid>
+
+</ContentPage>

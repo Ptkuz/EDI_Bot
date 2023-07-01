@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibrary1", "ClassLibrary1\ClassLibrary1.csproj", "{BA3C5023-881F-490C-BB2B-28513558C76E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoDownloader.Common.Models", "VideoDownloader.Common.Models\VideoDownloader.Common.Models.csproj", "{BC62299B-059F-459E-BC66-4BBC889DD929}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BA3C5023-881F-490C-BB2B-28513558C76E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BA3C5023-881F-490C-BB2B-28513558C76E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BA3C5023-881F-490C-BB2B-28513558C76E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BA3C5023-881F-490C-BB2B-28513558C76E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC62299B-059F-459E-BC66-4BBC889DD929}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC62299B-059F-459E-BC66-4BBC889DD929}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC62299B-059F-459E-BC66-4BBC889DD929}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC62299B-059F-459E-BC66-4BBC889DD929}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {8FF26BC4-6830-4723-83D2-3A8A6C4E59CB}
+		SolutionGuid = {7513FC68-6877-4C34-9233-28513A983A67}
 	EndGlobalSection
 EndGlobal
